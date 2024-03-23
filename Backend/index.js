@@ -8,11 +8,11 @@ app.use(express.urlencoded({ extended: true })); // Handle URL-encoded data
 const mongoose = require("mongoose");
 mongoose
   .connect(
-    `mongodb+srv://project-restapi.5n25wpo.mongodb.net/?retryWrites=true&w=majority&appName=Project-RESTAPI/`,
+    `mongodb+srv://wastemanagement.ug8d6fr.mongodb.net/?retryWrites=true&w=majority&appName=WasteManagement/`,
     {
-      dbName: "Project-RESTAPI",
-      user: "sumontasaha80",
-      pass: "PeV8ZpACRbAV9Ast",
+      dbName: "WasteManagement",
+      user: "promimojumder8",
+      pass: "aXipRG6t3JTC2dpG",
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }
@@ -23,11 +23,6 @@ mongoose
 // Product routes
 const productRouter = require("./Routes/Product.route.js");
 app.use("/products", productRouter);
-
-// Test routes
-// Query, Params, JSON Body and Urlencoded
-const testRoutes = require("./Routes/Test.route.js");
-app.use("/test", testRoutes);
 
 // Main Router
 app.get("/", (req, res, next) => {
