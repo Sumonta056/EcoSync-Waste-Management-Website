@@ -3,8 +3,9 @@ import logo from "../Home/Images/logo.png";
 import { Envelope, Lock } from "phosphor-react";
 import { Icon, Input, Label } from "keep-react";
 import backgroundImage from "./login.jpg";
+import { Link } from 'react-router-dom';
 
-export default function ExampleV2() {
+export default function ExampleV2({ handleLogin }) {
   return (
     <section className="h-screen mx-auto bg-neutral-700">
       <div className="h-full p-5 mx-auto mxcontainer">
@@ -72,6 +73,7 @@ export default function ExampleV2() {
                               background:
                                 "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)",
                             }}
+                            onClick={handleLogin}
                           >
                             Log in
                           </button>
