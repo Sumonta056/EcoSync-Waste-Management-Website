@@ -1,0 +1,32 @@
+### Get All Product
+GET http://localhost:3000/products
+
+### Create Product Type - -1
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name": "Mac",
+    "price": 2000
+}
+
+### Create Product Type - -2
+POST http://localhost:3000/products/better
+Content-Type: application/json
+
+{
+    "name": "Samsung",
+    "price": 21400
+}
+
+
+### Get Information of Product id=1
+GET http://localhost:3000/products/65fec479c951c6e0e0769687
+
+
+### Get Information of Product name
+GET http://localhost:3000/products/search/Samsung
+
+#### No Route
+GET http://localhost:3000/about
+
