@@ -24,6 +24,10 @@ mongoose
 const productRouter = require("./Routes/Product.route.js");
 app.use("/products", productRouter);
 
+// User routes
+const userRouter = require("./Routes/user.route.js");
+app.use("/user", userRouter);
+
 // Main Router
 app.get("/", (req, res, next) => {
   res.send("Hello World");

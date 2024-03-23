@@ -1,0 +1,16 @@
+
+### Create User
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+    "email": "sumontasaha@gmail.com",
+    "password": 2000,
+    "name": "Sumonta Saha",
+    "phone": "01711111111",
+    "role": "STS-Manager"
+}
+
+
+### Get User
+GET http://localhost:3000/user

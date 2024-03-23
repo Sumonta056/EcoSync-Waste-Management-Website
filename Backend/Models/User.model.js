@@ -10,7 +10,19 @@ const UserScheme = new Schema({
     type: Number,
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+  },
+  role: {
+    type: String,
+    required: true,
+  },
 });
 
 const User = mongoose.model("User", UserScheme);
-module.exports = Product;
+module.exports = User;
