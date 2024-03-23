@@ -4,6 +4,11 @@ const app = express();
 app.use(express.json()); // Handle Json Body
 app.use(express.urlencoded({ extended: true })); // Handle URL-encoded data
 
+// Swagger For API Documentation
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // Conntection MongoDB
 const mongoose = require("mongoose");
 mongoose
