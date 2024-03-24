@@ -49,28 +49,28 @@ export const DASHBOARD_SIDEBAR_LINKS = [
   {
     key: "sts",
     label: "STS Vehicle Entry",
-    path: "/addVehicl1e",
+    path: "/sts",
     icon: <HiOutlineAnnotation />,
   },
   {
     key: "landfill",
     label: "Landfill Vehicle Entry",
-    path: "/addVehicl2e",
+    path: "/landfill",
     icon: <HiOutlineAnnotation />,
   },
 ];
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
   {
-    key: "settings",
-    label: "Settings",
-    path: "/settings",
+    key: "profile",
+    label: "Profile",
+    path: "/profile",
     icon: <HiOutlineCog />,
   },
   {
     key: "support",
     label: "Help & Support",
-    path: "/support",
+    path: "/profile",
     icon: <HiOutlineQuestionMarkCircle />,
   },
 ];

@@ -3,6 +3,7 @@ import { Menu, Popover, Transition } from '@headlessui/react'
 import { HiOutlineBell, HiOutlineSearch, HiOutlineChatAlt } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
+import profile  from "./man.png"
 
 export default function Header() {
 	const navigate = useNavigate()
@@ -83,8 +84,8 @@ export default function Header() {
 						<Menu.Button className="flex ml-2 text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400">
 							<span className="sr-only">Open user menu</span>
 							<div
-								className="w-10 h-10 bg-center bg-no-repeat bg-cover rounded-full bg-sky-500"
-								style={{ backgroundImage: 'url("https://source.unsplash.com/80x80?face")' }}
+								className="w-10 h-10 bg-center bg-no-repeat bg-cover rounded-full"
+								style={{ backgroundImage: `url(${profile})` }}
 							>
 								<span className="sr-only">Marc Backes</span>
 							</div>
@@ -110,19 +111,6 @@ export default function Header() {
 										)}
 									>
 										Your Profile
-									</div>
-								)}
-							</Menu.Item>
-							<Menu.Item>
-								{({ active }) => (
-									<div
-										onClick={() => navigate('/settings')}
-										className={classNames(
-											active && 'bg-gray-100',
-											'active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
-										)}
-									>
-										Settings
 									</div>
 								)}
 							</Menu.Item>
