@@ -12,11 +12,11 @@ const UserScheme = new Schema({
   },
   name: {
     type: String,
-    required: true,
+    required: false,
   },
   phone: {
     type: Number,
-    required: true,
+    required: false,
   },
   role: {
     type: String,
