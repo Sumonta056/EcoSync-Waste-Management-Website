@@ -11,6 +11,8 @@ You can also view it [here](https://app.diagrams.net/#G1g_L8rnyOr36RGzPW83tWoD-h
 
 ---
 
+## Workflow Diagram
+
 ![Workflow Diagram](./Workflow%20Diagram/Workflow%20Diagram.png)
 
 For better version, please see the [PDF](./Workflow%20Diagram/Workflow%20Diagram.pdf) 
@@ -18,6 +20,8 @@ For better version, please see the [PDF](./Workflow%20Diagram/Workflow%20Diagram
 You can also view it [here](https://app.diagrams.net/#G18VnL2MHVnQJk_iHp9gi1IfTqpxwAmqFE#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
 
 ---
+
+## Activity Diagram
 
 ![Activity Diagram](./Activity%20Diagram/Activity%20Diagram.png)
 
