@@ -40,6 +40,10 @@ app.get("/", (req, res, next) => {
   res.send("Hello World");
 });
 
+//Authentication Router
+const authRouter = require("./Routes/auth.route.js");
+app.use("/api/auth", authRouter);
+
 // Set Error
 app.use((req, res, next) => {
   const err = new Error("Not Found");

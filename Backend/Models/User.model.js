@@ -7,7 +7,7 @@ const UserScheme = new Schema({
     required: true,
   },
   password: {
-    type: Number,
+    type: String,
     required: true,
   },
   name: {
@@ -20,7 +20,7 @@ const UserScheme = new Schema({
   },
   role: {
     type: String,
-    required: true,
+    default: "unassigned",
   },
 });
 
