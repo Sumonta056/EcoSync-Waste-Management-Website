@@ -16,8 +16,8 @@ export default function ExampleV2() {
     <section className="h-screen mx-auto bg-neutral-700">
       <div className="h-full p-5 mx-auto mxcontainer">
         <div className="flex flex-wrap items-center justify-center h-full g-6 text-neutral-800 dark:text-neutral-200">
-          <div className="w-full">
-            <div className="block rounded-lg shadow-lg bg-slate-800">
+          <div className="w-5/6 px-26">
+            <div className="block bg-gray-900 rounded-lg shadow-lg">
               <div className="g-0 lg:flex lg:flex-wrap">
                 {/* <!-- Left column container--> */}
                 <div className="px-4 md:px-0 lg:w-6/12">
@@ -34,9 +34,6 @@ export default function ExampleV2() {
                       {/* <!--Username input--> */}
                       <fieldset className="mb-4 space-y-1">
                         <div className="flex gap-2 pb-2">
-                          <Icon>
-                            <Envelope size={30} color="#AFBACA" />
-                          </Icon>
                           <Label htmlFor="" className="text-lg">
                             Email Address
                           </Label>
@@ -52,9 +49,6 @@ export default function ExampleV2() {
                       {/* <!--Password input--> */}
                       <fieldset className="mb-4 space-y-1">
                         <div className="flex gap-2 pb-2">
-                          <Icon>
-                            <Lock size={30} color="#AFBACA" />
-                          </Icon>
                           <Label htmlFor="" className="text-lg">
                             Password
                           </Label>
@@ -71,9 +65,9 @@ export default function ExampleV2() {
 
                       {/* <!--Submit button--> */}
                       <div className="pt-1 pb-1 mb-12 text-center">
-                        <TERipple rippleColor="light" className="w-full">
+                        <TERipple className="w-full">
                           <button
-                            className="mb-3 inline-block w-full rounded p-4 pt-2.5 text-lg font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
+                            className="mb-3 inline-block w-full rounded p-4 pt-2.5 text-lg font-medium uppercase leading-normal text-white"
                             type="button"
                             style={{
                               background:
@@ -81,7 +75,7 @@ export default function ExampleV2() {
                             }}
                             onClick={handleLogin}
                           >
-                            Log in
+                            Login
                           </button>
                         </TERipple>
 

@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);
@@ -28,6 +29,13 @@ export default function RecentOrders() {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
 
+  const navigate = useNavigate();
+  const handleUser = async (event) => {
+    event.preventDefault();
+    navigate("/createUser");
+  };
+  
+
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
       <div className="flex flex-row justify-between w-full gap-4 px-4">
@@ -37,6 +45,7 @@ export default function RecentOrders() {
         </strong>
         <button
           type="button"
+          onClick={handleUser}
           className="gap-2 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-lg px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
         >
          <IoMdPersonAdd size={25} />
