@@ -70,7 +70,7 @@ export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
   {
     key: "support",
     label: "Help & Support",
-    path: "/profile",
+    path: "/about",
     icon: <HiOutlineQuestionMarkCircle />,
   },
 ];
