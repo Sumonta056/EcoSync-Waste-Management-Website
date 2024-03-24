@@ -1,6 +1,6 @@
 export function getRoleStatus(status) {
   switch (status) {
-    case "STS-Manager":
+    case "STS-MANAGER":
       return (
         <span className="px-2 py-1 capitalize rounded-md text-md text-sky-600 bg-sky-100">
           {status.replaceAll("_", " ").toUpperCase()}

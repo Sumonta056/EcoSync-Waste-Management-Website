@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const user = new User(req.body);
+    console.log(user);
     const result = await user.save();
     res.send(result);
   } catch (err) {
