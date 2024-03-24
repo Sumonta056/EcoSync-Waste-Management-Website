@@ -5,6 +5,7 @@ import Layout from "./Dashboard/components/shared//Layout.jsx";
 import Dashboard from "./Dashboard/pages/Dashboard.jsx";
 import UserList from "./Dashboard/pages/UserList.jsx";
 import CreateUser from "./Dashboard/pages/CreateUser.jsx";
+import AddVehicle from "./Dashboard/pages/AddVehicle/Index.jsx";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route path="/userList" element={<Layout />}>
           <Route index element={<UserList />} />
+        </Route>
+        <Route path="/addVehicle" element={<Layout />}>
+          <Route index element={<AddVehicle />} />
         </Route>
       </Routes>
     </BrowserRouter>
