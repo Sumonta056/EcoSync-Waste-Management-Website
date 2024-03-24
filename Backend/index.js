@@ -42,7 +42,7 @@ app.get("/", (req, res, next) => {
 
 //Authentication Router
 const authRouter = require("./Routes/auth.route.js");
-app.use("/api/auth", authRouter);
+app.use("/auth", authRouter);
 
 // Set Error
 app.use((req, res, next) => {
