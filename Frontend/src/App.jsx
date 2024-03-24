@@ -3,7 +3,6 @@ import Home from "./Home/Home.jsx";
 import Login from "./Login/Login.jsx";
 import Layout from "./Dashboard/components/shared/Layout.jsx";
 import Dashboard from "./Dashboard/pages/Dashboard.jsx";
-import MoreInfoUser from "./Dashboard/pages/MoreInfoUser.jsx";
 import UserList from "./Dashboard/pages/User-List/UserList.jsx";
 import CreateUser from "./Dashboard/pages/User-Create/CreateUser.jsx";
 import AddVehicle from "./Dashboard/pages/AddVehicle/Index.jsx";
@@ -22,7 +21,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createUser" element={<CreateUser />} />
-        <Route path="/moreInfoUser/:userId" element={<MoreInfoUser />} />
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={<Dashboard />} />
         </Route>
