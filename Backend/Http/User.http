@@ -17,3 +17,6 @@ GET http://localhost:3000/user
 
 ### Get User By Id
 GET http://localhost:3000/user/:userId
+
+### Delete User By Id
+DELETE http://localhost:3000/user/:userId

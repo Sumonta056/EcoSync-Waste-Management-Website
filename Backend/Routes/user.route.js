@@ -68,15 +68,18 @@ router.delete("/:userId", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.send("User not found");
     }
-    await user.remove();
+
+    // Use deleteOne() to delete the user
+    await User.deleteOne({ _id: req.params.userId });
     res.send("User deleted successfully");
   } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Internal Server Error");
+    console.error(err.message);
+    res.status.send("Internal Server Error");
   }
 });
+
 
 // GET all available roles
 router.get("/roles", async (req, res, next) => {
@@ -101,5 +104,6 @@ router.put("/:userId/roles", async (req, res, next) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 module.exports = router;
