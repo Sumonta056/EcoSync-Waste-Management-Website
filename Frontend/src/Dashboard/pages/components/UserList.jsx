@@ -12,6 +12,8 @@ export default function RecentOrders() {
   const [roleData, setRoleData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(6);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserInfo, setSelectedUserInfo] = useState(null);
 
   useEffect(() => {
     axios
@@ -34,7 +36,10 @@ export default function RecentOrders() {
     event.preventDefault();
     navigate("/createUser");
   };
-  
+  const handleMoreInfo = (userId) => {
+    setSelectedUserId(userId);
+    navigate(`/moreInfoUser/${userId}`);
+  };
 
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
@@ -73,6 +78,7 @@ export default function RecentOrders() {
                   <div className="flex justify-center gap-1">
                     <button
                       type="button"
+                      onClick={() => handleMoreInfo(user._id)}
                       className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                     >
                       More Info

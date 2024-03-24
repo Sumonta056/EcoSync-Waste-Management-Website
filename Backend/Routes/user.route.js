@@ -30,6 +30,7 @@ router.get("/:userId", async (req, res, next) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
+    console.log(user)
     res.send(user);
   } catch (err) {
     console.log(err.message);
@@ -44,13 +45,15 @@ router.put("/:userId", async (req, res, next) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    // Check if the user is updating own details or if the request is from System Admin
-    // Add your logic here based on your authentication/authorization mechanism
-    // For simplicity, assuming any authenticated user can update their own details
-    // You might want to enhance this logic as per your application's requirements
+    
+    // Update user's details, excluding the password field
+    user.set({
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+      role: req.body.role
+    });
 
-    // Update user's details
-    user.set(req.body);
     const updatedUser = await user.save();
     res.send(updatedUser);
   } catch (err) {
@@ -58,6 +61,7 @@ router.put("/:userId", async (req, res, next) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 // DELETE method for deleting a user (System Admin access)
 router.delete("/:userId", async (req, res, next) => {
