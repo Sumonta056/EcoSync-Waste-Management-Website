@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcryptjs = require("bcryptjs");
 
 const User = require("../Models/User.model.js");
 
@@ -14,9 +15,14 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const user = new User(req.body);
-    console.log(user);
-    const result = await user.save();
+    let user = req.body;
+    if (user.password) {
+      const hashedPassword = bcryptjs.hashSync(user.password, 10);
+      user.password = hashedPassword;
+    }
+    const newUser = new User(user);
+    console.log(newUser);
+    const result = await newUser.save();
     res.send(result);
   } catch (err) {
     console.log(err);
@@ -30,7 +36,7 @@ router.get("/:userId", async (req, res, next) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    console.log(user)
+    console.log(user);
     res.send(user);
   } catch (err) {
     console.log(err.message);
@@ -45,13 +51,13 @@ router.put("/:userId", async (req, res, next) => {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    
+
     // Update user's details, excluding the password field
     user.set({
       email: req.body.email,
       name: req.body.name,
       phone: req.body.phone,
-      role: req.body.role
+      role: req.body.role,
     });
 
     const updatedUser = await user.save();
@@ -61,7 +67,6 @@ router.put("/:userId", async (req, res, next) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 // DELETE method for deleting a user (System Admin access)
 router.delete("/:userId", async (req, res, next) => {
