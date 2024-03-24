@@ -14,3 +14,8 @@ npm install
 ```bash
 npm run dev
 ```
+
+## API Documentation
+```bash
+node swagger.js
+```

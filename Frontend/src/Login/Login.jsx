@@ -3,9 +3,15 @@ import logo from "../Home/Images/logo.png";
 import { Envelope, Lock } from "phosphor-react";
 import { Icon, Input, Label } from "keep-react";
 import backgroundImage from "./login.jpg";
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-export default function ExampleV2({ handleLogin }) {
+export default function ExampleV2() {
+  const navigate = useNavigate();
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    navigate("/dashboard");
+  };
+
   return (
     <section className="h-screen mx-auto bg-neutral-700">
       <div className="h-full p-5 mx-auto mxcontainer">

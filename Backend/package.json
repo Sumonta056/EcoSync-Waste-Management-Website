@@ -9,6 +9,7 @@
   "author": "Sumonta056",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.3",
