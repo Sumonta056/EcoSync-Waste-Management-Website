@@ -58,7 +58,7 @@ export default function RecentOrders() {
     try {
       const response = await axios.get(`http://localhost:3000/user/${user._id}`);
       console.log("Navigating to profile with userId:", user._id);
-      navigate(`/profile/${user._id}`);
+      navigate(`/user/${user._id}`);
       
       // Pass the user ID to the Card component
       setUserId(user._id);
