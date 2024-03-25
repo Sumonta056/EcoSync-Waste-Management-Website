@@ -7,7 +7,7 @@ import UserList from "./Dashboard/pages/User-List/UserList.jsx";
 import CreateUser from "./Dashboard/pages/User-Create/CreateUser.jsx";
 import AddVehicle from "./Dashboard/pages/AddVehicle/Index.jsx";
 import Profile from "./Dashboard/pages/Profile/index.jsx";
-import UpdateProfile from "./Dashboard/pages/Profile/index.jsx";
+import UpdateProfile from "./Dashboard/pages/UpdateProfile/index.jsx";
 import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFiill from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import Permission from "./Dashboard/pages/Permission/index.jsx";
