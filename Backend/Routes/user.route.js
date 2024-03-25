@@ -34,13 +34,13 @@ router.get("/:userId", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.send("User not found");
     }
     console.log(user);
     res.send(user);
   } catch (err) {
     console.log(err.message);
-    res.status(500).send("Internal Server Error");
+    res.send("Internal Server Error");
   }
 });
 
@@ -49,7 +49,7 @@ router.put("/:userId", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.send("User not found");
     }
 
     // Update user's details, excluding the password field
@@ -64,7 +64,7 @@ router.put("/:userId", async (req, res, next) => {
     res.send(updatedUser);
   } catch (err) {
     console.log(err.message);
-    res.status(500).send("Internal Server Error");
+    res.send("Internal Server Error");
   }
 });
 
@@ -81,7 +81,7 @@ router.delete("/:userId", async (req, res, next) => {
     res.send("User deleted successfully");
   } catch (err) {
     console.error(err.message);
-    res.status.send("Internal Server Error");
+    res.send("Internal Server Error");
   }
 });
 
@@ -89,14 +89,15 @@ router.delete("/:userId", async (req, res, next) => {
 // GET all available roles
 router.get("/roles", async (req, res, next) => {
   try {
-    // Assuming you have a roles collection or some predefined roles
-    const roles = ["Admin", "Moderator", "User"];
-    res.send(roles);
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Internal Server Error");
+    // Fetch distinct roles from the user collection
+    const roles = await User.distinct("role");
+    res.json(roles);
+  } catch (error) {
+    console.error("Error fetching roles:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 // PUT method for updating a user's roles (System Admin access)
 router.put("/:userId/roles", async (req, res, next) => {
@@ -106,9 +107,10 @@ router.put("/:userId/roles", async (req, res, next) => {
     res.send("User roles updated successfully");
   } catch (err) {
     console.log(err.message);
-    res.status(500).send("Internal Server Error");
+    res.send("Internal Server Error");
   }
 });
+
 
 
 module.exports = router;

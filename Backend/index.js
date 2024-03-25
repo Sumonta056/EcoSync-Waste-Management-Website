@@ -35,6 +35,14 @@ app.use("/products", productRouter);
 const userRouter = require("./Routes/user.route.js");
 app.use("/user", userRouter);
 
+// role routes
+const roleRouter = require("./Routes/user.route.js");
+app.use("/roles", userRouter);
+
+// Vehicle routes
+const vehicleRouter = require("./Routes/vehicle.route.js");
+app.use("/vehicle", vehicleRouter);
+
 // Main Router
 app.get("/", (req, res, next) => {
   res.send("Hello World");

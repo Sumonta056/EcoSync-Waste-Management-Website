@@ -8,7 +8,6 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import ShowMoreModal from "./ShowMoreModal";
 import DeleteModal from "./DeleteModal";
-import Card from "../components/UserProfile/update.jsx"
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);

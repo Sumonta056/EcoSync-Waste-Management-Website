@@ -1,0 +1,20 @@
+
+### Create Vehicle
+POST http://localhost:3000/vehicle
+Content-Type: application/json
+
+{
+    "number": "56",
+    "type": "OPEN TRUCK",
+    "capacity": "5 TON"
+}
+
+
+### Get User
+GET http://localhost:3000/vehicle
+
+### Get User By Id
+GET http://localhost:3000/vehicle/:vehicleId
+
+### Delete User By Id
+DELETE http://localhost:3000/vehicle/:vehicleId
