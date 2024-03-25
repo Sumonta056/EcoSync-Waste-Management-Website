@@ -39,15 +39,16 @@ export default function History() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-              <th>Vehicle Number</th>
+            <th>Registration Number</th>
               <th>Type</th>
               <th>Capacity</th>
-              <th>STS Manager</th>
+              <th>Fuel Cost (Loaded)</th>
+              <th>Fuel Cost (Unloaded)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td colSpan="4" className="text-center">Loading...</td>
+              <td colSpan="5" className="text-center">Loading...</td>
             </tr>
           </tbody>
         </table>
@@ -71,19 +72,21 @@ export default function History() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-              <th>Vehicle Number</th>
+              <th>Registration Number</th>
               <th>Type</th>
               <th>Capacity</th>
-              <th>STS Manager</th>
+              <th>Fuel Cost (Loaded)</th>
+              <th>Fuel Cost (Unloaded)</th>
             </tr>
           </thead>
           <tbody>
             {vehicleData.map(vehicle => (
               <tr key={vehicle._id}>
-                <td>{vehicle.number}</td>
+                <td>{vehicle.regnumber}</td>
                 <td>{getRoleStatus(vehicle.type, 'type')}</td>
                 <td>{getRoleStatus(vehicle.capacity, 'capacity')}</td>
-                <td>{vehicle.stsManager}</td>
+                <td>{vehicle.loadedfuelcost}</td>
+                <td>{vehicle.unloadedfuelcost}</td>
               </tr>
             ))}
           </tbody>
