@@ -1,13 +1,9 @@
-import axios from "axios";
-import { getRoleStatus } from "../User-List/components/roles.jsx";
 import React, { useState } from "react";
 
-const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
+const PermissionModal = ({ isOpen, onClose, user, onUpdate }) => {
   if (!isOpen || !user) return null;
 
   const [updatedUser, setUpdatedUser] = useState({ ...user });
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -16,7 +12,6 @@ const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
       [name]: value,
     }));
   };
-
   
   return (
     <>
@@ -29,7 +24,17 @@ const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
           </h2>
           {/* Display user information */}
           <div className="mb-6">
-            
+            <div className="mb-2">
+              <label className="text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={updatedUser.name}
+                onChange={handleInputChange}
+                className="border border-gray-400 p-2 w-full"
+                readOnly
+              />
+            </div>
             <div className="mb-2">
               <label className="text-gray-700">ID:</label>
               <input
@@ -43,34 +48,25 @@ const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
             </div>
             <div className="mb-2">
               <label className="text-gray-700">Role:</label>
-              <div className="border border-gray-400 p-2">{updatedUser.role}</div>
+              <select
+              name="role"
+              value={updatedUser.role}
+              onChange={handleInputChange}
+              className="border border-gray-400 p-2 w-full"
+            >
+                <option value="UNASSIGNED">UNASSIGNED</option>
+                <option value="STS-MANAGER">STS-MANAGER</option>
+                <option value="LANDFILL MANAGER">LANDFILL MANAGER</option>
+                <option value="SYSTEM ADMIN">SYSTEM ADMIN</option>
+            </select>
             </div>
-            <div className="mb-2">
-              <label className="text-gray-700">Email:</label>
-              <input
-                type="email"
-                name="email"
-                value={updatedUser.email}
-                onChange={handleInputChange}
-                className="border border-gray-400 p-2 w-full"
-              />
-            </div>
-            <div className="mb-2">
-              <label className="text-gray-700">Phone Number:</label>
-              <input
-                type="tel"
-                name="phone"
-                value={updatedUser.phone}
-                onChange={handleInputChange}
-                className="border border-gray-400 p-2 w-full"
-              />
-            </div>
+            
             {/* Add more user information fields here if needed */}
           </div>
           <div className="flex justify-center gap-4">
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            onClick={() => onUpdate(user._id)}
+            onClick={() => onPermission(user._id)}
           >
             Update
           </button>
@@ -81,6 +77,7 @@ const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
             Cancel
           </button>
         </div>
+
         </div>
       </div>
       </div>
@@ -90,4 +87,4 @@ const UpdateModal = ({ isOpen, onClose, user, onUpdate }) => {
   );
 };
 
-export default UpdateModal;
+export default PermissionModal;
