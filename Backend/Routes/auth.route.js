@@ -31,10 +31,11 @@ router.post("/login", async (req, res, next) => {
       JWT_SECRET
     );
     const { password: pass, ...rest } = validUser._doc;
+
     res
-      .cookie("access_token", token, { httpOnly: true, sameSite: 'none', secure: true })
+      .cookie("access_token", token, { httpOnly: false })
       .status(200)
-      .json({ token: jwt.token, ...rest });
+      .json({ access_token: token });
   } catch (error) {
     next(error);
   }

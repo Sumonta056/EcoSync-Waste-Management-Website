@@ -26,6 +26,7 @@ export default function ExampleV2() {
       if (modalVisible) {
         setModalVisible(false);
         navigate("/dashboard");
+        window.location.reload();
       }
     }, 2000);
   };
@@ -44,6 +45,9 @@ export default function ExampleV2() {
         password,
       });
       if (response.status === 200) {
+        console.log(response.data);
+        const token = response.data.access_token; // Access the token from the response data
+        localStorage.setItem("access_token", token); // Store the token in local storage
         setModalTitle("UserLogin Success !!");
         setModalText("Congratulations, User Created Successfully !");
         setModalVisible(true);

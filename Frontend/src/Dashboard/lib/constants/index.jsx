@@ -1,13 +1,16 @@
 import {
   HiOutlineViewGrid,
   HiOutlineCube,
-  HiOutlineShoppingCart,
-  HiOutlineUsers,
-  HiOutlineDocumentText,
-  HiOutlineAnnotation,
   HiOutlineQuestionMarkCircle,
   HiOutlineCog,
 } from "react-icons/hi";
+
+import { SiSecurityscorecard } from "react-icons/si";
+import { FaLandmark } from "react-icons/fa6";
+import { MdCreateNewFolder } from "react-icons/md";
+import { RiMoneyPoundBoxFill } from "react-icons/ri";
+import { FaTruckFront } from "react-icons/fa6";
+import { MdOutlineSecurity } from "react-icons/md";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -23,40 +26,40 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <HiOutlineCube />,
   },
   {
-    key: "persmission",
-    label: "Permission",
-    path: "/permisssion",
-    icon: <HiOutlineShoppingCart />,
-  },
-  {
     key: "access",
     label: "Access Roles",
     path: "/userRoles",
-    icon: <HiOutlineUsers />,
+    icon: <MdOutlineSecurity />,
   },
   {
     key: "transactions",
     label: "Transactions",
     path: "/transactions",
-    icon: <HiOutlineDocumentText />,
+    icon: <RiMoneyPoundBoxFill />,
   },
   {
     key: "addVehicle",
     label: "Add Vehicle",
     path: "/addVehicle",
-    icon: <HiOutlineAnnotation />,
+    icon: <FaTruckFront />,
+  },
+  {
+    key: "createSTS",
+    label: "Create STS",
+    path: "/createSTS",
+    icon: <MdCreateNewFolder />,
   },
   {
     key: "sts",
-    label: "STS Vehicle Entry",
+    label: "STS Entry",
     path: "/sts",
-    icon: <HiOutlineAnnotation />,
+    icon: <SiSecurityscorecard />,
   },
   {
     key: "landfill",
-    label: "Landfill Vehicle Entry",
+    label: "Landfill Entry",
     path: "/landfill",
-    icon: <HiOutlineAnnotation />,
+    icon: <FaLandmark />,
   },
 ];
 
