@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ShowMoreModal from "./ShowMoreModal";
 import DeleteModal from "./DeleteModal";
 import UpdateModal from "../../UpdateProfile/index.jsx";
+import PermissionModal from "../../UpdateProfile/permission.jsx";
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);
@@ -20,6 +21,7 @@ export default function RecentOrders() {
   const [showMoreModal, setShowMoreModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
+  const [permissionModal, setPermissionModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -55,6 +57,29 @@ export default function RecentOrders() {
       console.error("Error deleting user:", error);
     }
   };
+  const updateUser = async (userId) => {
+    try {
+      console.log("Updating user with ID:", userId);
+      await axios.put(`http://localhost:3000/user/${userId}`);
+      const response = await axios.get("http://localhost:3000/user");
+      setUserData(response.data);
+      setUpdateModal(false); // Close the delete modal after deleting the user
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+
+  const permissionUser = async (userId) => {
+    try {
+      console.log("Updating permission of user with ID:", userId);
+      await axios.put(`http://localhost:3000/user/${userId}`);
+      const response = await axios.get("http://localhost:3000/user");
+      setUserData(response.data);
+      setPermissionModal(false); 
+    } catch (error) {
+      console.error("Error updating permission:", error);
+    }
+  };
 
   const openShowMoreModal = (user) => {
     console.log("Opening Show More modal for user:", user);
@@ -75,11 +100,18 @@ export default function RecentOrders() {
     setSelectedUserInfo(user); // Ensure user object contains necessary properties
     setUpdateModal(true);
   };
+  const openPermissionModal = (user) => {
+    console.log("Opening Permission modal for user:", user);
+    setSelectedUserId(user._id); // Make sure user._id exists
+    setSelectedUserInfo(user); // Ensure user object contains necessary properties
+    setPermissionModal(true);
+  };
 
   // Function to close modals
   const closeShowMoreModal = () => setShowMoreModal(false);
   const closeDeleteModal = () => setDeleteModal(false);
   const closeUpdateModal = () => setUpdateModal(false);
+  const closePermissionModal = () => setPermissionModal(false);
 
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
@@ -127,6 +159,7 @@ export default function RecentOrders() {
                     </button>
                     <button
                       type="button"
+                      onClick={() => openPermissionModal(user)}
                       className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                     >
                       Permission
@@ -183,12 +216,18 @@ export default function RecentOrders() {
         user={selectedUserInfo}
         onDelete={() => deleteUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
       />
-      <UpdateModal
-        isOpen={updateModal}
-        onClose={closeUpdateModal}
-        user={selectedUserInfo}
-        onDelete={() => updateUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
-      />
+     <UpdateModal
+      isOpen={updateModal}
+      onClose={closeUpdateModal}
+      user={selectedUserInfo}
+      onUpdate={() => updateUser(selectedUserId)} 
+    />
+    <PermissionModal
+      isOpen={permissionModal}
+      onClose={closePermissionModal}
+      user={selectedUserInfo}
+      onPermission={() => permissionUser(selectedUserId)}  // Pass the updateUser function directly
+    />
     </div>
   );
 }
