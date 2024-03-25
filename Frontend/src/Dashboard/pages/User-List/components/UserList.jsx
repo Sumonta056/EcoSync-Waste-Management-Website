@@ -6,7 +6,9 @@ import { FaEdit } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { RiH2 } from "react-icons/ri";
+import ShowMoreModal from "./ShowMoreModal";
+import DeleteModal from "./DeleteModal";
+import Card from "../components/UserProfile/update.jsx"
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);
@@ -15,8 +17,8 @@ export default function RecentOrders() {
   const [usersPerPage] = useState(6);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUserInfo, setSelectedUserInfo] = useState(null);
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
-  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showMoreModal, setShowMoreModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -47,234 +49,47 @@ export default function RecentOrders() {
       await axios.delete(`http://localhost:3000/user/${userId}`);
       const response = await axios.get("http://localhost:3000/user");
       setUserData(response.data);
-      setShowModal(false);
+      setDeleteModal(false); // Close the delete modal after deleting the user
     } catch (error) {
       console.error("Error deleting user:", error);
     }
   };
-
-  const openModal = (userId) => {
-    const user = userData.find((user) => user._id === userId);
-    setSelectedUserId(userId);
-    setSelectedUserInfo(user);
-    setShowModal(true);
+  
+  const goToProfile = async (user) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/user/${user._id}`);
+      console.log("Navigating to profile with userId:", user._id);
+      navigate(`/profile/${user._id}`);
+      
+      // Pass the user ID to the Card component
+      setUserId(user._id);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
-
-  const openInfoModal = (userId) => {
-    const user = userData.find((user) => user._id === userId);
-    setSelectedUserId(userId);
-    setSelectedUserInfo(user);
-    setShowInfoModal(true);
+  
+  const openShowMoreModal = (user) => {
+    console.log("Opening Show More modal for user:", user);
+    setSelectedUserId(user._id); // Update selectedUserId with the correct user ID
+    setSelectedUserInfo(user); // Update selectedUserInfo with the correct user information
+    setShowMoreModal(true);
   };
-
-  const closeModal = () => setShowModal(false);
-  const closeInfoModal = () => setShowInfoModal(false);
+  
+  const openDeleteModal = (user) => {
+      console.log("Opening Delete modal for user:", user);
+      setSelectedUserId(user._id); // Make sure user._id exists
+      setSelectedUserInfo(user); // Ensure user object contains necessary properties
+      setDeleteModal(true);
+    };
+    
+  
+  // Function to close modals
+  const closeShowMoreModal = () => setShowMoreModal(false);
+  const closeDeleteModal = () => setDeleteModal(false);
 
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
       {/* Modal */}
-    <div className="Modal">
-    {showInfoModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-    <div className="relative w-auto max-w-3xl mx-auto my-6">
-      <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
-        {/* First Modal Header */}
-        <div className="flex items-center justify-between p-4 border-b border-solid rounded-t border-blueGray-200 bg-blue-200">
-          <h3 className="text-xl font-semibold text-blue-900">User Details</h3>
-        </div>
-
-        {/* First Modal Body */}
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none">
-          <div className="flex items-center justify-center min-h-screen px-4 text-center">
-            <div className="fixed inset-0 bg-black opacity-50"></div>
-            <div className="relative z-50 inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
-              {/* Modal content */}
-              <div>
-                {/* Header */}
-                <div className="flex justify-between items-center pb-3 mb-4 border-b">
-                  <h3 className="text-xl font-semibold">Confirmation</h3>
-                  <button
-                    className="focus:outline-none"
-                    onClick={closeModal}
-                  >
-                    <svg
-                      className="w-6 h-6 text-gray-400 cursor-pointer hover:text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-                {/* Body */}
-                <div className="pb-4">
-                  <div className="my-4 flex items-center2">
-                    <p className="text-lg font-semibold mr-2">ID:</p>
-                    <p className="text-lg">{selectedUserInfo._id}</p>
-                  </div>
-                  <div className="my-4 flex items-center2">
-                    <p className="text-lg font-semibold mr-2">Name:</p>
-                    <p className="text-lg">{selectedUserInfo.name}</p>
-                  </div>
-                  <div className="my-4 flex items-center2">
-                    <p className="text-lg font-semibold mr-2">Role:</p>
-                    <p className="text-lg">{selectedUserInfo.role}</p>
-                  </div>
-                  <div className="my-4 flex items-center">
-                    <p className="text-lg font-semibold mr-2">Email:</p>
-                    <p className="text-lg">{selectedUserInfo.email}</p>
-                  </div>
-                  <div className="my-4 flex items-center">
-                    <p className="text-lg font-semibold mr-2">Phone Number:</p>
-                    <p className="text-lg">{selectedUserInfo.phoneno}</p>
-                  </div>
-                </div>
-                {/* Footer */}
-                <div className="flex justify-end pt-2 border-t">
-                  <button
-                    className="px-4 py-2 mr-2 text-sm font-semibold text-gray-500 uppercase border border-gray-300 rounded-md focus:outline-none hover:text-gray-700 hover:border-gray-400"
-                    onClick={closeInfoModal}
-                  >
-                    OK
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* First Modal Footer */}
-        <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-blueGray-200">
-          <button
-            className="text-white-500 background-green font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            onClick={closeInfoModal}
-          >
-            OK
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
-
-    </div>
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-          <div className="relative w-auto max-w-3xl mx-auto my-6">
-            {/*content*/}
-            <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
-              {/*header*/}
-              <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
-                <h3 className="text-xl font-semibold">
-                  Confirmation
-                </h3>
-                <button
-                  className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                  onClick={closeModal}
-                >
-                  <span className="text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-                    ×
-                  </span>
-                </button>
-              </div>
-              {/*body*/}
-             
-              <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none">
-                <div className="flex items-center justify-center min-h-screen px-4 text-center">
-                  <div className="fixed inset-0 bg-black opacity-50"></div>
-                  <div className="relative z-50 inline-block w-full max-w-lg p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-lg">
-                    {/* Modal content */}
-                    <div>
-                      {/* Header */}
-                      <div className="flex justify-between items-center pb-3 mb-4 border-b">
-                        <h3 className="text-xl font-semibold">Confirmation</h3>
-                        <button
-                          className="focus:outline-none"
-                          onClick={closeModal}
-                        >
-                          <svg
-                            className="w-6 h-6 text-gray-400 cursor-pointer hover:text-gray-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M6 18L18 6M6 6l12 12"
-                            ></path>
-                          </svg>
-                        </button>
-                      </div>
-                      {/* Body */}
-                      <div className="pb-4">
-                        <p className="text-lg">Are you sure you want to delete this user?</p>
-                        <div className="my-4 flex items-center">
-                          <p className="text-lg font-semibold mr-2">ID:</p>
-                          <p className="text-lg">{selectedUserInfo._id}</p>
-                        </div>
-
-                        <div className="my-4 flex items-center">
-                          <p className="text-lg font-semibold mr-2">Name:</p>
-                          <p className="text-lg">{selectedUserInfo.name}</p>
-                        </div>
-                        <div className="my-4 flex items-center">
-                          <p className="text-lg font-semibold mr-2">Role:</p>
-                          <p className="text-lg">{selectedUserInfo.role}</p>
-                        </div>
-                      </div>
-                      {/* Footer */}
-                      <div className="flex justify-end pt-2 border-t">
-                        <button
-                          className="px-4 py-2 mr-2 text-sm font-semibold text-gray-500 uppercase border border-gray-300 rounded-md focus:outline-none hover:text-gray-700 hover:border-gray-400"
-                          onClick={closeModal}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className="px-4 py-2 text-sm font-semibold text-white bg-red-500 rounded-md focus:outline-none hover:bg-red-600"
-                          onClick={() => deleteUser(selectedUserId)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-              {/*footer*/}
-              <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-blueGray-200">
-                <button
-                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                  onClick={closeModal}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="bg-red-600 text-white active:bg-red-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                  onClick={() => deleteUser(selectedUserId)}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Rest of the component */}
       <div className="flex flex-row justify-between w-full gap-4 px-4">
         <strong className="flex justify-center gap-2 text-3xl text-gray-600">
@@ -311,7 +126,7 @@ export default function RecentOrders() {
                   <div className="flex justify-center gap-1">
                     <button
                       type="button"
-                      onClick={() =>  openInfoModal(user._id)}
+                      onClick={() =>  openShowMoreModal(user)}
                       className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                     >
                       More Info
@@ -324,6 +139,7 @@ export default function RecentOrders() {
                       </button>
                       <button
                         type="button"
+                        onClick={() => goToProfile(user)}
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                       >
                         <FaEdit size={25} />
@@ -331,7 +147,7 @@ export default function RecentOrders() {
   
                       <button
                         type="button"
-                        onClick={() => openModal(user._id)}
+                        onClick={() => openDeleteModal(user)}
                         className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                       >
                         <MdDelete size={25} />
@@ -359,6 +175,19 @@ export default function RecentOrders() {
             </button>
           </div>
         </div>
+       {/* Show More Modal */}
+      <ShowMoreModal
+        isOpen={showMoreModal}
+        onClose={closeShowMoreModal}
+        user={selectedUserInfo}
+      />
+
+      <DeleteModal
+        isOpen={deleteModal}
+        onClose={closeDeleteModal}
+        user={selectedUserInfo}
+        onDelete={() => deleteUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
+      />
       </div>
     );
   }
