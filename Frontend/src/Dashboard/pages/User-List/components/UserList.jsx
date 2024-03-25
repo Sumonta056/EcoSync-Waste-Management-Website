@@ -53,35 +53,36 @@ export default function RecentOrders() {
       console.error("Error deleting user:", error);
     }
   };
-  
+
   const goToProfile = async (user) => {
     try {
-      const response = await axios.get(`http://localhost:3000/user/${user._id}`);
+      const response = await axios.get(
+        `http://localhost:3000/user/${user._id}`
+      );
       console.log("Navigating to profile with userId:", user._id);
       navigate(`/user/${user._id}`);
-      
+
       // Pass the user ID to the Card component
       setUserId(user._id);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   };
-  
+
   const openShowMoreModal = (user) => {
     console.log("Opening Show More modal for user:", user);
     setSelectedUserId(user._id); // Update selectedUserId with the correct user ID
     setSelectedUserInfo(user); // Update selectedUserInfo with the correct user information
     setShowMoreModal(true);
   };
-  
+
   const openDeleteModal = (user) => {
-      console.log("Opening Delete modal for user:", user);
-      setSelectedUserId(user._id); // Make sure user._id exists
-      setSelectedUserInfo(user); // Ensure user object contains necessary properties
-      setDeleteModal(true);
-    };
-    
-  
+    console.log("Opening Delete modal for user:", user);
+    setSelectedUserId(user._id); // Make sure user._id exists
+    setSelectedUserInfo(user); // Ensure user object contains necessary properties
+    setDeleteModal(true);
+  };
+
   // Function to close modals
   const closeShowMoreModal = () => setShowMoreModal(false);
   const closeDeleteModal = () => setDeleteModal(false);
@@ -125,56 +126,57 @@ export default function RecentOrders() {
                   <div className="flex justify-center gap-1">
                     <button
                       type="button"
-                      onClick={() =>  openShowMoreModal(user)}
+                      onClick={() => openShowMoreModal(user)}
                       className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                     >
                       More Info
                     </button>
                     <button
                       type="button"
-                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-                    .2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-                      >
-                        Permission
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => goToProfile(user)}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                      >
-                        <FaEdit size={25} />
-                      </button>
-  
-                      <button
-                        type="button"
-                        onClick={() => openDeleteModal(user)}
-                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                      >
-                        <MdDelete size={25} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="flex justify-between w-full gap-3 p-4">
-            <button
-              className="rounded-lg text-white bg-slate-700 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium text-base px-5 py-2.5 text-center mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-900"
-              onClick={() => setCurrentPage(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <button
-              className="rounded-lg text-white bg-slate-700 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium text-base px-5 py-2.5 text-center mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-900"
-              onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={currentPage === Math.ceil(userData.length / usersPerPage)}
-            >
-              Next
-            </button>
-          </div>
+                      className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                    >
+                      Permission
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => goToProfile(user)}
+                      className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                    >
+                      <FaEdit size={25} />
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => openDeleteModal(user)}
+                      className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                    >
+                      <MdDelete size={25} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex justify-between w-full gap-3 p-4">
+          <button
+            className="rounded-lg text-white bg-slate-700 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium text-base px-5 py-2.5 text-center mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-900"
+            onClick={() => setCurrentPage(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            className="rounded-lg text-white bg-slate-700 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 font-medium text-base px-5 py-2.5 text-center mb-2 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-900"
+            onClick={() => setCurrentPage(currentPage + 1)}
+            disabled={currentPage === Math.ceil(userData.length / usersPerPage)}
+          >
+            Next
+          </button>
         </div>
-       {/* Show More Modal */}
+      </div>
+
+      {/* Show More Modal */}
       <ShowMoreModal
         isOpen={showMoreModal}
         onClose={closeShowMoreModal}
@@ -187,7 +189,6 @@ export default function RecentOrders() {
         user={selectedUserInfo}
         onDelete={() => deleteUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
       />
-      </div>
-    );
-  }
-  
+    </div>
+  );
+}
