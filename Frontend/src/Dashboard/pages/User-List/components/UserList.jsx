@@ -8,6 +8,7 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import ShowMoreModal from "./ShowMoreModal";
 import DeleteModal from "./DeleteModal";
+import UpdateModal from "../../UpdateProfile/index.jsx";
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);
@@ -18,6 +19,7 @@ export default function RecentOrders() {
   const [selectedUserInfo, setSelectedUserInfo] = useState(null);
   const [showMoreModal, setShowMoreModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -54,21 +56,6 @@ export default function RecentOrders() {
     }
   };
 
-  const goToProfile = async (user) => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/user/${user._id}`
-      );
-      console.log("Navigating to profile with userId:", user._id);
-      navigate(`/user/${user._id}`);
-
-      // Pass the user ID to the Card component
-      setUserId(user._id);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
   const openShowMoreModal = (user) => {
     console.log("Opening Show More modal for user:", user);
     setSelectedUserId(user._id); // Update selectedUserId with the correct user ID
@@ -82,10 +69,17 @@ export default function RecentOrders() {
     setSelectedUserInfo(user); // Ensure user object contains necessary properties
     setDeleteModal(true);
   };
+  const openUpdateModal = (user) => {
+    console.log("Opening Update modal for user:", user);
+    setSelectedUserId(user._id); // Make sure user._id exists
+    setSelectedUserInfo(user); // Ensure user object contains necessary properties
+    setUpdateModal(true);
+  };
 
   // Function to close modals
   const closeShowMoreModal = () => setShowMoreModal(false);
   const closeDeleteModal = () => setDeleteModal(false);
+  const closeUpdateModal = () => setUpdateModal(false);
 
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
@@ -139,7 +133,7 @@ export default function RecentOrders() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => goToProfile(user)}
+                      onClick={() => openUpdateModal(user)}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     >
                       <FaEdit size={25} />
@@ -188,6 +182,12 @@ export default function RecentOrders() {
         onClose={closeDeleteModal}
         user={selectedUserInfo}
         onDelete={() => deleteUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
+      />
+      <UpdateModal
+        isOpen={updateModal}
+        onClose={closeUpdateModal}
+        user={selectedUserInfo}
+        onDelete={() => updateUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
       />
     </div>
   );

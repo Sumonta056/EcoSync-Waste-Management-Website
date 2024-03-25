@@ -1,13 +1,77 @@
-import Vehicle from "./profile.jsx";
-import History from "./update.jsx";
+import { getRoleStatus } from "../User-List/components/roles.jsx";
 
-export default function Index() {
+import React from "react";
+
+const UpdateModal = ({ isOpen, onClose, user }) => {
+  if (!isOpen) return null;
+
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row w-full gap-4">
-        <History />
-        <Vehicle />
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
+      <div className="modal bg-white rounded-lg p-6 md:p-8 w-96">
+        <div className="modal-content">
+          <h2 className="w-full text-2xl font-semibold mb-4 flex flex-col justify-center text-slate-800">
+            User Details:
+          </h2>
+          {/* Display user information */}
+
+          <div className="mb-6">
+            <div className="mb-2">
+              <label className="text-gray-700">Name</label>
+              <div className="border border-gray-400 p-2 font-medium">{user.name}</div>
+            </div>
+            <div className="mb-2">
+              <label className="text-gray-700">ID:</label>
+              <div className="border border-gray-400 text-neutral-600 p-2">{user._id}</div>
+            </div>
+            <div className="mb-2">
+              <label className="text-gray-700">Role:</label>
+              <div className="border border-gray-400 p-2">
+                {getRoleStatus(user.role)}
+              </div>
+            </div>
+            <div className="mb-2">
+              <label className="text-gray-700">Email:</label>
+              <div className="border border-gray-400 p-2">
+                <a href={`mailto:${user.email}`} className="text-cyan-600">
+                  {user.email}
+                </a>
+              </div>
+            </div>
+            <div className="mb-2">
+              <label className="text-gray-700">Phone Number:</label>
+              <div className="border border-gray-400 p-2">
+              <input
+                type="tel"
+                name="phone"
+                value={user.phone}
+                onChange={handleInputChange}
+                className="border border-gray-400 p-2 w-full"
+              />
+              </div>
+            </div>
+            {/* Add more user information fields here if needed */}
+          </div>
+          {/* <div className="mb-6">
+            <p className="text-gray-700 mb-2">ID: {user._id}</p>
+            <p className="text-gray-700 mb-2">Role: {getRoleStatus(user.role)}</p>
+            <p className="text-gray-700 mb-2">Email: <a href={`mailto:${user.email}`} className="text-blue-600">{user.email}</a></p>
+            <p className="text-gray-700 mb-2">Phone Number: <a href={`tel:${user.phone}`} className="text-blue-600">{user.phone}</a></p>
+       
+          </div> */}
+          <div className="flex justify-center">
+            {" "}
+            {/* Added flex container to center button */}
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={onClose}
+            >
+              Update
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default UpdateModal;

@@ -43,6 +43,10 @@ app.use("/roles", userRouter);
 const vehicleRouter = require("./Routes/vehicle.route.js");
 app.use("/vehicle", vehicleRouter);
 
+// Waste transfer from STS to Landfill routes
+const transferRouter = require("./Routes/transfer.route.js");
+app.use("/transfer", transferRouter);
+
 // Main Router
 app.get("/", (req, res, next) => {
   res.send("Hello World");

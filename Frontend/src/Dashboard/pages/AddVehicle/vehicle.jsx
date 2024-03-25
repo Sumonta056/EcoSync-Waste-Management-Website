@@ -1,27 +1,10 @@
 import { Form, Input, Select, Button, DatePicker, message } from "antd";
-import moment from "moment";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Vehicle() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [stsManagers, setStsManagers] = useState([]);
-
-  useEffect(() => {
-    const fetchStsManagers = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/user");
-        const users = response.data;
-        const stsManagers = users.filter(user => user.role === "STS-MANAGER");
-        setStsManagers(stsManagers);
-      } catch (error) {
-        console.error("Error fetching STS managers:", error);
-      }
-    };
-
-    fetchStsManagers();
-  }, []);
 
   const onFinish = async (values) => {
     let successMessage = "Vehicle entry added successfully";
@@ -32,14 +15,14 @@ export default function Vehicle() {
         if (!data.success) {
             throw new Error(data.error || errorMessage);
         }
+        message.success(successMessage);
         form.resetFields();
     } catch (error) {
         message.error(error.message || errorMessage);
     } finally {
-        message.success(successMessage);
+      setLoading(false);
     }
 };
-
 
   return (
     <div className="w-[27rem] bg-white p-4 rounded-sm border border-gray-200">
@@ -49,11 +32,11 @@ export default function Vehicle() {
       <div className="flex flex-col gap-3 mt-4">
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Form.Item
-            label="Vehicle Number"
-            name="number"
-            rules={[{ required: true, message: "Please enter vehicle number" }]}
+            label="Vehicle Registration Number"
+            name="regnumber"
+            rules={[{ required: true, message: "Please enter vehicle registration number" }]}
           >
-            <Input placeholder="Enter Vehicle Number" />
+            <Input placeholder="Enter Vehicle Registration Number" />
           </Form.Item>
           <Form.Item
             label="Vehicle Type"
@@ -81,31 +64,20 @@ export default function Vehicle() {
             </Select>
           </Form.Item>
           <Form.Item
-          label="STS Manager"
-          name="stsManager" // Update the name to match the backend
-          rules={[{ required: true, message: "Please select STS Manager" }]}
-        >
-          <Select placeholder="Select STS Manager">
-            {stsManagers.map(manager => (
-              <Select.Option key={manager._id} value={manager.name}>
-                {manager.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-
-
-          <Form.Item
-            label="Date"
-            name="date"
-            rules={[{ required: true, message: "Please select a date" }]}
+            label="Vehicle Fuel Cost (Loaded)"
+            name="loadedfuelcost"
+            rules={[{ required: true, message: "Please enter vehicle fuel cost (loaded)" }]}
           >
-            <DatePicker
-              format="DD MMMM YYYY"
-              defaultValue={moment()}
-              style={{ width: "100%" }}
-            />
+            <Input placeholder="Enter Vehicle Fuel Cost (Loaded)" />
           </Form.Item>
+          <Form.Item
+            label="Vehicle Fuel Cost (Unloaded)"
+            name="unloadedfuelcost"
+            rules={[{ required: true, message: "Please enter vehicle fuel cost (unloaded)" }]}
+          >
+            <Input placeholder="Enter Vehicle Fuel Cost (Unloaded)" />
+          </Form.Item>
+         
           <Form.Item>
             <Button
               type="primary"
