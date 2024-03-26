@@ -17,6 +17,9 @@ export default function Vehicle() {
         }
         message.success(successMessage);
         form.resetFields();
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
     } catch (error) {
         message.error(error.message || errorMessage);
     } finally {
@@ -25,7 +28,7 @@ export default function Vehicle() {
 };
 
   return (
-    <div className="w-[27rem] bg-white p-4 rounded-sm border border-gray-200">
+    <div className="w-[25rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="w-full text-2xl text-center text-gray-700">
         Add Vehicle Entry
       </strong>

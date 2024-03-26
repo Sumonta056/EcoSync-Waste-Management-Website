@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FaTruckField } from "react-icons/fa6";
 
 export default function LandfillHistory() {
   const [landfillData, setLandfillData] = useState([]);
@@ -39,22 +40,21 @@ export default function LandfillHistory() {
     fetchData();
   }, []);
 
-
   // Render loading state for the first row
   if (loading) {
     return (
       <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-        <strong className="px-4 mx-auto text-2xl text-center text-gray-700">
-          Available Landfill
+        <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-cyan-700">
+          <FaTruckField size={30} /> Available Landfill Sites
         </strong>
         <div className="mt-3 border-gray-200 rounded-sm border-x">
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-              <th>Manager Name</th>
-              <th>Capacity (Tonnes)</th>
-              <th>Operational Timespan</th>
-              <th>GPS Coordinates</th>
+                <th>Manager Name</th>
+                <th>Capacity (Tonnes)</th>
+                <th>Operational Timespan</th>
+                <th>GPS Coordinates</th>
               </tr>
             </thead>
             <tbody>
@@ -78,8 +78,8 @@ export default function LandfillHistory() {
   // Render table with landfill data and STS managers
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-      <strong className="px-4 mx-auto text-2xl text-center text-gray-700">
-        Available Landfill
+      <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-cyan-700">
+        <FaTruckField size={30} /> Available Landfill Sites
       </strong>
       <div className="mt-3 border-gray-200 rounded-sm border-x">
         <table className="w-full text-gray-700">
@@ -92,6 +92,7 @@ export default function LandfillHistory() {
             </tr>
           </thead>
           <tbody>
+
           {landfillData.map((landfill) => {
           const manager = managers.find((manager) => manager._id === landfill.managerId);
           if (!manager) {
@@ -106,16 +107,29 @@ export default function LandfillHistory() {
             );
           }
 
-          // Manager found, render the STS entry with manager details
-          return (
-            <tr key={landfill._id}>
-              <td>{manager.name}</td>
-              <td>{landfill.capacity}</td>
-              <td>{landfill.timespan}</td>
-              <td>{landfill.gpscoords}</td>
-            </tr>
-          );
         })}
+
+            {landfillData.map((landfill) => {
+              const manager = managers.find(
+                (manager) => manager._id === landfill.managerId
+              );
+              return (
+                <tr key={landfill._id}>
+                  <td>{manager.name}</td>
+                  <td>
+                    <span className="px-2 py-1 capitalize rounded-md bg-cyan-100 text-cyan-600 text-md">
+                      {landfill.capacity}
+                    </span>
+                  </td>
+                  <td>{landfill.timespan}</td>
+                  <td>
+                  <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
+                      {landfill.gpscoords}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

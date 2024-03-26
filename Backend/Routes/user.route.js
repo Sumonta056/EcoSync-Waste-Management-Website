@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcryptjs = require("bcryptjs");
-
 const User = require("../Models/User.model.js");
 
 router.get("/", async (req, res, next) => {
@@ -45,17 +44,23 @@ router.post("/", async (req, res, next) => {
 });
 
 // GET a specific user's details
+const mongoose = require('mongoose');
+
 router.get("/:userId", async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const userId = req.params.userId;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).send("Invalid user ID");
+    }
+    const user = await User.findById(userId);
     if (!user) {
-      return res.send("User not found");
+      return res.status(404).send("User not found");
     }
     console.log(user);
     res.send(user);
   } catch (err) {
     console.log(err.message);
-    res.send("Internal Server Error");
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -65,12 +70,34 @@ router.put("/:userId", async (req, res, next) => {
     if (!user) {
       return res.send("User not found");
     }
-
+    console.log(user);
     user.set({
-      email: req.body.email || user.email,
-      name: req.body.name || user.name,
-      phone: req.body.phone || user.phone,
-      role: req.body.role || user.role, // Ensure role is updated correctly
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+    });
+    //console.log("1st:" user);
+    const updatedUser = await user.save();
+    console.log(updatedUser);
+    res.send(updatedUser);
+  } catch (err) {
+    console.log(err.message);
+    res.send("Internal Server Error");
+  }
+});
+
+router.put("/:userId/role", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.send("User not found");
+    }
+    console.log(user);
+    user.set({
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+      role: req.body.role
     });
     //console.log("1st:" user);
     const updatedUser = await user.save();

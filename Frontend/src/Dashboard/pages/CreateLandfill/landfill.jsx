@@ -1,6 +1,7 @@
 import { Form, Input, Select, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { FaLandmarkDome } from "react-icons/fa6";
 
 export default function Landfill() {
   const [form] = Form.useForm();
@@ -10,7 +11,9 @@ export default function Landfill() {
   useEffect(() => {
     const fetchManagers = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/user/landfill-manager");
+        const { data } = await axios.get(
+          "http://localhost:3000/user/landfill-manager"
+        );
         setManagers(data);
       } catch (error) {
         console.error(error);
@@ -20,12 +23,12 @@ export default function Landfill() {
     fetchManagers();
   }, []);
 
-
   const onFinish = async (values) => {
     let successMessage = "Landfill entry added successfully";
     let errorMessage = "Failed to add landfill entry";
-  
+
     try {
+
       // Concatenate start and end time into a single timespan
       const startTime = values.timespan.startTime;
       const endTime = values.timespan.endTime;
@@ -35,13 +38,14 @@ export default function Landfill() {
       const newData = { ...values, timespan };
   
       const { data } = await axios.post("http://localhost:3000/landfill", newData);
+
       if (data.error) {
         throw new Error(data.error);
       }
       message.success(successMessage);
       setTimeout(() => {
         window.location.reload();
-      }, 1000);
+      }, 600);
       form.resetFields();
     } catch (error) {
       message.error(error.message || errorMessage);
@@ -49,13 +53,12 @@ export default function Landfill() {
       setLoading(false);
     }
   };
-  
 
 return (
   <div className="w-[27rem] bg-white p-4 rounded-sm border border-gray-200">
-    <strong className="w-full text-2xl text-center text-gray-700">
-      Create Landfill
-    </strong>
+    <strong className="flex w-full gap-2 text-2xl text-center text-lime-700">
+        <FaLandmarkDome /> New Landfill Entry
+      </strong>
     <div className="flex flex-col gap-3 mt-4">
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item
@@ -131,7 +134,8 @@ return (
         >
           <Input placeholder="Enter GPS Coordinates" />
         </Form.Item>
-        <Form.Item>
+
+          <Form.Item>
             <Button
               type="primary"
               htmlType="submit"
@@ -147,9 +151,8 @@ return (
               Submit
             </Button>
           </Form.Item>
-      </Form>
+        </Form>
+      </div>
     </div>
-  </div>
-);
-
+  );
 }
