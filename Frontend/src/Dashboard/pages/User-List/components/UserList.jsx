@@ -6,10 +6,11 @@ import { FaEdit } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { IoMdPersonAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import ShowMoreModal from "./ShowMoreModal";
+import ShowMoreModal from "./ShowMoreModal.jsx";
 import DeleteModal from "./DeleteModal";
-import UpdateModal from "../../UpdateProfile/index.jsx";
-import PermissionModal from "../../UpdateProfile/permission.jsx";
+import EditUserForm from "./EditModal.jsx"; // Import the component at the top of your file
+import Permission from "./Permission.jsx";
+import { Modal } from "antd";
 
 export default function RecentOrders() {
   const [userData, setUserData] = useState([]);
@@ -20,8 +21,6 @@ export default function RecentOrders() {
   const [selectedUserInfo, setSelectedUserInfo] = useState(null);
   const [showMoreModal, setShowMoreModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [updateModal, setUpdateModal] = useState(false);
-  const [permissionModal, setPermissionModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -38,7 +37,6 @@ export default function RecentOrders() {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
-
   const navigate = useNavigate();
 
   const handleUser = async (event) => {
@@ -57,38 +55,14 @@ export default function RecentOrders() {
       console.error("Error deleting user:", error);
     }
   };
-  const permissionUser = async (updatedUser) => {
-    console.log("function:" + JSON.stringify(updatedUser, null, 2));
-    try {
-      console.log("Permission access given to user with ID:", updatedUser._id);
-      console.log("function2:" + JSON.stringify(updatedUser, null, 2));
-      await axios.put(`http://localhost:3000/user/${updatedUser._id}`, updatedUser);
-      const response = await axios.get("http://localhost:3000/user");
-      setUserData(response.data);
-      setPermissionModal(false); // Close the delete modal after deleting the user
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
-  };
-  
-  const updateUser = async (userId) => {
-    try {
-      console.log("Updating user with ID:", userId);
-      await axios.put(`http://localhost:3000/user/${userId}`);
-      const response = await axios.get("http://localhost:3000/user");
-      window.location.reload();
-      setUserData(response.data);
-      setUpdateModal(false); // Close the delete modal after deleting the user
-    } catch (error) {
-      console.error("Error updating user:", error);
-    }
-  };
-  
-  
+
   const openShowMoreModal = (user) => {
+    console.log(selectedUserInfo);
     console.log("Opening Show More modal for user:", user);
     setSelectedUserId(user._id); // Update selectedUserId with the correct user ID
     setSelectedUserInfo(user); // Update selectedUserInfo with the correct user information
+    console.log(selectedUserInfo);
+    console.log(selectedUserId);
     setShowMoreModal(true);
   };
 
@@ -98,24 +72,32 @@ export default function RecentOrders() {
     setSelectedUserInfo(user); // Ensure user object contains necessary properties
     setDeleteModal(true);
   };
-  const openUpdateModal = (user) => {
-    console.log("Opening Update modal for user:", user);
+
+  const [editModal, setEditModal] = useState(false);
+
+  // Modify the openEditModal function to open the edit modal
+  const openEditModal = (user) => {
+    console.log("Opening Edit modal for user:", user);
     setSelectedUserId(user._id); // Make sure user._id exists
     setSelectedUserInfo(user); // Ensure user object contains necessary properties
-    setUpdateModal(true);
+    setEditModal(true); // Open the edit modal
   };
-  const openPermissionModal = (user) => {
-    console.log("Opening Permission modal for user:", user);
-    setSelectedUserId(user._id); // Set the selectedUserId
-    setSelectedUserInfo(user); // Set the selectedUserInfo with the user object
-    setPermissionModal(true);
-  }; 
+
+  const [perrModal, setPerModal] = useState(false);
+
+  // Modify the openEditModal function to open the edit modal
+  const openPerModal = (user) => {
+    console.log("Opening Edit modal for user:", user);
+    setSelectedUserId(user._id); // Make sure user._id exists
+    setSelectedUserInfo(user); // Ensure user object contains necessary properties
+    setPerModal(true); // Open the edit modal
+  };
 
   // Function to close modals
   const closeShowMoreModal = () => setShowMoreModal(false);
   const closeDeleteModal = () => setDeleteModal(false);
-  const closeUpdateModal = () => setUpdateModal(false);
-  const closePermissionModal = () => setPermissionModal(false);
+  const closeEditModal = () => setEditModal(false);
+  const closePerModal = () => setPerModal(false);
 
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
@@ -163,14 +145,14 @@ export default function RecentOrders() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => openPermissionModal(user)}
+                      onClick={() => openPerModal(user)}
                       className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                     >
                       Permission
                     </button>
                     <button
                       type="button"
-                      onClick={() => openUpdateModal(user)}
+                      onClick={() => openEditModal(user)}
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     >
                       <FaEdit size={25} />
@@ -214,28 +196,24 @@ export default function RecentOrders() {
         user={selectedUserInfo}
       />
 
+      {editModal && (
+        <Modal visible={editModal} onCancel={closeEditModal} footer={null}>
+          <EditUserForm userInfo={selectedUserInfo} />
+        </Modal>
+      )}
+
+      {perrModal && (
+        <Modal visible={perrModal} onCancel={closePerModal} footer={null}>
+          <Permission userInfo={selectedUserInfo} />
+        </Modal>
+      )}
+
       <DeleteModal
         isOpen={deleteModal}
         onClose={closeDeleteModal}
         user={selectedUserInfo}
         onDelete={() => deleteUser(selectedUserId)} // Pass selectedUserId instead of selectedUserInfo.id
       />
-     <UpdateModal
-      isOpen={updateModal}
-      onClose={closeUpdateModal}
-      user={selectedUserInfo}
-      onUpdate={() => updateUser(selectedUserId)} 
-    />
-   <PermissionModal
-  isOpen={permissionModal}
-  onClose={closePermissionModal}
-  user={selectedUserInfo}
-  onPermission={() => permissionUser({ ...updateUser, _id: selectedUserId })}
-/>
-
-
-
-
     </div>
   );
 }

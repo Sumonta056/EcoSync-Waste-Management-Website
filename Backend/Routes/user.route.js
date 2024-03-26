@@ -50,12 +50,34 @@ router.put("/:userId", async (req, res, next) => {
     if (!user) {
       return res.send("User not found");
     }
-
+    console.log(user);
     user.set({
-      email: req.body.email || user.email,
-      name: req.body.name || user.name,
-      phone: req.body.phone || user.phone,
-      role: req.body.role || user.role, // Ensure role is updated correctly
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+    });
+    //console.log("1st:" user);
+    const updatedUser = await user.save();
+    console.log(updatedUser);
+    res.send(updatedUser);
+  } catch (err) {
+    console.log(err.message);
+    res.send("Internal Server Error");
+  }
+});
+
+router.put("/:userId/role", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.send("User not found");
+    }
+    console.log(user);
+    user.set({
+      email: req.body.email,
+      name: req.body.name,
+      phone: req.body.phone,
+      role: req.body.role
     });
     //console.log("1st:" user);
     const updatedUser = await user.save();
