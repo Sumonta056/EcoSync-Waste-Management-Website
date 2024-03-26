@@ -26,7 +26,15 @@ export default function Landfill() {
     let errorMessage = "Failed to add landfill entry";
   
     try {
-      const { data } = await axios.post("http://localhost:3000/landfill", values);
+      // Concatenate start and end time into a single timespan
+      const startTime = values.timespan.startTime;
+      const endTime = values.timespan.endTime;
+      const timespan = `${startTime} - ${endTime}`;
+      
+      // Create a new object with timespan concatenated
+      const newData = { ...values, timespan };
+  
+      const { data } = await axios.post("http://localhost:3000/landfill", newData);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -71,26 +79,51 @@ return (
           <Input placeholder="Enter Capacity" />
         </Form.Item>
         <Form.Item
-  label="Operational Timespan"
-  name="timespan"
-  rules={[
-    { 
-      required: true, 
-      message: 'Please enter operational timespan in the format HH:mm - HH:mm' 
-    },
-    {
-      pattern: /^(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]\s+-\s+(?:0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/,
-      message: 'Please enter timespan in the format HH:mm - HH:mm',
-    }
-  ]}
->
-  <Input
-    placeholder="Enter timespan (e.g., 08:00 - 16:00)"
-    name="timespan"
-  />
-</Form.Item>
+            label="Operational Timespan"
+            style={{ marginBottom: 10 }} 
+          >
+            <Form.Item
+              name="timespan"
+              noStyle
+              rules={[
+                { 
+                  required: true, 
+                  message: 'Please enter operational timespan' 
+                }, 
 
-
+              ]}
+            >
+              <Input.Group compact style={{ display: 'inline-block' }}>
+                <Form.Item
+                  name={['timespan', 'startTime']}
+                  noStyle
+                  rules={[
+                    {
+                      pattern: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
+                      message: 'Please enter a valid start time in HH:mm format'
+                    }
+                  ]}
+                  style={{ marginRight: '8px', marginBottom: '8px' }}
+                >
+                  <Input placeholder="Start Time" style={{ width: '42%' }} />
+                </Form.Item>
+                <span style={{ padding: '0 8px', marginBottom: '8px' }}>to</span>
+                <Form.Item
+                  name={['timespan', 'endTime']}
+                  noStyle
+                  rules={[
+                    {
+                      pattern: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/,
+                      message: 'Please enter a valid end time in HH:mm format'
+                    }
+                  ]}
+                  style={{ marginRight: '8px', marginBottom: '8px' }}
+                >
+                  <Input placeholder="End Time" style={{ width: '42%' }} />
+                </Form.Item>
+              </Input.Group>
+            </Form.Item>
+          </Form.Item>
         <Form.Item
           label="GPS Coordinates"
           name="gpscoords"

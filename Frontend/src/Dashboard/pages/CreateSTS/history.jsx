@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function STSHistory() {
@@ -15,13 +15,13 @@ export default function STSHistory() {
           axios.get("http://localhost:3000/user/sts-manager"),
         ]);
 
-        // Ensure that response data is an array
         if (Array.isArray(stsResponse.data)) {
           setStsData(stsResponse.data);
         } else {
           console.error("Received sts data is not an array.");
           setError("Received sts data is not an array.");
         }
+
         if (Array.isArray(managersResponse.data)) {
           setManagers(managersResponse.data);
         } else {
@@ -38,7 +38,6 @@ export default function STSHistory() {
 
     fetchData();
   }, []);
-
 
   // Render loading state for the first row
   if (loading) {
@@ -92,17 +91,31 @@ export default function STSHistory() {
             </tr>
           </thead>
           <tbody>
-            {stsData.map((sts) => {
-              const manager = managers.find((manager) => manager._id === sts.managerId);
-              return (
-                <tr key={sts._id}>
-                  <td>{sts.wardno}</td>
-                  <td>{manager.name}</td>
-                  <td>{sts.capacity}</td>
-                  <td>{sts.gpscoords}</td>
-                </tr>
-              );
-            })}
+          {stsData.map((sts) => {
+          const manager = managers.find((manager) => manager._id === sts.managerId);
+          if (!manager) {
+            // Manager not found, render a placeholder or handle the situation accordingly
+            return (
+              <tr key={sts._id}>
+                <td>{sts.wardno}</td>
+                <td>Loading...</td> {/* Render a placeholder */}
+                <td>{sts.capacity}</td>
+                <td>{sts.gpscoords}</td>
+              </tr>
+            );
+          }
+
+          // Manager found, render the STS entry with manager details
+          return (
+            <tr key={sts._id}>
+              <td>{sts.wardno}</td>
+              <td>{manager.name}</td>
+              <td>{sts.capacity}</td>
+              <td>{sts.gpscoords}</td>
+            </tr>
+          );
+        })}
+
           </tbody>
         </table>
       </div>

@@ -92,17 +92,30 @@ export default function LandfillHistory() {
             </tr>
           </thead>
           <tbody>
-            {landfillData.map((landfill) => {
-              const manager = managers.find((manager) => manager._id === landfill.managerId);
-              return (
-                <tr key={landfill._id}>
-                  <td>{manager.name}</td>
-                  <td>{landfill.capacity}</td>
-                  <td>{landfill.timespan}</td>
-                  <td>{landfill.gpscoords}</td>
-                </tr>
-              );
-            })}
+          {landfillData.map((landfill) => {
+          const manager = managers.find((manager) => manager._id === landfill.managerId);
+          if (!manager) {
+            // Manager not found, render a placeholder or handle the situation accordingly
+            return (
+              <tr key={landfill._id}>
+                <td>{landfill.wardno}</td>
+                <td>Loading...</td> {/* Render a placeholder */}
+                <td>{landfill.capacity}</td>
+                <td>{landfill.gpscoords}</td>
+              </tr>
+            );
+          }
+
+          // Manager found, render the STS entry with manager details
+          return (
+            <tr key={landfill._id}>
+              <td>{manager.name}</td>
+              <td>{landfill.capacity}</td>
+              <td>{landfill.timespan}</td>
+              <td>{landfill.gpscoords}</td>
+            </tr>
+          );
+        })}
           </tbody>
         </table>
       </div>
