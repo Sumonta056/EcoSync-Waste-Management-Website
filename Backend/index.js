@@ -39,6 +39,10 @@ app.use("/user", userRouter);
 const roleRouter = require("./Routes/user.route.js");
 app.use("/roles", userRouter);
 
+// prolfe routes
+const profile = require("./Routes/profile.route.js");
+app.use("/profile", profile);
+
 // Vehicle routes
 const vehicleRouter = require("./Routes/vehicle.route.js");
 app.use("/vehicle", vehicleRouter);

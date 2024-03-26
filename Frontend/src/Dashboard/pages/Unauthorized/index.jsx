@@ -7,7 +7,7 @@ function index() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(true);
-    }, 1000);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, []);
@@ -18,7 +18,7 @@ function index() {
 
   return (
     <div className="text-center">
-      <img className="w-50 mx-auto" src={logo} alt="logo" />
+      <img className="mx-auto w-50" src={logo} alt="logo" />
       <h2 className="pb-1 mt-10 mb-12 text-4xl font-semibold">
         You don&apos;t have access to this service !!
       </h2>
