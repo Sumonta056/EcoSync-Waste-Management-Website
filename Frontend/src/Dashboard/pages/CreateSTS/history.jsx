@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function STSHistory() {
@@ -50,10 +50,10 @@ export default function STSHistory() {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-              <th>Ward No</th>
-              <th>Manager Name</th>
-              <th>Capacity (Tonnes)</th>
-              <th>GPS Coordinates</th>
+                <th>Ward No</th>
+                <th>Manager Name</th>
+                <th>Capacity (Tonnes)</th>
+                <th>GPS Coordinates</th>
               </tr>
             </thead>
             <tbody>
@@ -91,31 +91,41 @@ export default function STSHistory() {
             </tr>
           </thead>
           <tbody>
-          {stsData.map((sts) => {
-          const manager = managers.find((manager) => manager._id === sts.managerId);
-          if (!manager) {
-            // Manager not found, render a placeholder or handle the situation accordingly
-            return (
-              <tr key={sts._id}>
-                <td>{sts.wardno}</td>
-                <td>Loading...</td> {/* Render a placeholder */}
-                <td>{sts.capacity}</td>
-                <td>{sts.gpscoords}</td>
-              </tr>
-            );
-          }
+            {stsData.map((sts) => {
+              const manager = managers.find(
+                (manager) => manager._id === sts.managerId
+              );
+              if (!manager) {
+                // Manager not found, render a placeholder or handle the situation accordingly
+                return (
+                  <tr key={sts._id}>
+                    <td>{sts.wardno}</td>
+                    <td>Loading...</td> {/* Render a placeholder */}
+                    <td>{sts.capacity}</td>
+                    <td>{sts.gpscoords}</td>
+                  </tr>
+                );
+              }
 
-          // Manager found, render the STS entry with manager details
-          return (
-            <tr key={sts._id}>
-              <td>{sts.wardno}</td>
-              <td>{manager.name}</td>
-              <td>{sts.capacity}</td>
-              <td>{sts.gpscoords}</td>
-            </tr>
-          );
-        })}
+              // Manager found, render the STS entry with manager details
+              return (
+                <tr key={sts._id}>
+                  <td>{sts.wardno}</td>
+                  <td>
+                    <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
+                      {manager.name}
+                    </span>
+                  </td>
+                  <td>{sts.capacity}</td>
 
+                  <td>
+                    <span className="px-2 py-1 capitalize rounded-md bg-lime-100 text-lime-600 text-md">
+                      {sts.gpscoords}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

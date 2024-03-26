@@ -138,14 +138,14 @@ export default function RecentOrders() {
             <option value="">Sort By</option>
             <option value="_id">ID</option>
             <option value="name">User Name</option>
-            <option value="role" className="p-4 m-2">
+            <option value="role">
               Role Status
             </option>
           </select>
           <button
             type="button"
             onClick={handleUser}
-            className="gap-2 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
+            className="gap-2 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-md px-5 py-3 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
           >
             <IoMdPersonAdd size={22} />
             Create New User

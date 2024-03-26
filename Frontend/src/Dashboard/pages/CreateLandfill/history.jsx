@@ -92,22 +92,22 @@ export default function LandfillHistory() {
             </tr>
           </thead>
           <tbody>
-
-          {landfillData.map((landfill) => {
-          const manager = managers.find((manager) => manager._id === landfill.managerId);
-          if (!manager) {
-            // Manager not found, render a placeholder or handle the situation accordingly
-            return (
-              <tr key={landfill._id}>
-                <td>{landfill.wardno}</td>
-                <td>Loading...</td> {/* Render a placeholder */}
-                <td>{landfill.capacity}</td>
-                <td>{landfill.gpscoords}</td>
-              </tr>
-            );
-          }
-
-        })}
+            {landfillData.map((landfill) => {
+              const manager = managers.find(
+                (manager) => manager._id === landfill.managerId
+              );
+              if (!manager) {
+                // Manager not found, render a placeholder or handle the situation accordingly
+                return (
+                  <tr key={landfill._id}>
+                    <td>{landfill.wardno}</td>
+                    <td>Loading...</td> {/* Render a placeholder */}
+                    <td>{landfill.capacity}</td>
+                    <td>{landfill.gpscoords}</td>
+                  </tr>
+                );
+              }
+            })}
 
             {landfillData.map((landfill) => {
               const manager = managers.find(
@@ -123,7 +123,7 @@ export default function LandfillHistory() {
                   </td>
                   <td>{landfill.timespan}</td>
                   <td>
-                  <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
+                    <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
                       {landfill.gpscoords}
                     </span>
                   </td>
