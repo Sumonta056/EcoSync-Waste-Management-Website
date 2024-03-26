@@ -12,7 +12,14 @@ router.get("/", async (req, res, next) => {
     console.log(err.message);
   }
 });
-
+router.get("/sts-manager", async (req, res, next) => {
+  try {
+    const result = await User.find({ role: 'STS-MANAGER' });
+    res.send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 router.post("/", async (req, res, next) => {
   try {
     let user = req.body;
