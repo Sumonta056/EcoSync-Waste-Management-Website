@@ -21,6 +21,28 @@ export default function RecentOrders() {
   const [selectedUserInfo, setSelectedUserInfo] = useState(null);
   const [showMoreModal, setShowMoreModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [sortDirection, setSortDirection] = useState({
+    _id: "asc",
+    name: "asc",
+    role: "asc",
+  });
+  const handleSort = (field) => {
+    const newSortDirection = { ...sortDirection };
+    newSortDirection[field] = sortDirection[field] === "asc" ? "desc" : "asc";
+    setSortDirection(newSortDirection);
+
+    const sortedUsers = [...userData].sort((a, b) => {
+      if (a[field] < b[field]) {
+        return sortDirection[field] === "asc" ? -1 : 1;
+      }
+      if (a[field] > b[field]) {
+        return sortDirection[field] === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
+    setUserData(sortedUsers);
+  };
 
   useEffect(() => {
     axios
@@ -108,14 +130,27 @@ export default function RecentOrders() {
           <FaRegUser size={30} />
           User Information
         </strong>
-        <button
-          type="button"
-          onClick={handleUser}
-          className="gap-2 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
-        >
-          <IoMdPersonAdd size={22} />
-          Create New User
-        </button>
+        <div className="flex gap-2">
+          <select
+            onChange={(e) => handleSort(e.target.value)}
+            className="px-3 border rounded-lg"
+          >
+            <option value="">Sort By</option>
+            <option value="_id">ID</option>
+            <option value="name">User Name</option>
+            <option value="role" className="p-4 m-2">
+              Role Status
+            </option>
+          </select>
+          <button
+            type="button"
+            onClick={handleUser}
+            className="gap-2 text-gray-900 bg-[#F7BE38] hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium rounded-lg text-md px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
+          >
+            <IoMdPersonAdd size={22} />
+            Create New User
+          </button>
+        </div>
       </div>
 
       <div className="mt-3 border-gray-200 rounded-sm border-x">
