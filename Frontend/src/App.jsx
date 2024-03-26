@@ -11,6 +11,7 @@ import Profile from "./Dashboard/pages/Profile/index.jsx";
 import UpdateProfile from "./Dashboard/pages/UpdateProfile/index.jsx";
 import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFiill from "./Dashboard/pages/Landfill-Entry/index.jsx";
+import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
@@ -98,6 +99,12 @@ function App() {
           <Route
             index
             element={userRole === "SYSTEM ADMIN" ? <CreateSTS /> : <NOACCESS />}
+          />
+        </Route>
+        <Route path="/createLandfill" element={<Layout />}>
+          <Route
+            index
+            element={userRole === "SYSTEM ADMIN" ? <CreateLandfill /> : <NOACCESS />}
           />
         </Route>
 

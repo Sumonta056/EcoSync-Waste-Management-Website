@@ -50,7 +50,7 @@ export default function ExampleV2() {
         const token = response.data.access_token; // Access the token from the response data
         localStorage.setItem("access_token", token); // Store the token in local storage
         setModalTitle("UserLogin Success !!");
-        setModalText("Congratulations, User Created Successfully !");
+        setModalText("Congratulations, User Logged in Successfully !");
         setModalVisible(true);
         setOpen(true);
       } else {

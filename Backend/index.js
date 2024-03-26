@@ -47,6 +47,14 @@ app.use("/profile", profile);
 const vehicleRouter = require("./Routes/vehicle.route.js");
 app.use("/vehicle", vehicleRouter);
 
+// STS routes
+const stsRouter = require("./Routes/sts.route.js");
+app.use("/sts", stsRouter);
+
+// Landfill routes
+const landfillRouter = require("./Routes/landfill.route.js");
+app.use("/landfill", landfillRouter);
+
 // Waste transfer from STS to Landfill routes
 const transferRouter = require("./Routes/transfer.route.js");
 app.use("/transfer", transferRouter);

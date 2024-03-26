@@ -56,6 +56,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <SiSecurityscorecard />,
   },
   {
+    key: "createLandfill",
+    label: "Create Landfill",
+    path: "/createLandfill",
+    icon: <MdCreateNewFolder />,
+  },
+  {
     key: "landfill",
     label: "Landfill Entry",
     path: "/landfill",
