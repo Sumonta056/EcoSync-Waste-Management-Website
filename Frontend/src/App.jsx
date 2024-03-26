@@ -76,7 +76,7 @@ function App() {
           />
         </Route>
         {/* Only Admin can access */}
-        <Route path="/createUser" element={<Layout />}>
+        <Route path="/createUser">
           <Route
             index
             element={

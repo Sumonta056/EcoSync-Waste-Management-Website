@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { Modal } from "antd";
+import { PiAlignCenterHorizontalFill } from "react-icons/pi";
+import { MdCancel } from "react-icons/md";
 
 function CreateUser() {
   const navigate = useNavigate();
@@ -26,6 +28,10 @@ function CreateUser() {
   const [modalTitle, setModalTitle] = useState("Content of the modal");
   const [modalVisible, setModalVisible] = useState(false);
 
+  const cancel = () => {
+    navigate("/userList");
+  }
+
   const handleOk2 = () => {
     setModalText("The modal will be closed after two seconds");
     setConfirmLoading(true);
@@ -34,7 +40,7 @@ function CreateUser() {
       setConfirmLoading(false);
       if (modalVisible) {
         setModalVisible(false);
-        navigate("/dashboard");
+        navigate("/userList");
       }
     }, 2000);
   };
@@ -170,12 +176,21 @@ function CreateUser() {
                 className="w-full p-4 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
               />
             </div>
-            <button
-              className="w-full p-4 mt-3 mb-2 text-white bg-black rounded-lg hover:bg-cyan-400 hover:text-black hover:border hover:border-cyan-500"
-              onClick={handleUser}
-            >
-              Submit
-            </button>
+            <div className="flex gap-3">
+              <button
+                className="flex justify-center w-full gap-2 p-4 mt-3 mb-2 text-lg text-white bg-black rounded-lg gap hover:bg-orange-400 hover:text-black hover:border hover:border-orange-500"
+                onClick={handleUser}
+              >
+                <PiAlignCenterHorizontalFill size={28} />
+                Submit
+              </button>
+              <button
+                className="flex justify-center w-full gap-2 p-4 mt-3 mb-2 text-lg text-white bg-black rounded-lg gap hover:bg-red-400 hover:text-black hover:border hover:border-red-500"
+                onClick={cancel}
+              >
+                <MdCancel size={28} /> Cancel
+              </button>
+            </div>
           </div>
 
           <div className="relative w-6/12">
