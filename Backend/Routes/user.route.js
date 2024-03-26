@@ -44,7 +44,6 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
-// PUT method for updating a user's details (restricted to own details or System Admin access)
 router.put("/:userId", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);
@@ -52,21 +51,22 @@ router.put("/:userId", async (req, res, next) => {
       return res.send("User not found");
     }
 
-    // Update user's details, excluding the password field
     user.set({
-      email: req.body.email,
-      name: req.body.name,
-      phone: req.body.phone,
-      role: req.body.role,
+      email: req.body.email || user.email,
+      name: req.body.name || user.name,
+      phone: req.body.phone || user.phone,
+      role: req.body.role || user.role, // Ensure role is updated correctly
     });
-
+    //console.log("1st:" user);
     const updatedUser = await user.save();
+    console.log(updatedUser);
     res.send(updatedUser);
   } catch (err) {
     console.log(err.message);
     res.send("Internal Server Error");
   }
 });
+
 
 // DELETE method for deleting a user (System Admin access)
 router.delete("/:userId", async (req, res, next) => {

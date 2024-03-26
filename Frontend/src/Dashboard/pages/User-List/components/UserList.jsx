@@ -57,30 +57,34 @@ export default function RecentOrders() {
       console.error("Error deleting user:", error);
     }
   };
+  const permissionUser = async (updatedUser) => {
+    console.log("function:" + JSON.stringify(updatedUser, null, 2));
+    try {
+      console.log("Permission access given to user with ID:", updatedUser._id);
+      console.log("function2:" + JSON.stringify(updatedUser, null, 2));
+      await axios.put(`http://localhost:3000/user/${updatedUser._id}`, updatedUser);
+      const response = await axios.get("http://localhost:3000/user");
+      setUserData(response.data);
+      setPermissionModal(false); // Close the delete modal after deleting the user
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
+  };
+  
   const updateUser = async (userId) => {
     try {
       console.log("Updating user with ID:", userId);
       await axios.put(`http://localhost:3000/user/${userId}`);
       const response = await axios.get("http://localhost:3000/user");
+      window.location.reload();
       setUserData(response.data);
       setUpdateModal(false); // Close the delete modal after deleting the user
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
-
-  const permissionUser = async (userId) => {
-    try {
-      console.log("Updating permission of user with ID:", userId);
-      await axios.put(`http://localhost:3000/user/${userId}`);
-      const response = await axios.get("http://localhost:3000/user");
-      setUserData(response.data);
-      setPermissionModal(false); 
-    } catch (error) {
-      console.error("Error updating permission:", error);
-    }
-  };
-
+  
+  
   const openShowMoreModal = (user) => {
     console.log("Opening Show More modal for user:", user);
     setSelectedUserId(user._id); // Update selectedUserId with the correct user ID
@@ -102,10 +106,10 @@ export default function RecentOrders() {
   };
   const openPermissionModal = (user) => {
     console.log("Opening Permission modal for user:", user);
-    setSelectedUserId(user._id); // Make sure user._id exists
-    setSelectedUserInfo(user); // Ensure user object contains necessary properties
+    setSelectedUserId(user._id); // Set the selectedUserId
+    setSelectedUserInfo(user); // Set the selectedUserInfo with the user object
     setPermissionModal(true);
-  };
+  }; 
 
   // Function to close modals
   const closeShowMoreModal = () => setShowMoreModal(false);
@@ -222,12 +226,16 @@ export default function RecentOrders() {
       user={selectedUserInfo}
       onUpdate={() => updateUser(selectedUserId)} 
     />
-    <PermissionModal
-      isOpen={permissionModal}
-      onClose={closePermissionModal}
-      user={selectedUserInfo}
-      onPermission={() => permissionUser(selectedUserId)}  // Pass the updateUser function directly
-    />
+   <PermissionModal
+  isOpen={permissionModal}
+  onClose={closePermissionModal}
+  user={selectedUserInfo}
+  onPermission={() => permissionUser({ ...updateUser, _id: selectedUserId })}
+/>
+
+
+
+
     </div>
   );
 }

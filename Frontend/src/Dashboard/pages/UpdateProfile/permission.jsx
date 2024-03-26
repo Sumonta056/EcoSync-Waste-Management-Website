@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PermissionModal = ({ isOpen, onClose, user, onUpdate }) => {
+const PermissionModal = ({ isOpen, onClose, user, onPermission}) => {
   if (!isOpen || !user) return null;
 
   const [updatedUser, setUpdatedUser] = useState({ ...user });
@@ -10,8 +10,14 @@ const PermissionModal = ({ isOpen, onClose, user, onUpdate }) => {
     setUpdatedUser((prevUser) => ({
       ...prevUser,
       [name]: value,
+      
     }));
+    console.log(name, value);
   };
+  
+
+  console.log("component:" + updatedUser);
+  
   
   return (
     <>
@@ -65,11 +71,18 @@ const PermissionModal = ({ isOpen, onClose, user, onUpdate }) => {
           </div>
           <div className="flex justify-center gap-4">
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-            onClick={() => onPermission(user._id)}
-          >
-            Update
-          </button>
+    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    onClick={() => {
+      const updatedUserInfo = {
+        ...updatedUser,
+        role: updatedUser.role,
+      };
+      onPermission(updatedUserInfo);
+    }}
+  >
+    Update
+  </button>
+
           <button
             className="bg-white text-blue-500 border border-gray-300 px-4 py-2 rounded hover:bg-gray-100"
             onClick={onClose}
@@ -85,6 +98,7 @@ const PermissionModal = ({ isOpen, onClose, user, onUpdate }) => {
       
     </>
   );
+  
 };
 
 export default PermissionModal;
