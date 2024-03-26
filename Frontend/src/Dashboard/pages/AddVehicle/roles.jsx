@@ -35,28 +35,28 @@ export function getRoleStatus(status) {
         </span>
       );
 
-    case "5 Ton":
+    case "5 TON":
       return (
         <span className="px-2 py-1 text-pink-600 capitalize bg-pink-100 rounded-md text-md">
           {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
 
-    case "3 Ton":
+    case "3 TON":
       return (
         <span className="px-2 py-1 text-teal-600 capitalize bg-teal-100 rounded-md text-md">
           {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
 
-    case "7 Ton":
+    case "7 TON":
       return (
         <span className="px-2 py-1 capitalize rounded-md bg-cyan-100 text-cyan-600 text-md">
           {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
 
-    case "10 Ton":
+    case "10 TON":
       return (
         <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
           {status.replaceAll("_", " ").toUpperCase()}
