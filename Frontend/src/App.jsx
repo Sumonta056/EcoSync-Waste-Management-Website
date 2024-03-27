@@ -160,6 +160,8 @@ function App() {
             }
           />
         </Route>
+        
+       
 
         <Route path="/user/:userId" element={<UpdateProfile />} />
         <Route path="/transactions" element={<Layout />}>

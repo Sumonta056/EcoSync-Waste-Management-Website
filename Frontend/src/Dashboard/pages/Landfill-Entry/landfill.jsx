@@ -8,6 +8,7 @@ export default function Landfill() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [siteNumbers, setSiteNumbers] = useState([]);
+  const [wardNumbers, setWardNumbers] = useState([]);
   const [landfillManagerName, setLandfillManagerName] = useState("");
   const [landfillManager, setLandfillManager] = useState([]);
   const [vehicleNumbers, setVehicleNumbers] = useState([]);
@@ -44,15 +45,12 @@ export default function Landfill() {
           }))
         );
 
-        const landfillManagerResponse = await axios.get(
-          "http://localhost:3000/user"
-        );
-        setLandfillManager(
-          landfillManagerResponse.data.map((user) => ({
-            id: user._id,
-            name: user.name,
-          }))
-        );
+        const wardNumbersResponse = await axios.get("http://localhost:3000/sts");
+        setWardNumbers(wardNumbersResponse.data.map((sts) => ({ id: sts._id, wardNumber: sts.wardno })));
+
+        const landfillManagerResponse = await axios.get("http://localhost:3000/user");
+        setLandfillManager(landfillManagerResponse.data.map((user) => ({ id: user._id, name: user.name })));
+
 
         const vehicleNumbersResponse = await axios.get(
           "http://localhost:3000/vehicle"
@@ -127,6 +125,19 @@ export default function Landfill() {
               {siteNumbers.map((site) => (
                 <Select.Option key={site._id} value={site.id}>
                   {site.siteNumber}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="STS No"
+            name="wardno"
+            rules={[{ required: true, message: "Please select STS ward no" }]}
+          >
+           <Select placeholder="Select a STS Ward No">
+              {wardNumbers.map((ward) => (
+                <Select.Option key={ward._id} value={ward.id}>
+                  {ward.wardNumber}
                 </Select.Option>
               ))}
             </Select>
