@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getRoleStatus } from "./roles";
+import { BsTruckFrontFill } from "react-icons/bs";
 
 export default function History() {
   const [vehicleData, setVehicleData] = useState([]);
@@ -71,8 +72,8 @@ export default function History() {
   // Render table with vehicle data and STS managers
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-      <strong className="px-4 mx-auto text-2xl text-center text-gray-700">
-        Vehicle History
+      <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-violet-900">
+      <BsTruckFrontFill size={25} /> Vehicle Entry History
       </strong>
       <div className="mt-3 border-gray-200 rounded-sm border-x">
         <table className="w-full text-gray-700">

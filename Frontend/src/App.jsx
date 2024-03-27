@@ -105,7 +105,9 @@ function App() {
         <Route path="/createLandfill" element={<Layout />}>
           <Route
             index
-            element={userRole === "SYSTEM ADMIN" ? <CreateLandfill /> : <NOACCESS />}
+            element={
+              userRole === "SYSTEM ADMIN" ? <CreateLandfill /> : <NOACCESS />
+            }
           />
         </Route>
 
@@ -124,7 +126,7 @@ function App() {
           <Route
             index
             element={
-              userRole === "LANDFILL MANAGER" ? (
+              userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
                 <LandFillEntry />
               ) : (
                 <NOACCESS />

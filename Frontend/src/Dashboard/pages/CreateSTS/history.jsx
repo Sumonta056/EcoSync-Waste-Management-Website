@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { SiSentry } from "react-icons/si";
 
 export default function STSHistory() {
   const [stsData, setStsData] = useState([]);
@@ -43,8 +44,8 @@ export default function STSHistory() {
   if (loading) {
     return (
       <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-        <strong className="px-4 mx-auto text-2xl text-center text-gray-700">
-          Available STS
+        <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-amber-700">
+          <SiSentry /> Available STS Services
         </strong>
         <div className="mt-3 border-gray-200 rounded-sm border-x">
           <table className="w-full text-gray-700">
@@ -77,8 +78,8 @@ export default function STSHistory() {
   // Render table with sts data and STS managers
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-      <strong className="px-4 mx-auto text-2xl text-center text-gray-700">
-        Available STS
+      <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-amber-700">
+        <SiSentry /> Available STS Services
       </strong>
       <div className="mt-3 border-gray-200 rounded-sm border-x">
         <table className="w-full text-gray-700">
