@@ -1,6 +1,7 @@
 import { Form, Input, Select, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { MdAddHome } from "react-icons/md";
 
 export default function STS() {
   const [form] = Form.useForm();
@@ -45,8 +46,8 @@ export default function STS() {
 
   return (
     <div className="w-[27rem] bg-white p-4 rounded-sm border border-gray-200">
-      <strong className="w-full text-2xl text-center text-gray-700">
-        Create STS
+      <strong className="flex w-full gap-2 text-2xl text-center text-neutral-700">
+        <MdAddHome size={30}/> Create STS Service
       </strong>
       <div className="flex flex-col gap-3 mt-4">
         <Form layout="vertical" form={form} onFinish={onFinish}>
