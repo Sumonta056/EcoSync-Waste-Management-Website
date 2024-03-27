@@ -16,11 +16,9 @@ function Home() {
           </h2>
 
           <div className={styles["buttons-reg"]}>
-            <Link to="/registration" className={styles["a"]}>
-              Admin Registraton
-            </Link>
+            
             <Link to="/login" className={styles["a"]}>
-              User Login
+              Login
             </Link>
           </div>
         </div>
