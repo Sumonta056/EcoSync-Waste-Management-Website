@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const LandfillScheme = new Schema({
-  managerId: {
+const DumpScheme = new Schema({
+  landfillmanagername: {
     type: String,
     required: true,
   },
@@ -10,19 +10,27 @@ const LandfillScheme = new Schema({
     type: String,
     required: true,
   },
-  capacity: {
+  vehicleregno: {
     type: String,
     required: true,
   },
-  timespan: {
+  wastevolume: {
     type: String,
     required: true,
   },
-  gpscoords: {
+  arrivaltime: {
+    type: String,
+    required: true,
+  },
+  departuretime: {
+    type: String,
+    required: true,
+  },
+  currentdate: {
     type: String,
     required: true,
   },
 });
 
-const Landfill = mongoose.model("Landfill", LandfillScheme);
-module.exports = Landfill;
+const Dump = mongoose.model("Dump", DumpScheme);
+module.exports = Dump;

@@ -124,7 +124,7 @@ function App() {
           <Route
             index
             element={
-              userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
+              userRole === "LANDFILL MANAGER" ? (
                 <LandFillEntry />
               ) : (
                 <NOACCESS />

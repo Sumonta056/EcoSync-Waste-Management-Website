@@ -51,7 +51,8 @@ export default function LandfillHistory() {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-                <th>Manager Name</th>
+              <th>Landfill Site No</th>
+              <th>Manager Name</th>
                 <th>Capacity (Tonnes)</th>
                 <th>Operational Timespan</th>
                 <th>GPS Coordinates</th>
@@ -85,7 +86,8 @@ export default function LandfillHistory() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-              <th>Manager Name</th>
+            <th>Landfill Site No</th>
+            <th>Manager Name</th>
               <th>Capacity (Tonnes)</th>
               <th>Operational Timespan</th>
               <th>GPS Coordinates</th>
@@ -100,7 +102,7 @@ export default function LandfillHistory() {
                 // Manager not found, render a placeholder or handle the situation accordingly
                 return (
                   <tr key={landfill._id}>
-                    <td>{landfill.wardno}</td>
+                    <td>{landfill.siteno}</td>
                     <td>Loading...</td> {/* Render a placeholder */}
                     <td>{landfill.capacity}</td>
                     <td>{landfill.gpscoords}</td>
@@ -115,6 +117,7 @@ export default function LandfillHistory() {
               );
               return (
                 <tr key={landfill._id}>
+                  <td>{landfill.siteno}</td>
                   <td>{manager.name}</td>
                   <td>
                     <span className="px-2 py-1 capitalize rounded-md bg-cyan-100 text-cyan-600 text-md">

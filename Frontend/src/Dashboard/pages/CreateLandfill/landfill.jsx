@@ -20,6 +20,8 @@ export default function Landfill() {
       }
     };
 
+    
+
     fetchManagers();
   }, []);
 
@@ -61,7 +63,24 @@ return (
       </strong>
     <div className="flex flex-col gap-3 mt-4">
       <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
+      <Form.Item
+  label="Landfill Site No"
+  name="siteno" 
+  rules={[
+    { 
+      required: true, 
+      message: "Please enter landfill site number" 
+    },
+    {
+      pattern: /^[0-9]{1,2}$/,
+      message: 'Landfill Site No is not valid'
+    }
+  ]}
+>
+  <Input placeholder="Enter Landfill Site No" />
+</Form.Item>
+
+      <Form.Item
         label="Manager Name"
         name="managerId" 
         rules={[{ required: true, message: "Please select manager name" }]}

@@ -103,7 +103,7 @@ export default function RoleBasedPermission() {
             </Select>
           </Form.Item>
           <Form.Item label="Role ID" name="roleId">
-            <Input placeholder="Choose a Role name" disabled />
+            <Input placeholder="Choose a Role name" readOnly />
           </Form.Item>
           <Form.Item
             label="Permissions Name"
