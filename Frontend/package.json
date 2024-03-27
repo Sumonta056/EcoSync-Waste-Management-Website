@@ -12,11 +12,15 @@
   "dependencies": {
     "@headlessui/react": "^1.6.4",
     "@material-tailwind/react": "^2.1.9",
+    "@react-pdf/font": "^2.4.4",
+    "@react-pdf/renderer": "^3.4.2",
     "antd": "^5.15.2",
     "axios": "^1.6.8",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
+    "html-to-image": "^1.11.11",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.1",
     "jsrsasign": "^11.1.0",
     "jwt-decode": "^4.0.0",
     "keep-react": "^1.2.0",
@@ -31,7 +35,8 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "recharts": "^2.1.10",
-    "tw-elements-react": "^1.0.0-alpha2"
+    "tw-elements-react": "^1.0.0-alpha2",
+    "uid": "^2.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

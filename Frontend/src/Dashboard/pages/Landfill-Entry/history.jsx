@@ -6,73 +6,77 @@ export default function LandfillHistory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [managers, setManagers] = useState([]);
-  const [sites, setSites] = useState([]);
   const [vehicles, setVehicles] = useState([]);
- // const[transfers, setTransfers] = useState([]);
-  
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const [managerResponse, siteResponse, dumpResponse, vehiclesResponse] = await Promise.all([
-        axios.get("http://localhost:3000/user"),
-        axios.get("http://localhost:3000/landfill"),
-        axios.get("http://localhost:3000/dump"),
-        axios.get("http://localhost:3000/vehicle"),
-      ]);
+  const [dumps, setDumps] = useState([]);
+  const [stsData, setStsData] = useState([]);
+  const [siteData, setSiteData] = useState([]);
 
-      if (Array.isArray(managerResponse.data)) {
-        setManagers(managerResponse.data);
-      } else {
-        console.error("Received manager data is not an array.");
-        setError("Received manager data is not an array.");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [managerResponse, dumpResponse, vehicleResponse, stsResponse, siteResponse] = await Promise.all([
+          axios.get("http://localhost:3000/user"),
+          axios.get("http://localhost:3000/dump"),
+          axios.get("http://localhost:3000/vehicle"),
+          axios.get("http://localhost:3000/sts"),
+          axios.get("http://localhost:3000/landfill"),
+        ]);
+
+        if (Array.isArray(managerResponse.data)) {
+          setManagers(managerResponse.data);
+        } else {
+          console.error("Received manager data is not an array.");
+          setError("Received manager data is not an array.");
+        }
+        if (Array.isArray(dumpResponse.data)) {
+          setDumps(dumpResponse.data);
+        } else {
+          console.error("Received dump data is not an array.");
+          setError("Received dump data is not an array.");
+        }
+        if (Array.isArray(vehicleResponse.data)) {
+          setVehicles(vehicleResponse.data);
+        } else {
+          console.error("Received vehicles data is not an array.");
+          setError("Received vehicles data is not an array.");
+        }
+        if (Array.isArray(stsResponse.data)) {
+          setStsData(stsResponse.data);
+        } else {
+          console.error("Received STS data is not an array.");
+          setError("Received STS data is not an array.");
+        }
+        if (Array.isArray(siteResponse.data)) {
+          setSiteData(siteResponse.data);
+        } else {
+          console.error("Received site data is not an array.");
+          setError("Received site data is not an array.");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Error fetching data. Please try again later.");
+      } finally {
+        setLoading(false);
       }
-      if (Array.isArray(siteResponse.data)) {
-        setSites(siteResponse.data);
-        console.log(siteResponse);
-      } else {
-        console.error("Received landfill data is not an array.");
-        setError("Received landfill data is not an array.");
-      }
-      if (Array.isArray(dumpResponse.data)) {
-        setLandfillData(dumpResponse.data);
-        console.log(dumpResponse);
-      } else {
-        console.error("Received dump data is not an array.");
-        setError("Received dump data is not an array.");
-      }
-      if (Array.isArray(vehiclesResponse.data)) {
-        setVehicles(vehiclesResponse.data);
-      } else {
-        console.error("Received vehicles data is not an array.");
-        setError("Received vehicles data is not an array.");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setError("Error fetching data. Please try again later.");
-    } finally {
-      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (dumps.length > 0 && stsData.length > 0 && siteData.length > 0) {
+      const mappedLandfillData = dumps.map(dump => {
+        const correspondingSts = stsData.find(sts => sts._id === dump.wardno);
+        const correspondingSite = siteData.find(site => site._id === dump.siteno);
+        return {
+          ...dump,
+          correspondingSts: correspondingSts ? correspondingSts.wardno : 'N/A',
+          correspondingSite: correspondingSite.siteno
+        };
+      });
+      setLandfillData(mappedLandfillData);
     }
-  };
-
-  fetchData();
-}, []);
-
-// Update stsData when wards state changes
-useEffect(() => {
-  if (sites.length > 0) {
-    const mappedDumpData = landfillData.map(dump => {
-      const correspondingSite = sites.find(site => site._id === dump.siteno);
-      return {
-        ...dump,
-        correspondingSite: correspondingSite.siteno
-      };
-    });
-    setLandfillData(mappedDumpData);
-  }
-}, [sites, landfillData]);
-
-
-// Render loading state, error, or table with sts data and STS managers...
+  }, [dumps, stsData, siteData]);
 
 
   // Render loading state for the first row
@@ -86,7 +90,8 @@ useEffect(() => {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-                <th>Landfill Site ID</th>
+              <th>Landfill Site No</th>
+                <th>STS No</th>
                 <th>Manager Name</th>
                 <th>Truck No</th>
                 <th>Waste Volume</th> 
@@ -124,7 +129,8 @@ useEffect(() => {
           <thead>
             <tr>
             <tr>
-                <th>Lanfill Site ID</th>
+                <th>Landfill Site No</th>
+                <th>STS No</th>
                 <th>Manager Name</th>
                 <th>Truck No</th>
                 <th>Waste Volume</th> 
@@ -147,6 +153,7 @@ useEffect(() => {
                 return (
                   <tr key={landfill._id}>
                     <td>{landfill.correspondingSite}</td>
+                    <td>{landfill.correspondingSts}</td>
                     <td>Loading...</td> 
                     <td>{vehicle.regnumber}</td>
                     <td>{landfill.wastevolume}</td> 
@@ -161,6 +168,7 @@ useEffect(() => {
               return (
                 <tr key={landfill._id}>
                     <td>{landfill.correspondingSite}</td>
+                    <td>{landfill.correspondingSts}</td>
                     <td>{manager.name}</td> 
                     <td>{vehicle.regnumber}</td>
                     <td>{landfill.wastevolume}</td> 

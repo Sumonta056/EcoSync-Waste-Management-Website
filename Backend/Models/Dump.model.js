@@ -10,6 +10,10 @@ const DumpScheme = new Schema({
     type: String,
     required: true,
   },
+  wardno: {
+    type: String,
+    required: true,
+  },
   vehicleregno: {
     type: String,
     required: true,
