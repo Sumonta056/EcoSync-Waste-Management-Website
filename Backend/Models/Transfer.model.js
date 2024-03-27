@@ -1,28 +1,36 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const TransferScheme = new Schema({
-  vehicleNo: {
+const TransferEntryScheme = new Schema({
+  stsmanagername: {
     type: String,
     required: true,
   },
-  stsId: {
+  wardno: {
     type: String,
     required: true,
   },
-  wasteVolume: {
+  vehicleregno: {
     type: String,
     required: true,
   },
-  arrivalTime: {
+  wastevolume: {
     type: String,
     required: true,
   },
-  departureTime: {
+  arrivaltime: {
+    type: String,
+    required: true,
+  },
+  departuretime: {
+    type: String,
+    required: true,
+  },
+  currentdate: {
     type: String,
     required: true,
   },
 });
 
-const Transfer = mongoose.model("Transfer", TransferScheme);
-module.exports = Transfer;
+const TransferEntry = mongoose.model("TransferEntry", TransferEntryScheme);
+module.exports = TransferEntry;

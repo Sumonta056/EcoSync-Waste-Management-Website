@@ -56,6 +56,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <SiSecurityscorecard />,
   },
   {
+    key: "sts",
+    label: "See Transfer History",
+    path: "/stshistory",
+    icon: <SiSecurityscorecard />,
+  },
+  {
     key: "createLandfill",
     label: "Create Landfill",
     path: "/createLandfill",

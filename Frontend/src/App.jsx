@@ -10,10 +10,11 @@ import AddVehicle from "./Dashboard/pages/AddVehicle/Index.jsx";
 import Profile from "./Dashboard/pages/Profile/index.jsx";
 import UpdateProfile from "./Dashboard/pages/UpdateProfile/index.jsx";
 import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
-import LandFiill from "./Dashboard/pages/Landfill-Entry/index.jsx";
+import LandFillEntry from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
+import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
 
@@ -124,7 +125,7 @@ function App() {
             index
             element={
               userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <LandFiill />
+                <LandFillEntry />
               ) : (
                 <NOACCESS />
               )
@@ -139,6 +140,18 @@ function App() {
             element={
               userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
                 <STSEntry />
+              ) : (
+                <NOACCESS />
+              )
+            }
+          />
+        </Route>
+        <Route path="/stshistory" element={<Layout />}>
+          <Route
+            index
+            element={
+              userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
+                <STSHistory />
               ) : (
                 <NOACCESS />
               )
