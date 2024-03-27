@@ -1,0 +1,13 @@
+
+
+GET http://localhost:3000/rbac/permissions
+
+### Create Product Type - -1
+POST http://localhost:3000/rbac/permissions
+Content-Type: application/json
+
+{
+  "roleId": 1,
+  "permissionName": "Dashboard",
+  "status": true
+}

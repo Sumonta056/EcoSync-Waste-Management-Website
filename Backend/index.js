@@ -35,9 +35,13 @@ app.use("/products", productRouter);
 const userRouter = require("./Routes/user.route.js");
 app.use("/user", userRouter);
 
+// rbac Routes
+const rbacRouter = require("./Routes/rbac.route.js");
+app.use("/rbac", rbacRouter);
+
 // role routes
-const roleRouter = require("./Routes/user.route.js");
-app.use("/roles", userRouter);
+// const roleRouter = require("./Routes/user.route.js");
+// app.use("/roles", userRouter);
 
 // prolfe routes
 const profile = require("./Routes/profile.route.js");

@@ -1,0 +1,12 @@
+
+
+GET http://localhost:3000/rbac/roles
+
+### Create Product Type - -1
+POST http://localhost:3000/rbac/roles
+Content-Type: application/json
+
+{
+  "roleId": 3,
+  "roleName": "STS-MANAGER"
+}
