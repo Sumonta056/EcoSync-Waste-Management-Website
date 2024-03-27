@@ -15,7 +15,7 @@ router.get("/roles", async (req, res, next) => {
 
 router.post("/roles", async (req, res, next) => {
   const { roleId, roleName } = req.body;
-
+  console.log(roleName);
   try {
     let role = new Role({
       roleId,
@@ -82,7 +82,9 @@ router.get("/roles/:roleId/permissions", async (req, res, next) => {
   const { roleId } = req.params;
 
   try {
-    const permissions = await Permission.find({ roleId, status: true }).sort({ roleId: 1 });
+    const permissions = await Permission.find({ roleId, status: true }).sort({
+      roleId: 1,
+    });
     res.json(permissions);
   } catch (err) {
     console.error(err.message);

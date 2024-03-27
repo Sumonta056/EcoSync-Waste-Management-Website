@@ -1,10 +1,46 @@
-import { Form, Input, Select, Button, message } from "antd";
+import { Form, Input, Select, Button, message, Modal } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { IoAccessibility } from "react-icons/io5";
 
 export default function RoleBasedPermission() {
   const [form] = Form.useForm();
+  const [form1] = Form.useForm();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = async () => {
+    try {
+      const values1 = await form1.validateFields();
+      console.log("Form values:", values1);
+      const response = await axios.post(
+        "http://localhost:3000/rbac/roles",
+        values1
+      );
+      console.log("Response status:", response.status);
+
+      if (response.status === 200) {
+        message.success("Role created successfully");
+        setIsModalVisible(false);
+        form1.resetFields();
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } else {
+        message.error("Failed to create role");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      message.error("Failed to create role");
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const onFinish = async (values) => {
     console.log(values);
@@ -15,7 +51,9 @@ export default function RoleBasedPermission() {
         { permissionName, status }
       );
       if (response.data) {
-        message.success("Role Based Permission successfully created or updated");
+        message.success(
+          "Role Based Permission successfully created or updated"
+        );
         form.resetFields();
       } else {
         throw new Error("Failed to create or update permission");
@@ -114,21 +152,76 @@ export default function RoleBasedPermission() {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              block
-              style={{
-                backgroundColor: "green",
-                borderColor: "green",
-                fontSize: "15px",
-                height: "40px",
-              }}
-            >
-              Submit
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                style={{
+                  backgroundColor: "green",
+                  borderColor: "green",
+                  fontSize: "15px",
+                  height: "50px",
+                }}
+              >
+                Submit
+              </Button>
+
+              <Button
+                block
+                onClick={showModal}
+                style={{
+                  backgroundColor: "#f14c36",
+                  color: "white",
+                  fontSize: "15px",
+                  height: "50px",
+                }}
+                size="large"
+              >
+                Create New Role
+              </Button>
+            </div>
           </Form.Item>
         </Form>
+        <Modal
+          title={
+            <div
+              style={{
+                textAlign: "center",
+                fontSize: "25px",
+                padding: "10px",
+                fontWeight: "bold",
+              }}
+            >
+              Create New Role !
+            </div>
+          }
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okButtonProps={{
+            style: { backgroundColor: "green", borderColor: "green" },
+          }}
+        >
+          <Form form={form1} layout="vertical">
+            <Form.Item
+              label="Role ID"
+              name="roleId"
+              rules={[{ required: true, message: "Please input the role ID!" }]}
+            >
+              <Input placeholder="Enter a unique Role ID" />
+            </Form.Item>
+            <Form.Item
+              label="Role Name"
+              name="roleName"
+              rules={[
+                { required: true, message: "Please input the role name!" },
+              ]}
+            >
+              <Input placeholder="Write The New User Role" />
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
     </div>
   );
