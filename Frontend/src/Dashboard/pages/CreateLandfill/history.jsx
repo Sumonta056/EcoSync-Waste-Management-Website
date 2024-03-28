@@ -51,8 +51,8 @@ export default function LandfillHistory() {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-              <th>Landfill Site No</th>
-              <th>Manager Name</th>
+                <th>Landfill Site No</th>
+                <th>Manager Name</th>
                 <th>Capacity (Tonnes)</th>
                 <th>Operational Timespan</th>
                 <th>GPS Coordinates</th>
@@ -86,8 +86,8 @@ export default function LandfillHistory() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-            <th>Landfill Site No</th>
-            <th>Manager Name</th>
+              <th>Landfill Site No</th>
+              <th>Manager Name</th>
               <th>Capacity (Tonnes)</th>
               <th>Operational Timespan</th>
               <th>GPS Coordinates</th>
@@ -118,7 +118,11 @@ export default function LandfillHistory() {
               return (
                 <tr key={landfill._id}>
                   <td>{landfill.siteno}</td>
-                  <td>{manager.name}</td>
+                  <td>
+                    <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
+                      {manager.name}
+                    </span>
+                  </td>
                   <td>
                     <span className="px-2 py-1 capitalize rounded-md bg-cyan-100 text-cyan-600 text-md">
                       {landfill.capacity}
@@ -126,7 +130,7 @@ export default function LandfillHistory() {
                   </td>
                   <td>{landfill.timespan}</td>
                   <td>
-                    <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
+                    <span className="px-2 py-1 capitalize rounded-md bg-lime-100 text-lime-600 text-md">
                       {landfill.gpscoords}
                     </span>
                   </td>

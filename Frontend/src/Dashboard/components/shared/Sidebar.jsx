@@ -16,21 +16,20 @@ export default function Sidebar() {
     localStorage.removeItem("access_token");
     // window.location.reload();
     window.location.href = "/";
-    
   };
 
   return (
     <div className="flex flex-col p-3 bg-neutral-900 w-60">
-      <div className="flex items-center gap-2 px-1 py-3">
+      <div className="flex items-center gap-2 px-1 pt-3">
         <FaTree fontSize={30} color="green" />
         <span className="text-lg text-neutral-200">Eco-Sync</span>
       </div>
-      <div className="py-8 flex flex-1 flex-col gap-0.5">
+      <div className="py-5 flex flex-1 flex-col gap-0.5">
         {DASHBOARD_SIDEBAR_LINKS.map((link) => (
           <SidebarLink key={link.key} link={link} />
         ))}
       </div>
-      <div className="flex flex-col gap-0.5 pt-2 border-t border-neutral-700">
+      <div className="flex flex-col gap-0.5 border-t border-neutral-700">
         {DASHBOARD_SIDEBAR_BOTTOM_LINKS.map((link) => (
           <SidebarLink key={link.key} link={link} />
         ))}

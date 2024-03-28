@@ -5,12 +5,16 @@ import {
   HiOutlineCog,
 } from "react-icons/hi";
 
-import { SiSecurityscorecard } from "react-icons/si";
 import { FaLandmark } from "react-icons/fa6";
 import { MdCreateNewFolder } from "react-icons/md";
 import { RiMoneyPoundBoxFill } from "react-icons/ri";
 import { FaTruckFront } from "react-icons/fa6";
 import { MdOutlineSecurity } from "react-icons/md";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { MdHistory } from "react-icons/md";
+import { IoCreateSharp } from "react-icons/io5";
+import { FaPeopleRobbery } from "react-icons/fa6";
+import { FaDumpster } from "react-icons/fa";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -23,7 +27,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     key: "ueser",
     label: "User List",
     path: "/userList",
-    icon: <HiOutlineCube />,
+    icon: <FaPeopleRobbery />,
   },
   {
     key: "access",
@@ -33,7 +37,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
   },
   {
     key: "transactions",
-    label: "Transactions",
+    label: "Billing Transactions",
     path: "/transactions",
     icon: <RiMoneyPoundBoxFill />,
   },
@@ -45,33 +49,45 @@ export const DASHBOARD_SIDEBAR_LINKS = [
   },
   {
     key: "createSTS",
-    label: "Create STS",
+    label: "Create New STS",
     path: "/createSTS",
     icon: <MdCreateNewFolder />,
   },
   {
     key: "sts",
-    label: "STS Entry",
+    label: "STS Entry Form",
     path: "/sts",
-    icon: <SiSecurityscorecard />,
+    icon: <HiOutlineCube />,
+  },
+  {
+    key: "map",
+    label: "Optimized Route",
+    path: "/map",
+    icon: <FaMapMarkedAlt />,
   },
   {
     key: "sts",
     label: "See Transfer History",
     path: "/stshistory",
-    icon: <SiSecurityscorecard />,
+    icon: <MdHistory />,
   },
   {
     key: "createLandfill",
     label: "Create Landfill",
     path: "/createLandfill",
-    icon: <MdCreateNewFolder />,
+    icon: <IoCreateSharp />,
   },
   {
     key: "landfill",
-    label: "Landfill Entry",
+    label: "Landfill Entry Form",
     path: "/landfill",
     icon: <FaLandmark />,
+  },
+  {
+    key: "dumpHistory",
+    label: "See Dump History",
+    path: "/dumpHistory",
+    icon: <FaDumpster />,
   },
 ];
 

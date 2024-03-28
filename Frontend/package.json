@@ -36,7 +36,12 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.1.10",
     "tw-elements-react": "^1.0.0-alpha2",
-    "uid": "^2.0.2"
+    "uid": "^2.0.2",
+    "@chakra-ui/react": "^1.8.6",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@react-google-maps/api": "^2.7.0",
+    "framer-motion": "^6"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

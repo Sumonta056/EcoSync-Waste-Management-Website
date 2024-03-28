@@ -17,6 +17,8 @@ import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
+import Map from "./Dashboard/pages/RouteOptimize/index.jsx";
+import DumpHistory from "./Dashboard/pages/Dump History/index.jsx";
 
 function App() {
   const token = localStorage.getItem("access_token");
@@ -135,6 +137,19 @@ function App() {
           />
         </Route>
 
+        <Route path="/dumpHistory" element={<Layout />}>
+          <Route
+            index
+            element={
+              userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
+                <DumpHistory />
+              ) : (
+                <NOACCESS />
+              )
+            }
+          />
+        </Route>
+
         {/* Only STS Manager + Admin can access */}
         <Route path="/sts" element={<Layout />}>
           <Route
@@ -160,10 +175,23 @@ function App() {
             }
           />
         </Route>
-        
-       
 
         <Route path="/user/:userId" element={<UpdateProfile />} />
+        {/* <Route path="/map" element={<Map />} /> */}
+
+        <Route path="/map" element={<Layout />}>
+          <Route
+            index
+            element={
+              userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
+                <Map />
+              ) : (
+                <NOACCESS />
+              )
+            }
+          />
+        </Route>
+
         <Route path="/transactions" element={<Layout />}>
           <Route index element={<Transaction />} />
         </Route>

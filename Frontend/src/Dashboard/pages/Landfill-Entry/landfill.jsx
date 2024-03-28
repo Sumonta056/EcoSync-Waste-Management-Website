@@ -45,12 +45,25 @@ export default function Landfill() {
           }))
         );
 
-        const wardNumbersResponse = await axios.get("http://localhost:3000/sts");
-        setWardNumbers(wardNumbersResponse.data.map((sts) => ({ id: sts._id, wardNumber: sts.wardno })));
+        const wardNumbersResponse = await axios.get(
+          "http://localhost:3000/sts"
+        );
+        setWardNumbers(
+          wardNumbersResponse.data.map((sts) => ({
+            id: sts._id,
+            wardNumber: sts.wardno,
+          }))
+        );
 
-        const landfillManagerResponse = await axios.get("http://localhost:3000/user");
-        setLandfillManager(landfillManagerResponse.data.map((user) => ({ id: user._id, name: user.name })));
-
+        const landfillManagerResponse = await axios.get(
+          "http://localhost:3000/user"
+        );
+        setLandfillManager(
+          landfillManagerResponse.data.map((user) => ({
+            id: user._id,
+            name: user.name,
+          }))
+        );
 
         const vehicleNumbersResponse = await axios.get(
           "http://localhost:3000/vehicle"
@@ -103,7 +116,7 @@ export default function Landfill() {
 
   const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   return (
-    <div className="w-[25rem] bg-white p-4 rounded-sm border border-gray-200">
+    <div className="w-[40rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="flex w-full gap-2 text-xl text-center text-cyan-800">
         <FaTruckRampBox size={26} /> Truck Dumping Entry
       </strong>
@@ -116,32 +129,38 @@ export default function Landfill() {
               key={landfillManagerName}
             />
           </Form.Item>
-          <Form.Item
-            label="Landfill Site No"
-            name="siteno"
-            rules={[{ required: true, message: "Please select landfill site" }]}
-          >
-            <Select placeholder="Select a Landfill Site No">
-              {siteNumbers.map((site) => (
-                <Select.Option key={site._id} value={site.id}>
-                  {site.siteNumber}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="STS No"
-            name="wardno"
-            rules={[{ required: true, message: "Please select STS ward no" }]}
-          >
-           <Select placeholder="Select a STS Ward No">
-              {wardNumbers.map((ward) => (
-                <Select.Option key={ward._id} value={ward.id}>
-                  {ward.wardNumber}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
+          <div className="flex gap-2">
+            <Form.Item
+             className="w-full block-style"
+              label="Landfill Site No"
+              name="siteno"
+              rules={[
+                { required: true, message: "Please select landfill site" },
+              ]}
+            >
+              <Select placeholder="Select a Landfill Site No">
+                {siteNumbers.map((site) => (
+                  <Select.Option key={site._id} value={site.id}>
+                    {site.siteNumber}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+             className="w-full block-style"
+              label="STS No"
+              name="wardno"
+              rules={[{ required: true, message: "Please select STS ward no" }]}
+            >
+              <Select placeholder="Select a STS Ward No">
+                {wardNumbers.map((ward) => (
+                  <Select.Option key={ward._id} value={ward.id}>
+                    {ward.wardNumber}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
           <Form.Item
             label="Truck Registration Number"
             name="vehicleregno"
@@ -170,6 +189,7 @@ export default function Landfill() {
           </Form.Item>
           <div className="flex gap-3">
             <Form.Item
+              className="w-full block-style"
               label="Arrival Time"
               name="arrivaltime"
               rules={[
@@ -183,6 +203,7 @@ export default function Landfill() {
               <Input placeholder="Enter Arrival Time" />
             </Form.Item>
             <Form.Item
+              className="w-full block-style"
               label="Departure Time"
               name="departuretime"
               rules={[
