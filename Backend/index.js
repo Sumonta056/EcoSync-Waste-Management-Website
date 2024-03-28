@@ -63,14 +63,18 @@ app.use("/transfer", transferRouter);
 const dumpRouter = require("./Routes/dump.route.js");
 app.use("/dump", dumpRouter);
 
-//Authentication Router
-const authRouter = require("./Routes/auth.route.js");
-app.use("/auth", authRouter);
 
 // Main Router
 app.get("/", (req, res, next) => {
   res.send("Hello World");
 });
+
+
+//Authentication Router
+const authRouter = require("./Routes/auth.route.js");
+app.use("/auth", authRouter);
+
+
 
 // Set Error
 app.use((req, res, next) => {

@@ -35,6 +35,9 @@ export default function ExampleV2() {
     console.log("Clicked cancel button");
     setOpen(false);
   };
+  const handleForget = () => {
+    navigate("/auth/reset-password/initiate");
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -151,9 +154,14 @@ export default function ExampleV2() {
                             </button>
                           </TERipple>
 
-                          {/* <!--Forgot password link--> */}
 
-                          <a href="">Forgot password?</a>
+                          {/* <!--Forgot password link-->
+
+                          <a href="">Forgot password?</a> */}
+                        </div>
+                        {/* <!--Forgot password link--> */}
+                        <div>
+                          <a onClick={handleForget}>Forgot password?</a>
                         </div>
                       </form>
                     </div>

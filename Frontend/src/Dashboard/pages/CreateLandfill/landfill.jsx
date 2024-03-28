@@ -57,7 +57,7 @@ export default function Landfill() {
   };
 
 return (
-  <div className="w-[24rem] bg-white p-4 rounded-sm border border-gray-200">
+  <div className="w-[22rem] bg-white p-4 rounded-sm border border-gray-200">
     <strong className="flex w-full gap-2 text-2xl text-center text-lime-700">
         <FaLandmarkDome /> New Landfill Entry
       </strong>
