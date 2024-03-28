@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaHistory } from "react-icons/fa";
-import InvoiceItem from './InvoiceItem';
-import InvoiceModal from './InvoiceModal';
+import InvoiceItem from "./InvoiceItem";
+import InvoiceModal from "./InvoiceModal";
+import { IoMdPrint } from "react-icons/io";
 
 export default function STSHistory() {
   const [stsData, setStsData] = useState([]);
@@ -79,24 +80,24 @@ export default function STSHistory() {
   }, []);
 
   // Update stsData when wards state changes
-useEffect(() => {
-  if (wards.length > 0) {
-    const mappedTransferData = stsData.map((transfer) => {
-      const correspondingWard = wards.find(
-        (ward) => ward._id === transfer.wardno
-      );
-      const correspondingSite = sites.find(
-        (site) => site._id === transfer.siteno
-      );
-      return {
-        ...transfer,
-        correspondingWard: correspondingWard.wardno,
-        correspondingSite: correspondingSite.siteno,
-      };
-    });
-    setStsData(mappedTransferData);
-  }
-}, [wards, sites]); // Add sites as a dependency
+  useEffect(() => {
+    if (wards.length > 0) {
+      const mappedTransferData = stsData.map((transfer) => {
+        const correspondingWard = wards.find(
+          (ward) => ward._id === transfer.wardno
+        );
+        const correspondingSite = sites.find(
+          (site) => site._id === transfer.siteno
+        );
+        return {
+          ...transfer,
+          correspondingWard: correspondingWard.wardno,
+          correspondingSite: correspondingSite.siteno,
+        };
+      });
+      setStsData(mappedTransferData);
+    }
+  }, [wards, sites]); // Add sites as a dependency
 
  // Function to fetch GPS coordinates of STS site based on ID
  const fetchSTSGPSCoordinates = (wardId) => {
@@ -186,15 +187,15 @@ const handlePrintClick = (transfer) => {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-                <th>STS Ward No</th>
-                <th>Landfill Site No</th>
-                <th>Manager Name</th>
-                <th>Vehicle No</th>
-                <th>Waste Volume</th>
-                <th>Arrival Time</th>
-                <th>Departure Time</th>
-                <th>Date</th>
-                <th>Action</th>
+              <th>STS Ward No</th>
+              <th>Landfill Site No</th>
+              <th>Manager Name</th>
+              <th>Vehicle No</th>
+              <th>Waste Volume</th>
+              <th>Arrival Time</th>
+              <th>Departure Time</th>
+              <th>Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -218,8 +219,10 @@ const handlePrintClick = (transfer) => {
                     <td>{sts.departuretime}</td>
                     <td>{sts.currentdate}</td>
                     <td>
-                    <button onClick={() => handlePrintClick(sts)}>Action</button> 
-                  </td>
+                      <button onClick={() => handlePrintClick(sts)}>
+                        Action
+                      </button>
+                    </td>
                   </tr>
                 );
               }
@@ -259,7 +262,12 @@ const handlePrintClick = (transfer) => {
                   <td>{sts.departuretime}</td>
                   <td>{sts.currentdate}</td>
                   <td>
-                  <button onClick={() => handlePrintClick(sts)}>Print</button>
+                    <button
+                      className="flex gap-2 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 "
+                      onClick={() => handlePrintClick(sts)}
+                    ><IoMdPrint size={20}/>
+                      Print
+                    </button>
                   </td>
                 </tr>
               );
@@ -268,6 +276,7 @@ const handlePrintClick = (transfer) => {
         </table>
       </div>
       {isModalOpen && selectedTransfer && (
+
   <InvoiceModal
     isOpen={isModalOpen}
     setIsOpen={setIsModalOpen}

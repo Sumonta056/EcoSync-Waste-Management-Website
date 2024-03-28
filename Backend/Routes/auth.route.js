@@ -13,16 +13,16 @@ function errorHandle(status, msg) {
   return err;
 }
 
-router.post("/signup", async (req, res, next)=>{
-    try {
-        const {email, password } = req.body;
-        const hashedPassword = bcryptjs.hashSync(password, 10);
-        const newUser = new User({ email, password: hashedPassword});
-        await newUser.save();
-        res.status(201).json("User created successfully!");
-    } catch (error) {
-        next(error)
-    }
+router.post("/signup", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const newUser = new User({ email, password: hashedPassword });
+    await newUser.save();
+    res.status(201).json("User created successfully!");
+  } catch (error) {
+    next(error);
+  }
 });
 
 // Type - 1 : Handle Data (Promises)
@@ -48,7 +48,6 @@ router.post("/login", async (req, res, next) => {
     next(error);
   }
 });
-
 
 // router.post('/reset-password/initiate', async (req, res, next) => {
 //   // Your code here
@@ -82,9 +81,6 @@ router.post("/login", async (req, res, next) => {
 //   }
 // });
 
-
-
-
 function sendEmail({ recipient_email, OTP }) {
   return new Promise((resolve, reject) => {
     const transporter = nodemailer.createTransport({
@@ -115,7 +111,7 @@ function sendEmail({ recipient_email, OTP }) {
 <div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
   <div style="margin:50px auto;width:70%;padding:20px 0">
     <div style="border-bottom:1px solid #eee">
-      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
+      <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Team Eco-Sync</a>
     </div>
     <p style="font-size:1.1em">Hi,</p>
     <p>Thank you for choosing Team EcoSync. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
@@ -144,17 +140,15 @@ function sendEmail({ recipient_email, OTP }) {
   });
 }
 
-
 router.post("/reset-password/initiate", async (req, res, next) => {
   const { recipient_email } = req.body;
   const oldUser = await User.findOne({ email: recipient_email });
-  if(!oldUser) {
-    return next(errorHandle(404, "User not found!"));
-  }
-  else {
+  if (!oldUser) {
+    return res.json({ error: "User not found!" });
+  } else {
     sendEmail(req.body)
-  .then((response) => res.send(response.message))
-  .catch((error) => res.status(500).send(error.message));
+      .then((response) => res.send("found"))
+      .catch((error) => res.status(500).send(error.message));
   }
 });
 
@@ -165,10 +159,11 @@ router.post("/change-password", async (req, res, next) => {
     // console.log(oldUser);
     if (!oldUser) return next(errorHandle(404, "User not found!"));
     // console.log(oldUser);
-    if(password !== confirmPassword) return next(errorHandle(400, "Passwords do not match!"));
+    if (password !== confirmPassword)
+      return next(errorHandle(400, "Passwords do not match!"));
     console.log(oldUser);
     oldUser.password = bcryptjs.hashSync(password, 10);
-    
+
     await oldUser.save();
     res.status(200).json("Password updated successfully");
   } catch (error) {

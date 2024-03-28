@@ -25,7 +25,6 @@ import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
 import React, { useState } from 'react';
 
-
 function App() {
   const token = localStorage.getItem("access_token");
   let userRole = null;
@@ -46,7 +45,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         {/* Anyone  can access */}
         <Route path="/auth/reset-password/initiate" element={<ForgetPass1 />} />
-
         <Route path="/auth/reset-password/confirm" element={<ForgetPass2 />} />
         <Route path="/auth/change-password" element={<ForgetPass3 />} />
 
