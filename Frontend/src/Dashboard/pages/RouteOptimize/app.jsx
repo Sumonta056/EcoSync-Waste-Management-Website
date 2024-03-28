@@ -19,8 +19,7 @@ import {
   Autocomplete,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useRef, useState, useEffect } from "react";
-import axios from "axios";
+import { useRef, useState } from "react";
 
 const center = { lat: 23.8041, lng: 90.4152 };
 
@@ -34,42 +33,7 @@ function App() {
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
-  const [landfillOptions, setLandfillOptions] = useState([]);
-  const [stsOptions, setStsOptions] = useState([]);
-  const [stsDataFetched, setStsDataFetched] = useState(false);
-  const [landfillDataFetched, setLandfillDataFetched] = useState(false);
-  useEffect(() => {
-    fetchStsData();
-    fetchLandfillData();
-  }, []);
 
-  const fetchStsData = async () => {
-    try {
-      const stsResponse = await axios.get("http://localhost:3000/sts");
-      const options = stsResponse.data.map((sts) => ({
-        value: sts.gpscoords,
-        label: sts.wardno,
-      }));
-      setStsOptions(options);
-      setStsDataFetched(true);
-    } catch (error) {
-      console.error("Error fetching STS data:", error);
-    }
-  };
-
-  const fetchLandfillData = async () => {
-    try {
-      const landfillResponse = await axios.get("http://localhost:3000/landfill");
-      const options = landfillResponse.data.map((landfill) => ({
-        value: landfill.gpscoords,
-        label: landfill.siteno,
-      }));
-      setLandfillOptions(options);
-      setLandfillDataFetched(true);
-    } catch (error) {
-      console.error("Error fetching landfill data:", error);
-    }
-  };
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
   /** @type React.MutableRefObject<HTMLInputElement> */
@@ -115,8 +79,7 @@ function App() {
       const [lat, lng] = input.split(",").map(Number);
       return { lat, lng };
     };
-    
-      
+
     // Function to search for a location using coordinates
     const searchLocation = (coordinates) => {
       return new Promise((resolve, reject) => {
@@ -177,8 +140,6 @@ function App() {
     originRef.current.value = "";
     destiantionRef.current.value = "";
   }
-  console.log("STS options:", stsOptions);
-console.log("Landfill options:", landfillOptions);
 
   return (
     <Flex
@@ -224,37 +185,42 @@ console.log("Landfill options:", landfillOptions);
             {/* <Autocomplete>
               <Input type="text" placeholder="Origin" ref={originRef} />
             </Autocomplete> */}
-            {stsDataFetched && (
-        <Select
-          m={4}
-          bg="white"
-          borderColor="white"
-          color="black"
-          className="p-3 bg-neutral-300"
-          placeholder="Choose Your STS "
-          size="lg"
-          ref={originRef}
-          options={stsOptions}
-        />
-      )}
+            <Select
+              m={4}
+              className="p-3 bg-neutral-300"
+              color="black"
+              placeholder="Choose Your STS"
+              size="lg"
+              ref={originRef}
+            >
+              <option value="23.815257908191324, 90.42551368050358">NSU</option>
+              <option value="23.81528113133229, 90.42804797998136">IUB</option>
+              <option value="option3">Option 3</option>
+            </Select>
           </Box>
           <Box flexGrow={1}>
             {/* <Autocomplete>
-              <Input type="text" placeholder="Origin" ref={originRef} />
+              <Input
+                type="text"
+                placeholder="Destination"
+                ref={destiantionRef}
+              />
             </Autocomplete> */}
-            {stsOptions.length > 0 && (
-  <Select
-    m={4}
-    bg="white"
-    borderColor="white"
-    color="black"
-    className="p-3 bg-neutral-300"
-    placeholder="Choose Your STS "
-    size="lg"
-    ref={originRef}
-    options={stsOptions}
-  />
-)}
+
+            <Select
+              m={4}
+              bg='"white"'
+              borderColor="white"
+              color="black"
+              className="p-3 bg-neutral-300"
+              placeholder="Choose Destination Landfill"
+              size="lg"
+              ref={destiantionRef}
+            >
+              <option value="23.815257908191324, 90.42551368050358">NSU</option>
+              <option value="23.81528113133229, 90.42804797998136">IUB</option>
+              <option value="option3">Option 3</option>
+            </Select>
           </Box>
 
           <ButtonGroup className="p-3 bg-cyan-500">
