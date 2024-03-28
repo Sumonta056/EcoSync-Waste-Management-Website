@@ -43,7 +43,7 @@ function App() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
-  const [createContract, setCreateContract] = useState(false);
+  const [createContract, setCreateContract] = useState(true);
   const [stsEntry, setStsEntry] = useState(false);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
