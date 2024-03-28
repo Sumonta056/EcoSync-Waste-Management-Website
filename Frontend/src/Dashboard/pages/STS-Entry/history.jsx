@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { FaHistory } from "react-icons/fa";
+import InvoiceItem from './InvoiceItem';
+import InvoiceModal from './InvoiceModal';
 
 export default function STSHistory() {
   const [stsData, setStsData] = useState([]);
@@ -8,7 +10,10 @@ export default function STSHistory() {
   const [error, setError] = useState(null);
   const [managers, setManagers] = useState([]);
   const [wards, setWards] = useState([]);
+  const [sites, setSites] = useState([]);
   const [vehicles, setVehicles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTransfer, setSelectedTransfer] = useState(null);
   // const[transfers, setTransfers] = useState([]);
 
   useEffect(() => {
@@ -17,11 +22,13 @@ export default function STSHistory() {
         const [
           managerResponse,
           wardResponse,
+          siteResponse,
           transferResponse,
           vehiclesResponse,
         ] = await Promise.all([
           axios.get("http://localhost:3000/user"),
           axios.get("http://localhost:3000/sts"),
+          axios.get("http://localhost:3000/landfill"),
           axios.get("http://localhost:3000/transfer"),
           axios.get("http://localhost:3000/vehicle"),
         ]);
@@ -38,6 +45,13 @@ export default function STSHistory() {
         } else {
           console.error("Received sts data is not an array.");
           setError("Received sts data is not an array.");
+        }
+        if (Array.isArray(siteResponse.data)) {
+          setSites(siteResponse.data);
+          console.log(siteResponse);
+        } else {
+          console.error("Received landfill data is not an array.");
+          setError("Received landfill data is not an array.");
         }
         if (Array.isArray(transferResponse.data)) {
           setStsData(transferResponse.data);
@@ -64,22 +78,30 @@ export default function STSHistory() {
   }, []);
 
   // Update stsData when wards state changes
-  useEffect(() => {
-    if (wards.length > 0) {
-      const mappedTransferData = stsData.map((transfer) => {
-        const correspondingWard = wards.find(
-          (ward) => ward._id === transfer.wardno
-        );
-        return {
-          ...transfer,
-          correspondingWard: correspondingWard.wardno,
-        };
-      });
-      setStsData(mappedTransferData);
-    }
-  }, [wards, stsData]);
+useEffect(() => {
+  if (wards.length > 0) {
+    const mappedTransferData = stsData.map((transfer) => {
+      const correspondingWard = wards.find(
+        (ward) => ward._id === transfer.wardno
+      );
+      const correspondingSite = sites.find(
+        (site) => site._id === transfer.siteno
+      );
+      return {
+        ...transfer,
+        correspondingWard: correspondingWard.wardno,
+        correspondingSite: correspondingSite.siteno,
+      };
+    });
+    setStsData(mappedTransferData);
+  }
+}, [wards, sites]); // Add sites as a dependency
 
-  // Render loading state, error, or table with sts data and STS managers...
+
+const handlePrintClick = (transfer) => {
+  setSelectedTransfer(transfer);
+  setIsModalOpen(true);
+};
 
   // Render loading state for the first row
   if (loading) {
@@ -92,7 +114,8 @@ export default function STSHistory() {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-                <th>Ward No</th>
+                <th>STS Ward No</th>
+                <th>Landfill Site No</th>
                 <th>Manager Name</th>
                 <th>Vehicle No</th>
                 <th>Waste Volume</th>
@@ -103,7 +126,7 @@ export default function STSHistory() {
             </thead>
             <tbody>
               <tr>
-                <td colSpan="7" className="text-center">
+                <td colSpan="9" className="text-center">
                   Loading...
                 </td>
               </tr>
@@ -129,13 +152,15 @@ export default function STSHistory() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-              <th>Ward No</th>
-              <th>Manager Name</th>
-              <th>Vehicle No</th>
-              <th>Waste Volume</th>
-              <th>Arrival Time</th>
-              <th>Departure Time</th>
-              <th>Date</th>
+                <th>STS Ward No</th>
+                <th>Landfill Site No</th>
+                <th>Manager Name</th>
+                <th>Vehicle No</th>
+                <th>Waste Volume</th>
+                <th>Arrival Time</th>
+                <th>Departure Time</th>
+                <th>Date</th>
+                <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -151,12 +176,16 @@ export default function STSHistory() {
                 return (
                   <tr key={sts._id}>
                     <td>{sts.correspondingWard}</td>
+                    <td>{sts.correspondingSite}</td>
                     <td>Loading...</td>
                     <td>{vehicle.regnumber}</td>
                     <td>{sts.wastevolume}</td>
                     <td>{sts.arrivaltime}</td>
                     <td>{sts.departuretime}</td>
                     <td>{sts.currentdate}</td>
+                    <td>
+                    <button onClick={() => handlePrintClick(sts)}>Action</button> 
+                  </td>
                   </tr>
                 );
               }
@@ -167,6 +196,11 @@ export default function STSHistory() {
                   <td>
                     <span className="px-2 py-1 text-orange-600 capitalize bg-orange-100 rounded-md text-md">
                       {sts.correspondingWard}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="px-2 py-1 text-orange-600 capitalize bg-orange-100 rounded-md text-md">
+                      {sts.correspondingSite}
                     </span>
                   </td>
 
@@ -190,12 +224,28 @@ export default function STSHistory() {
                   <td>{sts.arrivaltime}</td>
                   <td>{sts.departuretime}</td>
                   <td>{sts.currentdate}</td>
+                  <td>
+                  <button onClick={() => handlePrintClick(sts)}>Print</button>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
       </div>
+      {isModalOpen && selectedTransfer && (
+  <InvoiceModal
+    isOpen={isModalOpen}
+    setIsOpen={setIsModalOpen}
+    invoiceInfo={selectedTransfer}
+    items={stsData.filter(transfer => transfer._id === selectedTransfer._id)}
+    vehicleData={vehicles.filter(vehicle => vehicle._id === selectedTransfer.vehicleregno)}
+    correspondingWard={selectedTransfer.correspondingWard} // Pass corresponding Ward number
+    correspondingSite={selectedTransfer.correspondingSite}
+    // Pass other necessary props to InvoiceModal
+  />
+)}
+
     </div>
   );
 }

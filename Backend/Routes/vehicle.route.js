@@ -26,20 +26,21 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// GET a specific vehicle's details
-router.get("/:vehicleId", async (req, res, next) => {
+// GET a specific vehicle's details by registration number
+router.get("/:regnumber", async (req, res, next) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.vehicleId);
+    const vehicle = await Vehicle.findOne({ regnumber: req.params.regnumber });
     if (!vehicle) {
-      return res.send("Vehicle not found");
+      return res.status(404).send("Vehicle not found");
     }
     console.log(vehicle);
     res.send(vehicle);
   } catch (err) {
-    console.log(err.message);
-    res.send("Internal Server Error");
+    console.error(err.message);
+    res.status(500).send("Internal Server Error");
   }
 });
+
 
 // PUT method for updating a vehicle's details (restricted to own details or System Admin access)
 router.put("/:vehicleId", async (req, res, next) => {

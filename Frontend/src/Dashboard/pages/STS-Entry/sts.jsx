@@ -8,6 +8,7 @@ export default function STS() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [wardNumbers, setWardNumbers] = useState([]);
+  const [siteNumbers, setSiteNumbers] = useState([]);
   const [stsManagerName, setStsManagerName] = useState("");
   const [stsManager, setStsManager] = useState([]);
   const [vehicleNumbers, setVehicleNumbers] = useState([]);
@@ -43,7 +44,16 @@ export default function STS() {
             wardNumber: sts.wardno,
           }))
         );
-
+        
+        const siteNumbersResponse = await axios.get(
+          "http://localhost:3000/landfill"
+        );
+        setSiteNumbers(
+          siteNumbersResponse.data.map((landfill) => ({
+            id: landfill._id,
+            siteNumber: landfill.siteno,
+          }))
+        );
         const stsManagerResponse = await axios.get(
           "http://localhost:3000/user"
         );
@@ -92,9 +102,6 @@ export default function STS() {
         throw new Error(data.error);
       }
       message.success(successMessage);
-      setTimeout(() => {
-        window.location.reload();
-      }, 600);
       form.resetFields();
     } catch (error) {
       message.error(error.message || errorMessage);
@@ -123,6 +130,19 @@ export default function STS() {
               {wardNumbers.map((ward) => (
                 <Select.Option key={ward._id} value={ward.id}>
                   {ward.wardNumber}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Landfill Site No"
+            name="siteno"
+            rules={[{ required: true, message: "Please select Landfill" }]}
+          >
+            <Select placeholder="Select a Landfill Site No">
+              {siteNumbers.map((site) => (
+                <Select.Option key={site._id} value={site.id}>
+                  {site.siteNumber}
                 </Select.Option>
               ))}
             </Select>

@@ -10,14 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.8.9",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@headlessui/react": "^1.6.4",
     "@material-tailwind/react": "^2.1.9",
+    "@react-google-maps/api": "^2.7.0",
     "@react-pdf/font": "^2.4.4",
     "@react-pdf/renderer": "^3.4.2",
     "antd": "^5.15.2",
     "axios": "^1.6.8",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
+    "framer-motion": "^6",
     "html-to-image": "^1.11.11",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.1",
@@ -36,12 +41,7 @@
     "react-scripts": "5.0.1",
     "recharts": "^2.1.10",
     "tw-elements-react": "^1.0.0-alpha2",
-    "uid": "^2.0.2",
-    "@chakra-ui/react": "^1.8.6",
-    "@emotion/react": "^11",
-    "@emotion/styled": "^11",
-    "@react-google-maps/api": "^2.7.0",
-    "framer-motion": "^6"
+    "uid": "^2.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",
