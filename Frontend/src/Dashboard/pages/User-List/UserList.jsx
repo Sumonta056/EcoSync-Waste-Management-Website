@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal, message } from "antd";
 import axios from "axios";
 import { HiOutlineSearch } from "react-icons/hi";
+import { MdContentPasteSearch } from "react-icons/md";
 
 export default function UserList() {
   const [searchInput, setSearchInput] = useState("");
@@ -44,28 +45,14 @@ export default function UserList() {
         <form className="w-full" onSubmit={handleSearch}>
           <div className="relative">
             <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
-              <svg
-                className="w-4 h-4 text-gray-800 dark:text-gray-800"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  stroke="currentColor"
-                  className="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                />
-              </svg>
+              <MdContentPasteSearch size={25} />
             </div>
             <input
               type="search"
               id="default-search"
               value={searchInput}
               onChange={handleSearchInputChange}
-              className="block w-full p-5 text-sm text-gray-900 placeholder-gray-600 border border-gray-300 rounded-lg bg-white-100 ps-10 focus:ring-black-500 focus:border-gray-500"
+              className="block w-full px-8 py-5 text-gray-900 placeholder-gray-600 border border-gray-300 rounded-lg text-md px- bg-white-100 ps-10 focus:ring-black-500 focus:border-gray-500"
               placeholder="Search User by ID"
               required
             />
@@ -78,7 +65,14 @@ export default function UserList() {
           </div>
         </form>
 
-        <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Modal
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okButtonProps={{
+            style: { backgroundColor: "green", borderColor: "green" },
+          }}
+        >
           {userData && (
             <div className="p-4 text-lg">
               <h2 className="pb-3 text-2xl font-bold text-center text-cyan-800">

@@ -52,9 +52,9 @@ export default function History() {
   // Render table with Roles data and STS managers
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
-      <strong className="flex justify-between gap-2 px-4 mx-auto text-2xl text-center text-green-700">
+      <strong className="flex justify-center gap-2 p-2 mx-auto text-2xl text-center text-sky-900">
         <div className="flex gap-2"><FaUserSecret /> Available User Roles </div>
-        
+
       </strong>
       <div className="mt-3 border-gray-200 rounded-sm border-x">
         <table className="w-full text-gray-700">
@@ -73,7 +73,7 @@ export default function History() {
                 <td>
                   <Button
                     onClick={() => showModal(Roles.roleId)}
-                    style={{ backgroundColor: "#571c57", color: "white" }}
+                    style={{ backgroundColor: "#2a5775", color: "white" }}
                     size="large"
                   >
                     View Permissions

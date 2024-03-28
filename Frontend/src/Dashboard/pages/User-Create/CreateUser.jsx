@@ -92,19 +92,19 @@ function CreateUser() {
   return (
     <>
       <div className="flex items-center justify-center min-h-screen bg-neutral-800">
-        <div className="relative flex flex-col w-8/12 space-y-2 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-          <div className="flex flex-col justify-center w-6/12 md:px-14">
-            <span className="mb-3 text-4xl font-bold">Registration</span>
+        <div className="relative flex flex-col w-7/12 space-y-2 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+          <div className="flex flex-col justify-center w-6/12 md:px-8">
+            <span className="mb-3 text-3xl font-bold">Registration</span>
             <span className="mb-4 font-light text-gray-400">
               Welcome back! Please enter user details
             </span>
             <div className="flex flex-col mb-3">
-              <span className="flex gap-2 p-1 text-lg text-gray-700">
-                <MdEmail size={24} /> Email
+              <span className="flex gap-2 p-2 text-gray-700 text-md">
+                <MdEmail size={20} /> Email
               </span>
               <input
                 type="Email"
-                className="w-full p-4 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
+                className="w-full px-3 py-2 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
                 name="email"
                 placeholder="Enter Email Address"
                 id="email"
@@ -114,14 +114,14 @@ function CreateUser() {
               />
             </div>
             <div className="flex flex-col mb-3">
-              <span className="flex gap-2 p-1 text-lg text-gray-700">
-                <FaUserCheck size={24} /> Name
+              <span className="flex gap-2 p-2 text-gray-700 text-md">
+                <FaUserCheck size={20} /> Name
               </span>
               <input
                 type="text"
                 name="name"
                 id="name"
-                className="w-full p-3 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
+                className="w-full px-3 py-2 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
                 value={formData.name}
                 placeholder="Enter User Name"
                 onChange={handleInputChange}
@@ -129,27 +129,27 @@ function CreateUser() {
             </div>
 
             <div className="flex flex-col mb-3">
-              <span className="flex gap-2 p-1 text-lg text-gray-700">
-                <FaPhoneAlt size={24} /> Phone
+              <span className="flex gap-2 p-2 text-gray-700 text-md">
+                <FaPhoneAlt size={17} /> Phone
               </span>
               <input
                 type="number"
                 name="phone"
                 id="phone"
                 placeholder="Enter Phone Number"
-                className="w-full p-4 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
+                className="w-full px-3 py-2 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
                 value={formData.phone}
                 onChange={handleInputChange}
               />
             </div>
             <div className="flex flex-col mb-3">
-              <span className="flex gap-2 p-1 text-lg text-gray-700">
-                <FaUniversalAccess size={24} /> Role
+              <span className="flex gap-2 p-2 text-gray-700 text-md">
+                <FaUniversalAccess size={19} /> Role
               </span>
               <select
                 name="role"
                 id="role"
-                className="w-full p-4 text-gray-500 border border-gray-500 rounded-md placeholder:font-light"
+                className="w-full px-3 py-2 text-gray-500 border border-gray-500 rounded-md placeholder:font-light"
                 value={formData.role}
                 onChange={handleInputChange}
               >
@@ -163,8 +163,8 @@ function CreateUser() {
               </select>
             </div>
             <div className="flex flex-col mb-3">
-              <span className="flex gap-2 p-1 text-lg text-gray-700">
-                <RiLockPasswordFill size={24} /> Password
+              <span className="flex gap-2 p-2 text-gray-700 text-md">
+                <RiLockPasswordFill size={20} /> Password
               </span>
               <input
                 type="text"
@@ -173,22 +173,22 @@ function CreateUser() {
                 id="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full p-4 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
+                className="w-full px-3 py-2 border border-gray-500 rounded-md placeholder:font-light placeholder:text-gray-500"
               />
             </div>
             <div className="flex gap-3">
               <button
-                className="flex justify-center w-full gap-2 p-4 mt-3 mb-2 text-lg text-white bg-black rounded-lg gap hover:bg-orange-400 hover:text-black hover:border hover:border-orange-500"
+                 className="flex justify-center w-full gap-2 p-3 mt-3 mb-2 text-white bg-black rounded-lg text-md gap hover:bg-red-400 hover:text-black hover:border hover:border-red-500"
                 onClick={handleUser}
               >
-                <PiAlignCenterHorizontalFill size={28} />
+                <PiAlignCenterHorizontalFill size={22} />
                 Submit
               </button>
               <button
-                className="flex justify-center w-full gap-2 p-4 mt-3 mb-2 text-lg text-white bg-black rounded-lg gap hover:bg-red-400 hover:text-black hover:border hover:border-red-500"
+                className="flex justify-center w-full gap-2 p-3 mt-3 mb-2 text-white bg-black rounded-lg text-md gap hover:bg-red-400 hover:text-black hover:border hover:border-red-500"
                 onClick={cancel}
               >
-                <MdCancel size={28} /> Cancel
+                <MdCancel size={22} /> Cancel
               </button>
             </div>
           </div>
