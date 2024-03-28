@@ -49,7 +49,17 @@ function App() {
         .get(`http://localhost:3000/sts/value/${userId}`)
         .then((response) => {
           console.log(response.data); // This will log the array of Sts documents
-          setStsData(response.data);
+          if (typeof response.data === "string") {
+            setStsData([
+              {
+                _id: "default",
+                wardno: "Dhaka Center",
+                gpscoords: "23.8103,90.4125",
+              },
+            ]);
+          } else {
+            setStsData(response.data);
+          }
         })
         .catch((error) => {
           console.error("Error fetching Sts data:", error);
@@ -250,7 +260,7 @@ function App() {
                 ref={destiantionRef}
               />
             </Autocomplete> */}
-<span className="p-3 font-semibold">Destination Landfill No :</span>
+            <span className="p-3 font-semibold">Destination Landfill No :</span>
             <Select
               m={4}
               bg='"white"'
