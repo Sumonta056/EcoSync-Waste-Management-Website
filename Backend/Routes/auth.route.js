@@ -83,21 +83,25 @@ router.post("/login", async (req, res, next) => {
 // });
 
 
+
+
 function sendEmail({ recipient_email, OTP }) {
   return new Promise((resolve, reject) => {
-    var transporter = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
-        user: "62c903b7bd0183",
-        pass: "15807a81c80047",
+        user: "siam.ridwan60@gmail.com",
+        pass: "yzxn mfrr zqft ajsm",
       },
     });
 
     const mail_configs = {
-      from: "ridwanur60@student.sust.edu",
+      from: "siam.ridwan60@gmail.com",
       to: recipient_email,
-      subject: "KODING 101 PASSWORD RECOVERY",
+      subject: "Team EcoSync PASSWORD RECOVERY",
       html: `<!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -114,14 +118,14 @@ function sendEmail({ recipient_email, OTP }) {
       <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Koding 101</a>
     </div>
     <p style="font-size:1.1em">Hi,</p>
-    <p>Thank you for choosing Koding 101. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
+    <p>Thank you for choosing Team EcoSync. Use the following OTP to complete your Password Recovery Procedure. OTP is valid for 5 minutes</p>
     <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${OTP}</h2>
-    <p style="font-size:0.9em;">Regards,<br />Koding 101</p>
+    <p style="font-size:0.9em;">Regards,<br />Team EcoSync</p>
     <hr style="border:none;border-top:1px solid #eee" />
     <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-      <p>Koding 101 Inc</p>
-      <p>1600 Amphitheatre Parkway</p>
-      <p>California</p>
+      <p>Team EcoSync</p>
+      <p>Shahjalal University of Science and Technology</p>
+      <p>Sylhet</p>
     </div>
   </div>
 </div>
