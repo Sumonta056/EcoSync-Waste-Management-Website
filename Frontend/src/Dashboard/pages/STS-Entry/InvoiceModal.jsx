@@ -2,8 +2,6 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { toPng } from "html-to-image";
 import { jsPDF } from "jspdf";
-import { MdOutlineAttachMoney } from "react-icons/md";
-import { RiPinDistanceFill } from "react-icons/ri";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
@@ -30,6 +28,8 @@ const InvoiceModal = ({
   const calculateActionValue = (loadedCost, unloadedCost) => {
     return unloadedCost + (3 / 5) * (loadedCost - unloadedCost);
   };
+  
+
   const SaveAsPDFHandler = () => {
     const dom = document.getElementById("print");
     toPng(dom)
@@ -91,7 +91,7 @@ const InvoiceModal = ({
         console.error("oops, something went wrong!", error);
       });
   };
-  console.log(items, vehicleData);
+  //console.log(items, vehicleData);
   //console.log(selectedTransfer);
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -216,11 +216,11 @@ const InvoiceModal = ({
                       >
                         <span className="flex gap-1 font-bold">
                           {" "}
-                          <MdOutlinePendingActions size={20} /> Action Value:
+                          <MdOutlinePendingActions size={20} /> Cost per kilometre:
                         </span>
                         {vehicleData.map((vehicle) => {
                           if (vehicle._id === item.vehicleregno) {
-                            console.log("bigyes");
+                            //console.log("bigyes");
                             const loadedCost = parseFloat(
                               vehicle.loadedfuelcost
                             );
@@ -231,7 +231,7 @@ const InvoiceModal = ({
                               loadedCost,
                               unloadedCost
                             );
-                            return <span key={vehicle._id}>{actionValue}</span>;
+                            return <span key={vehicle._id}>৳{actionValue.toFixed(2)}</span>;
                           }
                           return null;
                         })}
@@ -249,13 +249,36 @@ const InvoiceModal = ({
                     </div>
 
                     {/* Display Total */}
-                    <div className="flex justify-between w-full gap-32 px-2 pt-2 border-t border-black/10">
-                      <span className="flex gap-2 font-bold">
-                        {" "}
-                        <RiMoneyDollarBoxFill size={20} /> Total Cost:
-                      </span>
-                      <span>৳{total}</span>
-                    </div>
+                    {items.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex justify-between w-full gap-32 px-2 pt-2 border-t border-black/10"
+                      >
+                        <span className="flex gap-1 font-bold">
+                          {" "}
+                          <RiMoneyDollarBoxFill size={20} /> Total Cost:
+                        </span>
+                        {vehicleData.map((vehicle) => {
+                          if (vehicle._id === item.vehicleregno) {
+                            //console.log("bigyes");
+                            const loadedCost = parseFloat(
+                              vehicle.loadedfuelcost
+                            );
+                            const unloadedCost = parseFloat(
+                              vehicle.unloadedfuelcost
+                            );
+                            const actionValue = calculateActionValue(
+                              loadedCost,
+                              unloadedCost
+                            );
+                            const totalValue = (actionValue*distance).toFixed(2);
+                            return <span key={vehicle._id}>৳{totalValue}</span>;
+                          }
+                          return null;
+                        })}
+                      </div>
+                    ))}
+
                   </div>
                 </div>
               </div>
