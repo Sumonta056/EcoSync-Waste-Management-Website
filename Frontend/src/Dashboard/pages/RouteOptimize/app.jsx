@@ -5,18 +5,16 @@ import {
   Flex,
   HStack,
   IconButton,
-  Input,
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
-import { FaLocationArrow, FaTimes } from "react-icons/fa";
+import { FaLocationArrow } from "react-icons/fa";
 import { Select } from "@chakra-ui/react";
 import { FaSearchLocation } from "react-icons/fa";
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
-  Autocomplete,
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useRef, useState } from "react";

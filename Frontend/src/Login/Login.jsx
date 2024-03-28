@@ -37,7 +37,7 @@ export default function ExampleV2() {
   };
   const handleForget = () => {
     navigate("/auth/reset-password/initiate");
-  }
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -76,20 +76,20 @@ export default function ExampleV2() {
             <div className="w-5/6 px-26">
               <div className="block bg-gray-900 rounded-lg shadow-lg">
                 <div className="g-0 lg:flex lg:flex-wrap">
-                <div className="absolute flex justify-center mx-auto">
-                            <Link
-                              to="/"
-                              style={{
-                                padding: "20px 25px",
-                                textDecoration: "none",
-                                fontSize: "15px",
-                                display: "inline-block",
-                                color: "#e7e3e3",
-                              }}
-                            >
-                              <IoArrowBackCircleSharp size={50} />
-                            </Link>
-                          </div>
+                  <div className="absolute flex justify-center mx-auto cursor-pointer">
+                    <Link
+                      to="/"
+                      style={{
+                        padding: "20px 25px",
+                        textDecoration: "none",
+                        fontSize: "15px",
+                        display: "inline-block",
+                        color: "#e7e3e3",
+                      }}
+                    >
+                      <IoArrowBackCircleSharp size={50} />
+                    </Link>
+                  </div>
                   {/* <!-- Left column container--> */}
                   <div className="px-4 md:px-0 lg:w-6/12">
                     <div className="md:mx-6 md:p-12">
@@ -153,15 +153,9 @@ export default function ExampleV2() {
                               Login
                             </button>
                           </TERipple>
-
-
-                          {/* <!--Forgot password link-->
-
-                          <a href="">Forgot password?</a> */}
-                        </div>
-                        {/* <!--Forgot password link--> */}
-                        <div>
-                          <a onClick={handleForget}>Forgot password?</a>
+                          <div className="mt-2 cursor-pointer">
+                            <a onClick={handleForget}>Forgot password?</a>
+                          </div>
                         </div>
                       </form>
                     </div>

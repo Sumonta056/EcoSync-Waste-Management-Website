@@ -1,18 +1,22 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { EmailOTPContext } from './Forget-pass1';
-import { useContext } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
+import { Modal } from "antd";
 
-export default function ForgetPass2 () {
-    const location = useLocation();
-    const { email, OTP } = location.state;
-    const navigate = useNavigate();
-    const [timerCount, setTimer] = React.useState(60);
-    const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
-    const [disable, setDisable] = useState(true);
-    console.log(email, OTP);
+export default function ForgetPass2() {
+  const [visible, setVisible] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const location = useLocation();
+  const { email, OTP } = location.state;
+  const navigate = useNavigate();
+  const [timerCount, setTimer] = React.useState(60);
+  const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
+  const [disable, setDisable] = useState(true);
+  console.log(email, OTP);
 
   function resendOTP() {
     if (disable) return;
@@ -29,8 +33,12 @@ export default function ForgetPass2 () {
 
   function verfiyOTP() {
     if (parseInt(OTPinput.join("")) === OTP) {
-        console.log(OTP)
-      navigate("/auth/change-password", { state: { email } });
+      console.log(OTP);
+      setModalText("OTP match successful, now you can change your password");
+      setVisible(true);
+      setTimeout(() => {
+        navigate("/auth/change-password", { state: { email } });
+      }, 2000);
       return;
     }
     alert(
@@ -53,11 +61,25 @@ export default function ForgetPass2 () {
   }, [disable]);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
-      <div className="bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-        <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
-          <div className="flex flex-col items-center justify-center text-center space-y-2">
-            <div className="font-semibold text-3xl">
+    <div className="flex items-center justify-center w-screen h-screen bg-neutral-700">
+      <div className="absolute flex left-84 top-28">
+        <Link
+          to="/login"
+          style={{
+            padding: "20px 25px",
+            textDecoration: "none",
+            fontSize: "15px",
+            display: "inline-block",
+            color: "#e7e3e3",
+          }}
+        >
+          <IoArrowBackCircleSharp size={50} />
+        </Link>
+      </div>
+      <div className="w-full max-w-xl px-6 pt-10 mx-auto bg-gray-800 shadow-xl pb-9 rounded-2xl">
+        <div className="flex flex-col w-full max-w-md mx-auto space-y-16">
+          <div className="flex flex-col items-center justify-center space-y-2 text-center">
+            <div className="text-3xl font-semibold text-gray-300">
               <p>Email Verification</p>
             </div>
             <div className="flex flex-row text-sm font-medium text-gray-400">
@@ -68,11 +90,11 @@ export default function ForgetPass2 () {
           <div>
             <form>
               <div className="flex flex-col space-y-16">
-                <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                <div className="flex flex-row items-center justify-between w-full max-w-xs mx-auto">
                   <div className="w-16 h-16 ">
                     <input
                       maxLength="1"
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="flex flex-col items-center justify-center w-full h-full px-5 text-lg text-center bg-white border border-gray-200 outline-none rounded-xl focus:bg-gray-50 focus:ring-1 ring-blue-700"
                       type="text"
                       name=""
                       id=""
@@ -89,7 +111,7 @@ export default function ForgetPass2 () {
                   <div className="w-16 h-16 ">
                     <input
                       maxLength="1"
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="flex flex-col items-center justify-center w-full h-full px-5 text-lg text-center bg-white border border-gray-200 outline-none rounded-xl focus:bg-gray-50 focus:ring-1 ring-blue-700"
                       type="text"
                       name=""
                       id=""
@@ -106,7 +128,7 @@ export default function ForgetPass2 () {
                   <div className="w-16 h-16 ">
                     <input
                       maxLength="1"
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="flex flex-col items-center justify-center w-full h-full px-5 text-lg text-center bg-white border border-gray-200 outline-none rounded-xl focus:bg-gray-50 focus:ring-1 ring-blue-700"
                       type="text"
                       name=""
                       id=""
@@ -123,7 +145,7 @@ export default function ForgetPass2 () {
                   <div className="w-16 h-16 ">
                     <input
                       maxLength="1"
-                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                      className="flex flex-col items-center justify-center w-full h-full px-5 text-lg text-center bg-white border border-gray-200 outline-none rounded-xl focus:bg-gray-50 focus:ring-1 ring-blue-700"
                       type="text"
                       name=""
                       id=""
@@ -143,14 +165,14 @@ export default function ForgetPass2 () {
                   <div>
                     <a
                       onClick={() => verfiyOTP()}
-                      className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
+                      className="flex flex-row items-center justify-center w-full py-5 text-sm text-center text-white bg-blue-700 border border-none shadow-sm outline-none cursor-pointer rounded-xl"
                     >
                       Verify Account
                     </a>
                   </div>
 
-                  <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                    <p>Didn't recieve code?</p>{" "}
+                  <div className="flex flex-row items-center justify-center space-x-1 text-sm font-medium text-center text-gray-500">
+                    <p>Didn&apos;t recieve code?</p>{" "}
                     <a
                       className="flex flex-row items-center"
                       style={{
@@ -169,6 +191,21 @@ export default function ForgetPass2 () {
           </div>
         </div>
       </div>
+      <Modal
+        title="Notification"
+        visible={visible}
+        onOk={() => setVisible(false)}
+        onCancel={() => setVisible(false)}
+        okButtonProps={{
+          style: {
+            backgroundColor: "green",
+            borderColor: "green",
+            color: "white",
+          },
+        }}
+      >
+        <p>{modalText}</p>
+      </Modal>
     </div>
   );
 }
