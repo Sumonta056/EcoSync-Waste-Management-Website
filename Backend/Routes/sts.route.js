@@ -39,6 +39,23 @@ router.get("/:stsId", async (req, res, next) => {
   }
 });
 
+router.get("/value/:userId", async (req, res) => {
+  const { userId } = req.params;
+  console.log(userId);
+
+  try {
+    const sts = await Sts.find({ managerId: userId }, "wardno gpscoords");
+    if (!sts.length) {
+      return res.send("No Sts found");
+    }
+    console.log(sts);
+    res.send(sts);
+  } catch (err) {
+    console.log(err.message);
+    res.send("Internal Server Error");
+  }
+});
+
 router.put("/:stsId", async (req, res, next) => {
   try {
     const sts = await Sts.findById(req.params.stsId);
@@ -62,7 +79,6 @@ router.put("/:stsId", async (req, res, next) => {
   }
 });
 
-
 // DELETE method for deleting a sts (System Admin access)
 router.delete("/:stsId", async (req, res, next) => {
   try {
@@ -79,6 +95,5 @@ router.delete("/:stsId", async (req, res, next) => {
     res.send("Internal Server Error");
   }
 });
-
 
 module.exports = router;

@@ -20,7 +20,9 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useRef, useState } from "react";
-
+import axios from "axios";
+import { KJUR } from "jsrsasign";
+import { useEffect } from "react";
 const center = { lat: 23.8041, lng: 90.4152 };
 
 function App() {
@@ -28,6 +30,42 @@ function App() {
     googleMapsApiKey: "AIzaSyAds41EFa5EPmBRSFkcDB3Sh92pfpjeixI",
     libraries: ["places"],
   });
+  const [stsData, setStsData] = useState([]);
+  const [landfillData, setLandfillData] = useState([]);
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    let userId = null;
+
+    console.log("Access token");
+
+    if (token) {
+      const decodedToken = KJUR.jws.JWS.parse(token);
+      userId = decodedToken.payloadObj?.id;
+      console.log(userId);
+    }
+
+    if (userId) {
+      axios
+        .get(`http://localhost:3000/sts/value/${userId}`)
+        .then((response) => {
+          console.log(response.data); // This will log the array of Sts documents
+          setStsData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching Sts data:", error);
+        });
+
+      axios
+        .get("http://localhost:3000/landfill")
+        .then((response) => {
+          console.log(response.data); // This will log the array of landfill documents
+          setLandfillData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching landfill data:", error);
+        });
+    }
+  }, []);
 
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -185,17 +223,23 @@ function App() {
             {/* <Autocomplete>
               <Input type="text" placeholder="Origin" ref={originRef} />
             </Autocomplete> */}
+            <span className="p-3 font-semibold">STS Ward No :</span>
             <Select
               m={4}
               className="p-3 bg-neutral-300"
               color="black"
-              placeholder="Choose Your STS"
+              placeholder="Choose Your STS Ward No"
               size="lg"
               ref={originRef}
             >
-              <option value="23.815257908191324, 90.42551368050358">NSU</option>
+              {/* <option value="23.815257908191324, 90.42551368050358">NSU</option>
               <option value="23.81528113133229, 90.42804797998136">IUB</option>
-              <option value="option3">Option 3</option>
+              <option value="option3">Option 3</option> */}
+              {stsData.map((sts) => (
+                <option key={sts._id} value={sts.gpscoords}>
+                  {sts.wardno}
+                </option>
+              ))}
             </Select>
           </Box>
           <Box flexGrow={1}>
@@ -206,20 +250,25 @@ function App() {
                 ref={destiantionRef}
               />
             </Autocomplete> */}
-
+<span className="p-3 font-semibold">Destination Landfill No :</span>
             <Select
               m={4}
               bg='"white"'
               borderColor="white"
               color="black"
               className="p-3 bg-neutral-300"
-              placeholder="Choose Destination Landfill"
+              placeholder="Choose Destination Landfill No"
               size="lg"
               ref={destiantionRef}
             >
-              <option value="23.815257908191324, 90.42551368050358">NSU</option>
+              {/* <option value="23.815257908191324, 90.42551368050358">NSU</option>
               <option value="23.81528113133229, 90.42804797998136">IUB</option>
-              <option value="option3">Option 3</option>
+              <option value="option3">Option 3</option> */}
+              {landfillData.map((landfill) => (
+                <option key={landfill._id} value={landfill.gpscoords}>
+                  {landfill.siteno}
+                </option>
+              ))}
             </Select>
           </Box>
 
