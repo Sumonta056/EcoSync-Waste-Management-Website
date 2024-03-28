@@ -15,6 +15,7 @@ export default function STSHistory() {
   const [vehicles, setVehicles] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTransfer, setSelectedTransfer] = useState(null);
+  const [distance, setDistance] = useState("");
   // const[transfers, setTransfers] = useState([]);
 
   useEffect(() => {
@@ -98,10 +99,44 @@ export default function STSHistory() {
     }
   }, [wards, sites]); // Add sites as a dependency
 
-  const handlePrintClick = (transfer) => {
-    setSelectedTransfer(transfer);
-    setIsModalOpen(true);
-  };
+ // Function to fetch GPS coordinates of STS site based on ID
+ const fetchSTSGPSCoordinates = (wardId) => {
+  const correspondingWard = wards.find((ward) => ward._id === wardId);
+  return correspondingWard.gpscoords;
+};
+
+// Function to fetch GPS coordinates of landfill site based on ID
+const fetchLandfillGPSCoordinates = (siteId) => {
+  const correspondingSite = sites.find((site) => site._id === siteId);
+  return correspondingSite.gpscoords;
+};
+
+// Function to calculate distance between two sets of GPS coordinates
+const calculateDistance = (stsCoordinates, landfillCoordinates) => {
+  // Replace with your distance calculation logic
+  // For demonstration, let's assume a simple calculation based on latitude difference
+  if (!stsCoordinates || !landfillCoordinates) return null;
+
+  const [stsLat, stsLng] = stsCoordinates.split(",").map(parseFloat);
+  const [landfillLat, landfillLng] = landfillCoordinates.split(",").map(parseFloat);
+
+  // Approximate calculation of distance based on latitude difference
+  const distanceInKm = Math.abs(stsLat - landfillLat) * 111.32;
+
+  return distanceInKm.toFixed(2); // Round to 2 decimal places
+};
+
+
+const handlePrintClick = (transfer) => {
+  setSelectedTransfer(transfer);
+  setIsModalOpen(true);
+  const stsCoordinates = fetchSTSGPSCoordinates(transfer.wardno);
+    const landfillCoordinates = fetchLandfillGPSCoordinates(transfer.siteno);
+
+    // Calculate distance between STS and landfill
+    const calculatedDistance = calculateDistance(stsCoordinates, landfillCoordinates);
+    setDistance(calculatedDistance);
+};
 
   // Render loading state for the first row
   if (loading) {
@@ -241,21 +276,20 @@ export default function STSHistory() {
         </table>
       </div>
       {isModalOpen && selectedTransfer && (
-        <InvoiceModal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          invoiceInfo={selectedTransfer}
-          items={stsData.filter(
-            (transfer) => transfer._id === selectedTransfer._id
-          )}
-          vehicleData={vehicles.filter(
-            (vehicle) => vehicle._id === selectedTransfer.vehicleregno
-          )}
-          correspondingWard={selectedTransfer.correspondingWard} // Pass corresponding Ward number
-          correspondingSite={selectedTransfer.correspondingSite}
-          // Pass other necessary props to InvoiceModal
-        />
-      )}
+
+  <InvoiceModal
+    isOpen={isModalOpen}
+    setIsOpen={setIsModalOpen}
+    invoiceInfo={selectedTransfer}
+    items={stsData.filter(transfer => transfer._id === selectedTransfer._id)}
+    vehicleData={vehicles.filter(vehicle => vehicle._id === selectedTransfer.vehicleregno)}
+    correspondingWard={selectedTransfer.correspondingWard} // Pass corresponding Ward number
+    correspondingSite={selectedTransfer.correspondingSite}
+    distance={distance}
+    // Pass other necessary props to InvoiceModal
+  />
+)}
+
     </div>
   );
 }

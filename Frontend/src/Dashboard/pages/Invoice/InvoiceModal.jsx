@@ -11,7 +11,6 @@ const InvoiceModal = ({
   onAddNextInvoice,
   selectedTransfer,
   distance,
-  total,
   vehicleData,
 }) => {
   function closeModal() {
@@ -21,9 +20,33 @@ const InvoiceModal = ({
     setIsOpen(false);
     onAddNextInvoice();
   };
-  const calculateActionValue = (loadedCost, unloadedCost) => {
-    return unloadedCost + (3/5) * (loadedCost - unloadedCost);
-  };
+  
+ // Calculate total action value
+//console.log("Items:", items);
+//console.log("Vehicle Data:", vehicleData);
+const totalActionValue = items.reduce((acc, item) => {
+  const vehicle = vehicleData.find((v) => v.regnumber === item.selectedVehicle);
+  if (vehicle) {
+    const loadedCost = parseFloat(vehicle.loadedfuelcost);
+    const unloadedCost = parseFloat(vehicle.unloadedfuelcost);
+    console.log("Loaded Cost:", loadedCost);
+    console.log("Unloaded Cost:", unloadedCost);
+    const actionValue = calculateActionValue(loadedCost, unloadedCost);
+    console.log("Action Value:", actionValue);
+    return acc + actionValue;
+  }
+  return acc;
+}, 0);
+console.log("Total Action Value:", totalActionValue);
+const calculateTotalCost = (totalActionValue, distance) => {
+  console.log(totalActionValue, distance);
+  return totalActionValue * distance;
+};
+const totalCost = calculateTotalCost(totalActionValue, distance);
+console.log(totalCost);
+
+
+  
  const SaveAsPDFHandler = () => {
     const dom = document.getElementById('print');
     toPng(dom)
@@ -154,9 +177,6 @@ const InvoiceModal = ({
     <td>{item.selectedVehicle}</td>
     {vehicleData.map((vehicle) => {
       if (vehicle.regnumber === item.selectedVehicle) {
-        const loadedCost = parseFloat(vehicle.loadedfuelcost);
-        const unloadedCost = parseFloat(vehicle.unloadedfuelcost);
-        const actionValue = unloadedCost + (3 / 5) * (loadedCost - unloadedCost);
         return (
           <Fragment key={vehicle.regnumber}>
             <td>{vehicle.type}</td>
@@ -176,34 +196,25 @@ const InvoiceModal = ({
                     </tbody>
                   </table>
 
+                  {/* Total values */}
                   <div className="mt-4 flex flex-col items-end space-y-2">
-                  {items.map((item) => (
-                      <div key={item.id} className="flex w-full justify-between border-t border-black/10 pt-2">
-                        <span className="font-bold">Action Value:</span>
-                        {vehicleData.map((vehicle) => {
-                          if (vehicle.regnumber === item.selectedVehicle) {
-                            const loadedCost = parseFloat(vehicle.loadedfuelcost);
-                            const unloadedCost = parseFloat(vehicle.unloadedfuelcost);
-                            const actionValue = calculateActionValue(loadedCost, unloadedCost);
-                            return <span key={vehicle.regnumber}>{actionValue}</span>;
-                          }
-                          return null;
-                        })}
-                      </div>
-                    ))}
-                   {/* Display Distance */}
-          <div className="flex w-full justify-between border-t border-black/10 pt-2">
-            <span className="font-bold">Distance:</span>
-            <span>{distance} KM</span>
-          </div>
-          
-          {/* Display Total */}
-          <div className="flex w-full justify-between border-t border-black/10 pt-2">
-            <span className="font-bold">Total Cost:</span>
-            <span>৳{total}</span>
-          </div>
-        
-                    
+                    {/* Total Action Value */}
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Cost Per Kilometre:</span>
+                      <span>{totalActionValue}</span>
+                    </div>
+
+                    {/* Distance */}
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Distance:</span>
+                      <span>{distance} KM</span>
+                    </div>
+
+                    {/* Total Cost */}
+                    <div className="flex w-full justify-between border-t border-black/10 pt-2">
+                      <span className="font-bold">Total Cost:</span>
+                      <span>৳{totalCost}</span> {/* Display the total value here */}
+                    </div>
                   </div>
                 </div>
               </div>
