@@ -10,6 +10,10 @@ const TransferEntryScheme = new Schema({
     type: String,
     required: true,
   },
+  siteno: {
+    type: String,
+    required: true,
+  },
   vehicleregno: {
     type: String,
     required: true,

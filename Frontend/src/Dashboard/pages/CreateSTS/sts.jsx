@@ -88,7 +88,7 @@ export default function STS() {
             label="GPS Coordinates"
             name="gpscoords"
             rules={[
-              { required: true, message: "Please enter GPS coordinates" },
+              { required: true, pattern: /^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/, message: "Please enter GPS coordinates" },
             ]}
           >
             <Input placeholder="Enter GPS Coordinates" />
