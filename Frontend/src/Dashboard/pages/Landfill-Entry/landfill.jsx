@@ -38,12 +38,17 @@ export default function Landfill() {
         const siteNumbersResponse = await axios.get(
           "http://localhost:3000/landfill"
         );
-        setSiteNumbers(
-          siteNumbersResponse.data.map((landfill) => ({
-            id: landfill._id,
-            siteNumber: landfill.siteno,
-          }))
-        );
+        if (Array.isArray(siteNumbersResponse.data)) {
+          const managerSites = siteNumbersResponse.data.filter(
+            (site) => site.managerId === userId
+          );
+          setSiteNumbers(
+            managerSites.map((landfill) => ({
+              id: landfill._id,
+              siteNumber: landfill.siteno,
+            }))
+          );
+        }
 
         const wardNumbersResponse = await axios.get(
           "http://localhost:3000/sts"
@@ -131,7 +136,7 @@ export default function Landfill() {
           </Form.Item>
           <div className="flex gap-2">
             <Form.Item
-             className="w-full block-style"
+              className="w-full block-style"
               label="Landfill Site No"
               name="siteno"
               rules={[
@@ -147,7 +152,7 @@ export default function Landfill() {
               </Select>
             </Form.Item>
             <Form.Item
-             className="w-full block-style"
+              className="w-full block-style"
               label="STS No"
               name="wardno"
               rules={[{ required: true, message: "Please select STS ward no" }]}

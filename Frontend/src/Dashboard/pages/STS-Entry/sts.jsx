@@ -42,10 +42,10 @@ export default function STS() {
           wardNumbersResponse.data.map((sts) => ({
             id: sts._id,
             wardNumber: sts.wardno,
-            stsGpsCoords:sts.gpscoords,
+            stsGpsCoords: sts.gpscoords,
           }))
         );
-        
+
         const siteNumbersResponse = await axios.get(
           "http://localhost:3000/landfill"
         );
@@ -53,7 +53,7 @@ export default function STS() {
           siteNumbersResponse.data.map((landfill) => ({
             id: landfill._id,
             siteNumber: landfill.siteno,
-            landfillGpsCoords:landfill.gpscoords,
+            landfillGpsCoords: landfill.gpscoords,
           }))
         );
         const stsManagerResponse = await axios.get(
@@ -82,47 +82,76 @@ export default function STS() {
         console.error(error);
       }
     };
-
     fetchData();
+
+    if (userId) {
+      axios
+        .get(`http://localhost:3000/sts`)
+        .then((response) => {
+          console.log(response);
+          if (Array.isArray(response.data)) {
+            const managerWards = response.data.filter(
+              (ward) => ward.managerId === userId
+            );
+            setWardNumbers(managerWards);
+            console.log(managerWards);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching ward numbers:", error);
+        });
+    }
   }, []);
-console.log(wardNumbers);
-const calculateFuelAllocationCostPerKm = (cUnloaded, cLoaded, capacity, wasteVolume) => {
-  try {
-    // Convert capacity to a number by removing the "TON" suffix
-    const numericCapacity = parseFloat(capacity.replace(' TON', ''));
-    const numericCUnloaded = parseFloat(cUnloaded);
-    const numericCLoaded = parseFloat(cLoaded);
-    const numericWasteVolume = parseFloat(wasteVolume);
-    
-    // Calculate the fuel allocation cost per kilometer using the provided formula
-    let perKmCost = numericCUnloaded + (numericWasteVolume / numericCapacity) * (numericCLoaded - numericCUnloaded);
+  console.log(wardNumbers);
+  const calculateFuelAllocationCostPerKm = (
+    cUnloaded,
+    cLoaded,
+    capacity,
+    wasteVolume
+  ) => {
+    try {
+      // Convert capacity to a number by removing the "TON" suffix
+      const numericCapacity = parseFloat(capacity.replace(" TON", ""));
+      const numericCUnloaded = parseFloat(cUnloaded);
+      const numericCLoaded = parseFloat(cLoaded);
+      const numericWasteVolume = parseFloat(wasteVolume);
 
-    console.log("Per Km Cost:", perKmCost);
+      // Calculate the fuel allocation cost per kilometer using the provided formula
+      let perKmCost =
+        numericCUnloaded +
+        (numericWasteVolume / numericCapacity) *
+          (numericCLoaded - numericCUnloaded);
 
-    return perKmCost;
-  } catch (error) {
-    console.error('Error calculating fuel allocation cost per kilometer:', error.message);
-    return null;
-  }
-};
+      console.log("Per Km Cost:", perKmCost);
 
-  
+      return perKmCost;
+    } catch (error) {
+      console.error(
+        "Error calculating fuel allocation cost per kilometer:",
+        error.message
+      );
+      return null;
+    }
+  };
+
   const onFinish = async (values) => {
     let successMessage = "Transfer entry added successfully";
     let errorMessage = "Failed to add transfer entry";
-  
+
     try {
       setLoading(true);
-  
+
       const token = localStorage.getItem("access_token");
       const decodedToken = KJUR.jws.JWS.parse(token);
       const userId = decodedToken.payloadObj?.id;
-  
+
       const updatedValues = { ...values, stsmanagername: userId };
-  
+
       // Fetch the selected vehicle's information based on the selected vehicle ID
-      const selectedVehicle = vehicleNumbers.find(vehicle => vehicle.id === values.vehicleregno);
-  
+      const selectedVehicle = vehicleNumbers.find(
+        (vehicle) => vehicle.id === values.vehicleregno
+      );
+
       // Calculate the fuel allocation cost per kilometer
       const fuelAllocationCostPerKm = calculateFuelAllocationCostPerKm(
         selectedVehicle.unloadedfuelcost,
@@ -130,27 +159,32 @@ const calculateFuelAllocationCostPerKm = (cUnloaded, cLoaded, capacity, wasteVol
         selectedVehicle.capacity,
         parseFloat(values.wastevolume) // Convert the waste volume to a floating-point number
       );
-  
+
       console.log("Fuel Allocation Cost Per Km:", fuelAllocationCostPerKm);
-  
+
       // Calculate distance between STS and landfill
       const stsgpscoords = wardNumbers.find((sts) => sts.id == values.wardno);
       console.log("STS GPS Coordinates:", stsgpscoords);
-      const landfillgpscoords = siteNumbers.find((landfill) => landfill.id == values.siteno);
+      const landfillgpscoords = siteNumbers.find(
+        (landfill) => landfill.id == values.siteno
+      );
       console.log("Landfill GPS Coordinates:", landfillgpscoords);
 
-      const distance = calculateDistance(stsgpscoords.stsGpsCoords, landfillgpscoords.landfillGpsCoords);
+      const distance = calculateDistance(
+        stsgpscoords.stsGpsCoords,
+        landfillgpscoords.landfillGpsCoords
+      );
       //console.log("Distance:", distance);
-  
+
       // Add perKmCost and distance to updatedValues
       updatedValues.perkmcost = fuelAllocationCostPerKm;
       updatedValues.distance = distance;
-  
+
       const { data } = await axios.post(
         "http://localhost:3000/transfer",
         updatedValues
       );
-        console.log(updatedValues);
+      console.log(updatedValues);
       if (data.error) {
         throw new Error(data.error);
       }
@@ -162,20 +196,27 @@ const calculateFuelAllocationCostPerKm = (cUnloaded, cLoaded, capacity, wasteVol
       setLoading(false);
     }
   };
-  
+
   const calculateDistance = (stsCoords, landfillCoords) => {
     try {
       const [stsLat, stsLng] = stsCoords.split(",").map(parseFloat);
-      const [landfillLat, landfillLng] = landfillCoords.split(",").map(parseFloat);
-  
-      if (isNaN(stsLat) || isNaN(stsLng) || isNaN(landfillLat) || isNaN(landfillLng)) {
+      const [landfillLat, landfillLng] = landfillCoords
+        .split(",")
+        .map(parseFloat);
+
+      if (
+        isNaN(stsLat) ||
+        isNaN(stsLng) ||
+        isNaN(landfillLat) ||
+        isNaN(landfillLng)
+      ) {
         throw new Error("Invalid coordinates provided");
       }
-  
+
       const R = 6371; // Radius of the Earth in kilometers
       const dLat = deg2rad(landfillLat - stsLat);
       const dLng = deg2rad(landfillLng - stsLng);
-  
+
       const a =
         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
         Math.cos(deg2rad(stsLat)) *
@@ -184,32 +225,30 @@ const calculateFuelAllocationCostPerKm = (cUnloaded, cLoaded, capacity, wasteVol
           Math.sin(dLng / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       let distance = R * c;
-  
+
       if (isNaN(distance)) {
         throw new Error("Distance calculation resulted in NaN");
       }
       distance = Number(distance);
       // Convert distance to a string with two decimal points
       const formattedDistance = distance.toFixed(2);
-  
+
       return formattedDistance;
     } catch (error) {
-      console.error('Error calculating distance:', error.message);
+      console.error("Error calculating distance:", error.message);
       return null;
     }
   };
-  
-  
+
   const deg2rad = (deg) => {
     return deg * (Math.PI / 180);
   };
-  
 
   const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   return (
     <div className="w-[40rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="flex justify-center w-full gap-2 pb-2 text-2xl text-center text-stone-700">
-        <MdTransferWithinAStation size={30}/> STS Transfer Entry
+        <MdTransferWithinAStation size={30} /> STS Transfer Entry
       </strong>
       <div className="flex flex-col gap-3 mt-4">
         <Form layout="vertical" form={form} onFinish={onFinish}>
@@ -221,10 +260,10 @@ const calculateFuelAllocationCostPerKm = (cUnloaded, cLoaded, capacity, wasteVol
             name="wardno"
             rules={[{ required: true, message: "Please select STS Manager" }]}
           >
-            <Select placeholder="Select an STS Ward No">
+            <Select placeholder="Select a ward number">
               {wardNumbers.map((ward) => (
-                <Select.Option key={ward._id} value={ward.id}>
-                  {ward.wardNumber}
+                <Select.Option key={ward._id} value={ward.wardno}>
+                  {ward.wardno}
                 </Select.Option>
               ))}
             </Select>

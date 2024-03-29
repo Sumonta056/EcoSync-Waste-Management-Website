@@ -50,7 +50,7 @@ export default function Header() {
                       Messages
                     </strong>
                     <div className="py-1 mt-2 text-sm">
-                      This is messages panel.
+                      In future, User can sent message to each other from here.
                     </div>
                   </div>
                 </Popover.Panel>
@@ -84,7 +84,8 @@ export default function Header() {
                       Notifications
                     </strong>
                     <div className="py-1 mt-2 text-sm">
-                      This is notification panel.
+                      In Future, this will show notifications to admin if any
+                      activity is done.
                     </div>
                   </div>
                 </Popover.Panel>

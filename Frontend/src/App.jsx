@@ -22,6 +22,7 @@ import DumpHistory from "./Dashboard/pages/Dump History/index.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
+import About from "./Dashboard/pages/About/index.jsx"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -197,6 +198,12 @@ function App() {
           <Route
             index
             element={showTransaction ? <Transaction /> : <NOACCESS />}
+          />
+        </Route>
+        <Route path="/about" element={<Layout />}>
+          <Route
+            index
+            element={showTransaction ? <About /> : <NOACCESS />}
           />
         </Route>
         {/* Not Decided YET */}

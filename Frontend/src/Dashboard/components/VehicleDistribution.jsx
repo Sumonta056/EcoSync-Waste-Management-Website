@@ -1,15 +1,10 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { FaTruckFront } from "react-icons/fa6";
 
-const data = [
-  { name: "Male", value: 540 },
-  { name: "Female", value: 620 },
-  { name: "Other", value: 210 },
-];
-
+const COLORS = ["#00C49F", "#FFBB28", "#FF8042", "#7b42ff"];
 const RADIAN = Math.PI / 180;
-const COLORS = ["#00C49F", "#FFBB28", "#FF8042"];
 
 const renderCustomizedLabel = ({
   cx,
@@ -36,19 +31,19 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default function BuyerProfilePieChart() {
+export default function VehicleTypePieChart() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/user/")
+      .get("http://localhost:3000/vehicle/")
       .then((response) => {
-        const users = response.data;
-        const rolesCount = users.reduce((acc, user) => {
-          acc[user.role] = (acc[user.role] || 0) + 1;
+        const vehicles = response.data;
+        const typeCount = vehicles.reduce((acc, vehicle) => {
+          acc[vehicle.type] = (acc[vehicle.type] || 0) + 1;
           return acc;
         }, {});
 
-        const newData = Object.entries(rolesCount).map(([name, value]) => ({
+        const newData = Object.entries(typeCount).map(([name, value]) => ({
           name,
           value,
         }));
@@ -61,8 +56,8 @@ export default function BuyerProfilePieChart() {
 
   return (
     <div className="w-[30rem] h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col">
-      <strong className="font-medium text-gray-700">
-        User Distribution by Role
+      <strong className="flex justify-center gap-2 font-medium text-gray-700">
+      <FaTruckFront /> Transportation Vehicle Distribution
       </strong>
       <div className="flex-1 w-full mt-3 text-xs">
         <ResponsiveContainer width="100%" height="100%">

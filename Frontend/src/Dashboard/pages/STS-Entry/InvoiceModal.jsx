@@ -141,7 +141,7 @@ const InvoiceModal = ({
                       {items.map((item, index) => (
                         <div
                           key={index}
-                          className="flex justify-between gap-2 mb-2 border-2 border-gray-100"
+                          className="flex flex-wrap justify-between gap-2 mb-2 border-2 border-gray-100"
                         >
                           <div className="flex gap-2">
                             <span className="p-2 bg-gray-200">Date:</span>

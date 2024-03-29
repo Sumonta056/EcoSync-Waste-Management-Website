@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Link, useLocation } from "react-router-dom";
 import { FaTree } from "react-icons/fa6";
+import { FaTrashCanArrowUp } from "react-icons/fa6";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -105,8 +106,8 @@ export default function Sidebar() {
 
   return (
     <div className="flex flex-col p-3 bg-neutral-900 w-60">
-      <div className="flex items-center gap-2 px-1 pt-3">
-        <FaTree fontSize={30} color="green" />
+      <div className="flex items-center gap-2 px-2 pt-3">
+        <FaTrashCanArrowUp fontSize={24} color="green" />
         <span className="text-lg text-neutral-200">Eco-Sync</span>
       </div>
       <div className="py-5 flex flex-1 flex-col gap-0.5">
@@ -121,10 +122,10 @@ export default function Sidebar() {
             case "access-roles":
               return accessRoles && <SidebarLink key={link.key} link={link} />;
 
-            case "transaction":
-              return (
-                showTransaction && <SidebarLink key={link.key} link={link} />
-              );
+            // case "transaction":
+            //   return (
+            //     showTransaction && <SidebarLink key={link.key} link={link} />
+            //   );
             case "add-vehicle":
               return (
                 addVehicleEntry && <SidebarLink key={link.key} link={link} />

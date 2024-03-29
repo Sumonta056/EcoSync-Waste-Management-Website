@@ -173,7 +173,7 @@ export default function LandfillHistory() {
                     </span>
                   </td>
                   <td>{vehicle ? vehicle.regnumber : "Loading..."}</td>
-                  <td>{landfill.wastevolume}</td>
+                  <td>{landfill.wastevolume} TON</td>
                   <td>
                     <span className="px-2 py-1 capitalize rounded-md bg-rose-100 text-rose-600 text-md">
                       {landfill.arrivaltime}
