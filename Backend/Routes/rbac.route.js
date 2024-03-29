@@ -92,4 +92,31 @@ router.get("/roles/:roleId/permissions", async (req, res, next) => {
   }
 });
 
+router.get("/check/:roleName/permissions", async (req, res, next) => {
+  const { roleName } = req.params;
+
+  try {
+    // Find the role ID based on the role name
+    const role = await Role.findOne({ roleName });
+    if (!role) {
+      return res.status(404).send("Role not found");
+    }
+    console.log(role);
+
+    // Ensure the roleId is a number
+    const roleId = Number(role.roleId);
+    if (isNaN(roleId)) {
+      return res.status(400).send("Invalid role ID");
+    }
+    console.log(roleId);
+
+    // Find all permissions that match the role ID and have a status of true
+    const permissions = await Permission.find({ roleId, status: true });
+    res.json(permissions);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

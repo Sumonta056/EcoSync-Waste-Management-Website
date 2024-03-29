@@ -137,8 +137,8 @@ export default function RoleBasedPermission() {
                 <Select.Option value="User-List-Access">
                   User-List-Access
                 </Select.Option>
-                <Select.Option value="Show-Transaction">
-                  Show-Transaction
+                <Select.Option value="Show-Billing-Transaction">
+                  Show-Billing-Transaction
                 </Select.Option>
                 <Select.Option value="Add-Vehicle-Entry">
                   Add-Vehicle-Entry
@@ -147,12 +147,21 @@ export default function RoleBasedPermission() {
                 <Select.Option value="Create-Landfill">
                   Create-Landfill
                 </Select.Option>
-                <Select.Option value="STS-Entry">STS-Entry</Select.Option>
+                <Select.Option value="STS-Entry">Show-STS-Entry</Select.Option>
                 <Select.Option value="Landfill-Entry">
-                  Landfill-Entry
+                  Show-Landfill-Entry
                 </Select.Option>
                 <Select.Option value="Profile">Profile</Select.Option>
                 <Select.Option value="Access-Roles">Access-Roles</Select.Option>
+                <Select.Option value="See-Optimize-Route">
+                  See-Optimize-Route
+                </Select.Option>
+                <Select.Option value="See-Transfer-History">
+                  See-Transfer-History
+                </Select.Option>
+                <Select.Option value="See-Dump-History">
+                  See-Dump-History
+                </Select.Option>
               </Select>
             </Form.Item>
             <Form.Item

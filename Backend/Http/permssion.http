@@ -11,3 +11,6 @@ Content-Type: application/json
   "permissionName": "Dashboard",
   "status": true
 }
+
+
+GET http://localhost:3000/SYSTEM-ADMIN/permissions

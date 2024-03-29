@@ -32,7 +32,7 @@ export function getRoleStatus(status) {
           {status}
         </span>
       );
-    case "Show-Transaction":
+    case "Show-Billing-Transaction":
       return (
         <span className="px-2 py-1 capitalize rounded-md text-md text-rose-600 bg-rose-100">
           {status}
@@ -80,6 +80,27 @@ export function getRoleStatus(status) {
           {status}
         </span>
       );
+
+    case "See-Optimize-Route":
+      return (
+        <span className="px-2 py-1 text-red-600 capitalize bg-red-100 rounded-md text-md">
+          {status}
+        </span>
+      );
+
+    case "See-Transfer-History":
+      return (
+        <span className="px-2 py-1 capitalize rounded-md bg-sky-100 text-sky-900 text-md">
+          {status}
+        </span>
+      );
+
+      case "See-Dump-History":
+        return (
+          <span className="px-2 py-1 capitalize rounded-md bg-violet-100 text-violet-900 text-md">
+            {status}
+          </span>
+        );
 
     default:
       return (

@@ -22,7 +22,8 @@ import DumpHistory from "./Dashboard/pages/Dump History/index.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
   const token = localStorage.getItem("access_token");
@@ -34,61 +35,104 @@ function App() {
     console.log(userRole);
   }
 
-  return (
+  const [dashboard, setDashboard] = useState(false);
+  const [userListAccess, setUserListAccess] = useState(false);
+  const [showTransaction, setShowTransaction] = useState(false);
+  const [createSTS, setCreateSTS] = useState(false);
+  const [createLandfill, setCreateLandfill] = useState(false);
+  const [stsEntry, setStsEntry] = useState(false);
+  const [landfillEntry, setLandfillEntry] = useState(false);
+  const [seeDumpHistory, setSeeDumpHistory] = useState(false);
+  const [accessRoles, setAccessRoles] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const [seeTransferHistory, setSeeTransferHistory] = useState(false);
+  const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
+  const [addVehicleEntry, setAddVehicleEntry] = useState(false);
 
+  useEffect(() => {
+    if (userRole) {
+      axios
+        .get(
+          `http://localhost:3000/rbac/check/${encodeURIComponent(
+            userRole
+          )}/permissions`
+        )
+        .then((response) => {
+          response.data.forEach((permission) => {
+            switch (permission.permissionName) {
+              case "Dashboard":
+                setDashboard(permission.status);
+                break;
+              case "User-List-Access":
+                setUserListAccess(permission.status);
+                break;
+              case "Show-Transaction":
+                setShowTransaction(permission.status);
+                break;
+              case "Create-STS":
+                setCreateSTS(permission.status);
+                break;
+              case "Create-Landfill":
+                setCreateLandfill(permission.status);
+                break;
+              case "STS-Entry":
+                setStsEntry(permission.status);
+                break;
+              case "Landfill-Entry":
+                setLandfillEntry(permission.status);
+                break;
+              case "See-Dump-History":
+                setSeeDumpHistory(permission.status);
+                break;
+              case "Access-Roles":
+                setAccessRoles(permission.status);
+                break;
+              case "Profile":
+                setProfile(permission.status);
+                break;
+              case "See-Transfer-History":
+                setSeeTransferHistory(permission.status);
+                break;
+              case "See-Optimize-Route":
+                setSeeOptimizeRoute(permission.status);
+                break;
+              case "Add-Vehicle-Entry":
+                setAddVehicleEntry(permission.status);
+                break;
+              default:
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Error fetching permissions:", error);
+        });
+    }
+  }, [userRole]);
+
+  return (
     <BrowserRouter>
       <Routes>
         {/* Anyone  can access */}
         <Route path="/" element={<Home />} />
-        {/* Anyone  can access */}
         <Route path="/login" element={<Login />} />
-        {/* Anyone  can access */}
         <Route path="/auth/reset-password/initiate" element={<ForgetPass1 />} />
         <Route path="/auth/reset-password/confirm" element={<ForgetPass2 />} />
         <Route path="/auth/change-password" element={<ForgetPass3 />} />
+        {/* Anyone  can access */}
 
-        {/* Only Logged in can access */}
+        {/* Only any Logged in can access */}
         <Route path="/dashboard" element={<Layout />}>
-          <Route
-            index
-            element={
-              userRole === "STS-MANAGER" ||
-              userRole === "UNASSIGNED" ||
-              userRole === "SYSTEM ADMIN" ||
-              userRole === "LANDFILL MANAGER" ? (
-                <Dashboard />
-              ) : (
-                <NOACCESS />
-              )
-            }
-          />
+          <Route index element={dashboard ? <Dashboard /> : <NOACCESS />} />
         </Route>
-
-        {/* Only Logged in can access */}
         <Route path="/profile" element={<Layout />}>
-          <Route
-            index
-            element={
-              userRole === "STS-MANAGER" ||
-              userRole === "UNASSIGNED" ||
-              userRole === "SYSTEM ADMIN" ||
-              userRole === "LANDFILL MANAGER" ? (
-                <Profile />
-              ) : (
-                <NOACCESS />
-              )
-            }
-          />
+          <Route index element={profile ? <Profile /> : <NOACCESS />} />
         </Route>
+        {/* Only any Logged in can access */}
 
         {/* Only Admin can access */}
         <Route path="/userList" element={<Layout />}>
-          <Route
-            index
-            element={userRole === "SYSTEM ADMIN" ? <UserList /> : <NOACCESS />}
-          />
+          <Route index element={userListAccess ? <UserList /> : <NOACCESS />} />
         </Route>
-        {/* Only Admin can access */}
         <Route path="/createUser">
           <Route
             index
@@ -97,113 +141,65 @@ function App() {
             }
           />
         </Route>
-        {/* Only Admin can access */}
         <Route path="/addVehicle" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "SYSTEM ADMIN" ? <AddVehicle /> : <NOACCESS />
-            }
+            element={addVehicleEntry ? <AddVehicle /> : <NOACCESS />}
           />
         </Route>
-        {/* Only Admin can access */}
         <Route path="/createSTS" element={<Layout />}>
-          <Route
-            index
-            element={userRole === "SYSTEM ADMIN" ? <CreateSTS /> : <NOACCESS />}
-          />
+          <Route index element={createSTS ? <CreateSTS /> : <NOACCESS />} />
         </Route>
         <Route path="/createLandfill" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "SYSTEM ADMIN" ? <CreateLandfill /> : <NOACCESS />
-            }
+            element={createLandfill ? <CreateLandfill /> : <NOACCESS />}
           />
         </Route>
-
-        {/* Only Admin can access */}
         <Route path="/userRoles" element={<Layout />}>
-          <Route
-            index
-            element={
-              userRole === "SYSTEM ADMIN" ? <AccessRoles /> : <NOACCESS />
-            }
-          />
+          <Route index element={accessRoles ? <AccessRoles /> : <NOACCESS />} />
         </Route>
+        {/* Only Admin can access */}
 
         {/* Only landfil + Admin can access */}
         <Route path="/landfill" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <LandFillEntry />
-              ) : (
-                <NOACCESS />
-              )
-            }
+            element={landfillEntry ? <LandFillEntry /> : <NOACCESS />}
           />
         </Route>
-
         <Route path="/dumpHistory" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "LANDFILL MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <DumpHistory />
-              ) : (
-                <NOACCESS />
-              )
-            }
+            element={seeDumpHistory ? <DumpHistory /> : <NOACCESS />}
           />
         </Route>
+        {/* Only landfil + Admin can access */}
 
         {/* Only STS Manager + Admin can access */}
         <Route path="/sts" element={<Layout />}>
-          <Route
-            index
-            element={
-              userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <STSEntry />
-              ) : (
-                <NOACCESS />
-              )
-            }
-          />
+          <Route index element={stsEntry ? <STSEntry /> : <NOACCESS />} />
         </Route>
         <Route path="/stshistory" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <STSHistory />
-              ) : (
-                <NOACCESS />
-              )
-            }
+            element={seeTransferHistory ? <STSHistory /> : <NOACCESS />}
           />
         </Route>
-        
-        <Route path="/user/:userId" element={<UpdateProfile />} />
-        {/* <Route path="/map" element={<Map />} /> */}
-
         <Route path="/map" element={<Layout />}>
+          <Route index element={seeOptimizeRoute ? <Map /> : <NOACCESS />} />
+        </Route>
+        {/* Only STS Manager + Admin can access */}
+
+        {/* Not Decided YET */}
+        <Route path="/user/:userId" element={<UpdateProfile />} />
+        <Route path="/transactions" element={<Layout />}>
           <Route
             index
-            element={
-              userRole === "STS-MANAGER" || userRole === "SYSTEM ADMIN" ? (
-                <Map />
-              ) : (
-                <NOACCESS />
-              )
-            }
+            element={showTransaction ? <Transaction /> : <NOACCESS />}
           />
         </Route>
-
-        <Route path="/transactions" element={<Layout />}>
-          <Route index element={<Transaction />} />
-        </Route>
+        {/* Not Decided YET */}
       </Routes>
     </BrowserRouter>
   );
