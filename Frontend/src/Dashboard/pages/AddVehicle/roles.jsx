@@ -7,14 +7,14 @@ export function getRoleStatus(status) {
         </span>
       );
 
-    case "Carrier":
+    case "Dump Truck":
       return (
         <span className="px-2 py-1 text-green-600 capitalize bg-green-100 rounded-md text-md">
           {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
 
-    case "Container":
+    case "Container Carrier":
       return (
         <span className="px-2 py-1 capitalize rounded-md text-md text-rose-600 bg-rose-100">
           {status.replaceAll("_", " ").toUpperCase()}
@@ -28,12 +28,6 @@ export function getRoleStatus(status) {
         </span>
       );
 
-    case "Dump Truck":
-      return (
-        <span className="px-2 py-1 capitalize rounded-md text-md text-stone-600 bg-stone-100">
-          {status.replaceAll("_", " ").toUpperCase()}
-        </span>
-      );
 
     case "5 TON":
       return (
@@ -56,7 +50,7 @@ export function getRoleStatus(status) {
         </span>
       );
 
-    case "10 TON":
+    case "15 TON":
       return (
         <span className="px-2 py-1 text-purple-600 capitalize bg-purple-100 rounded-md text-md">
           {status.replaceAll("_", " ").toUpperCase()}

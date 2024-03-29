@@ -159,6 +159,12 @@ const InvoiceModal = ({
                             </span>
                             <span className="p-2">{item.departuretime}</span>
                           </div>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Waste Volume:
+                            </span>
+                            <span className="p-2">{item.wastevolume} TON</span>
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -227,10 +233,9 @@ const InvoiceModal = ({
                             const unloadedCost = parseFloat(
                               vehicle.unloadedfuelcost
                             );
-                            const actionValue = calculateActionValue(
-                              loadedCost,
-                              unloadedCost
-                            );
+                            const wastevolume = parseFloat(item.wastevolume);
+                            const capacity = parseFloat(vehicle.capacity);
+                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
                             return <span key={vehicle._id}>৳{actionValue.toFixed(2)}</span>;
                           }
                           return null;
@@ -247,6 +252,7 @@ const InvoiceModal = ({
                       </span>
                       <span>{distance} KM</span>
                     </div>
+                    
 
                     {/* Display Total */}
                     {items.map((item) => (
@@ -267,10 +273,9 @@ const InvoiceModal = ({
                             const unloadedCost = parseFloat(
                               vehicle.unloadedfuelcost
                             );
-                            const actionValue = calculateActionValue(
-                              loadedCost,
-                              unloadedCost
-                            );
+                            const wastevolume = parseFloat(item.wastevolume);
+                            const capacity = parseFloat(vehicle.capacity);
+                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
                             const totalValue = (actionValue*distance).toFixed(2);
                             return <span key={vehicle._id}>৳{totalValue}</span>;
                           }

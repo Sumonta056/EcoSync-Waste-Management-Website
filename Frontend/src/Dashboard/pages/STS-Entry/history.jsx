@@ -111,20 +111,30 @@ const fetchLandfillGPSCoordinates = (siteId) => {
   return correspondingSite.gpscoords;
 };
 
-// Function to calculate distance between two sets of GPS coordinates
-const calculateDistance = (stsCoordinates, landfillCoordinates) => {
-  // Replace with your distance calculation logic
-  // For demonstration, let's assume a simple calculation based on latitude difference
-  if (!stsCoordinates || !landfillCoordinates) return null;
+const calculateDistance = (stsCoords, landfillCoords) => {
+  const [stsLat, stsLng] = stsCoords.split(",").map(parseFloat);
+  const [landfillLat, landfillLng] = landfillCoords.split(",").map(parseFloat);
 
-  const [stsLat, stsLng] = stsCoordinates.split(",").map(parseFloat);
-  const [landfillLat, landfillLng] = landfillCoordinates.split(",").map(parseFloat);
+  const R = 6371; // Radius of the Earth in kilometers
+  const dLat = deg2rad(landfillLat - stsLat);
+  const dLng = deg2rad(landfillLng - stsLng);
 
-  // Approximate calculation of distance based on latitude difference
-  const distanceInKm = Math.abs(stsLat - landfillLat) * 111.32;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(stsLat)) *
+      Math.cos(deg2rad(landfillLat)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; // Distance in kilometers
 
-  return distanceInKm.toFixed(2); // Round to 2 decimal places
+  return distance.toFixed(2); // Round to 2 decimal places
 };
+
+const deg2rad = (deg) => {
+  return deg * (Math.PI / 180);
+};
+
 
 
 const handlePrintClick = (transfer) => {

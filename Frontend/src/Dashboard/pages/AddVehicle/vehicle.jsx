@@ -30,6 +30,26 @@ export default function Vehicle() {
       setLoading(false);
     }
   };
+  const handleTypeChange = (value) => {
+    let capacityValue;
+    switch (value) {
+      case "Open Truck":
+        capacityValue = "3 TON";
+        break;
+      case "Dump Truck":
+        capacityValue = "5 TON";
+        break;
+      case "Compactor":
+        capacityValue = "7 TON";
+        break;
+      case "Container Carrier":
+        capacityValue = "15 TON";
+        break;
+      default:
+        capacityValue = null;
+    }
+    form.setFieldsValue({ capacity: capacityValue });
+  };
 
   return (
     <div className="w-[25rem] bg-white p-4 rounded-sm border border-gray-200">
@@ -55,28 +75,30 @@ export default function Vehicle() {
             name="type"
             rules={[{ required: true, message: "Please select vehicle type" }]}
           >
-            <Select placeholder="Select a Vehicle type">
+            <Select
+              placeholder="Select a Vehicle type"
+              onChange={handleTypeChange}
+            >
               <Select.Option value="Open Truck">Open Truck</Select.Option>
               <Select.Option value="Dump Truck">Dump Truck</Select.Option>
-              <Select.Option value="Container">Container</Select.Option>
               <Select.Option value="Compactor">Compactor</Select.Option>
-              <Select.Option value="Carrier">Carrier</Select.Option>
+              <Select.Option value="Container Carrier">Container Carrier</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item
             label="Capacity"
             name="capacity"
             rules={[
-              { required: true, message: "Please select capacity amount" },
+              { required: true, message: "Please select capacity" },
             ]}
           >
-            <Select placeholder="Select Capacity Amount">
+            <Select placeholder="Select Capacity Amount" disabled>
               <Select.Option value="3 TON">3 TON</Select.Option>
               <Select.Option value="5 TON">5 TON</Select.Option>
               <Select.Option value="7 TON">7 TON</Select.Option>
-              <Select.Option value="10 TON">10 TON</Select.Option>
+              <Select.Option value="15 TON">15 TON</Select.Option>
             </Select>
-          </Form.Item>
+            </Form.Item>
           <Form.Item
             label="Vehicle Fuel Cost (Loaded)"
             name="loadedfuelcost"

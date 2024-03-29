@@ -34,6 +34,14 @@ const TransferEntryScheme = new Schema({
     type: String,
     required: true,
   },
+  perkmcost: {
+    type: String,
+    required: true,
+  },
+  distance: {
+    type: String,
+    required: true,
+  },
 });
 
 const TransferEntry = mongoose.model("TransferEntry", TransferEntryScheme);

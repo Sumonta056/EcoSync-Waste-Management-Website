@@ -153,9 +153,7 @@ function CreateUser() {
                 value={formData.role}
                 onChange={handleInputChange}
               >
-                <option value="" className="text-gray-400">
-                  Select User Role
-                </option>
+                
                 <option value="UNASSIGNED">UNASSIGNED</option>
                 <option value="STS-MANAGER">STS-MANAGER</option>
                 <option value="LANDFILL MANAGER">LANDFILL MANAGER</option>
@@ -167,7 +165,7 @@ function CreateUser() {
                 <RiLockPasswordFill size={20} /> Password
               </span>
               <input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="Enter User Password"
                 id="password"
