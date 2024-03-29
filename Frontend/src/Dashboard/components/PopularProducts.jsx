@@ -47,6 +47,8 @@ const popularProducts = [
 ]
 
 function PopularProducts() {
+
+	
 	return (
 		<div className="w-[20rem] bg-white p-4 rounded-sm border border-gray-200">
 			<strong className="font-medium text-gray-700">Popular Products</strong>
