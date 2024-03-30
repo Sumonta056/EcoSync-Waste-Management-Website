@@ -162,16 +162,19 @@ export default function STS() {
 
       console.log("Fuel Allocation Cost Per Km:", fuelAllocationCostPerKm);
 
+      
+      
+      console.log(wardNumbers);
       // Calculate distance between STS and landfill
-      const stsgpscoords = wardNumbers.find((sts) => sts.id == values.wardno);
-      console.log("STS GPS Coordinates:", stsgpscoords);
+      const stsgpscoords = wardNumbers.find((sts) => sts._id == values.wardno);
+      console.log("STS GPS Coordinates:", stsgpscoords.gpscoords);
       const landfillgpscoords = siteNumbers.find(
         (landfill) => landfill.id == values.siteno
       );
-      console.log("Landfill GPS Coordinates:", landfillgpscoords);
+      console.log("Landfill GPS Coordinates:", landfillgpscoords.landfillGpsCoords);
 
       const distance = calculateDistance(
-        stsgpscoords.stsGpsCoords,
+        stsgpscoords.gpscoords,
         landfillgpscoords.landfillGpsCoords
       );
       //console.log("Distance:", distance);
@@ -262,7 +265,7 @@ export default function STS() {
           >
             <Select placeholder="Select a ward number">
               {wardNumbers.map((ward) => (
-                <Select.Option key={ward._id} value={ward.wardno}>
+                <Select.Option key={ward._id} value={ward.id}>
                   {ward.wardno}
                 </Select.Option>
               ))}
@@ -302,9 +305,9 @@ export default function STS() {
             rules={[
               { required: true, message: "Please enter waste volume" },
               {
-                pattern: "^[1-9][0-9]{0,5}$",
-                message: "Please enter a valid volume",
-              },
+                pattern: /^(?!0(\.0+)?$)\d*(\.\d+)?$/,
+                message: "Please enter a valid volume greater than zero",
+              },                           
             ]}
           >
             <Input placeholder="Enter Waste Volume" />

@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { KJUR } from "jsrsasign";
+import { MdTransferWithinAStation } from "react-icons/md";
 import { FaTruckRampBox } from "react-icons/fa6";
-export default function Landfill() {
+export default function STS() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [siteNumbers, setSiteNumbers] = useState([]);
   const [wardNumbers, setWardNumbers] = useState([]);
+  const [siteNumbers, setSiteNumbers] = useState([]);
   const [landfillManagerName, setLandfillManagerName] = useState("");
   const [landfillManager, setLandfillManager] = useState([]);
   const [vehicleNumbers, setVehicleNumbers] = useState([]);
@@ -35,21 +36,6 @@ export default function Landfill() {
 
     const fetchData = async () => {
       try {
-        const siteNumbersResponse = await axios.get(
-          "http://localhost:3000/landfill"
-        );
-        if (Array.isArray(siteNumbersResponse.data)) {
-          const managerSites = siteNumbersResponse.data.filter(
-            (site) => site.managerId === userId
-          );
-          setSiteNumbers(
-            managerSites.map((landfill) => ({
-              id: landfill._id,
-              siteNumber: landfill.siteno,
-            }))
-          );
-        }
-
         const wardNumbersResponse = await axios.get(
           "http://localhost:3000/sts"
         );
@@ -57,14 +43,25 @@ export default function Landfill() {
           wardNumbersResponse.data.map((sts) => ({
             id: sts._id,
             wardNumber: sts.wardno,
+            stsGpsCoords: sts.gpscoords,
           }))
         );
 
-        const landfillManagerResponse = await axios.get(
+        const siteNumbersResponse = await axios.get(
+          "http://localhost:3000/landfill"
+        );
+        setSiteNumbers(
+          siteNumbersResponse.data.map((landfill) => ({
+            id: landfill._id,
+            siteNumber: landfill.siteno,
+            landfillGpsCoords: landfill.gpscoords,
+          }))
+        );
+        const stsManagerResponse = await axios.get(
           "http://localhost:3000/user"
         );
         setLandfillManager(
-          landfillManagerResponse.data.map((user) => ({
+          stsManagerResponse.data.map((user) => ({
             id: user._id,
             name: user.name,
           }))
@@ -77,40 +74,129 @@ export default function Landfill() {
           vehicleNumbersResponse.data.map((vehicle) => ({
             id: vehicle._id,
             regNumber: vehicle.regnumber,
+            capacity: vehicle.capacity,
+            loadedfuelcost: vehicle.loadedfuelcost,
+            unloadedfuelcost: vehicle.unloadedfuelcost,
           }))
         );
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchData();
+
+    if (userId) {
+      axios
+        .get(`http://localhost:3000/landfill`)
+        .then((response) => {
+          console.log(response);
+          if (Array.isArray(response.data)) {
+            const managerSites = response.data.filter(
+              (site) => site.managerId === userId
+            );
+            setSiteNumbers(managerSites);
+            //console.log(managerSites);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching ward numbers:", error);
+        });
+    }
   }, []);
+  console.log(siteNumbers);
+  const calculateFuelAllocationCostPerKm = (
+    cUnloaded,
+    cLoaded,
+    capacity,
+    wasteVolume
+  ) => {
+    try {
+      // Convert capacity to a number by removing the "TON" suffix
+      const numericCapacity = parseFloat(capacity.replace(" TON", ""));
+      const numericCUnloaded = parseFloat(cUnloaded);
+      const numericCLoaded = parseFloat(cLoaded);
+      const numericWasteVolume = parseFloat(wasteVolume);
+
+      // Calculate the fuel allocation cost per kilometer using the provided formula
+      let perKmCost =
+        numericCUnloaded +
+        (numericWasteVolume / numericCapacity) *
+          (numericCLoaded - numericCUnloaded);
+
+      console.log("Per Km Cost:", perKmCost);
+
+      return perKmCost;
+    } catch (error) {
+      console.error(
+        "Error calculating fuel allocation cost per kilometer:",
+        error.message
+      );
+      return null;
+    }
+  };
 
   const onFinish = async (values) => {
-    let successMessage = "Transfer entry added successfully";
+    let successMessage = "Dump entry added successfully";
     let errorMessage = "Failed to add transfer entry";
 
     try {
-      // Fetch userId from the token
+      setLoading(true);
+
       const token = localStorage.getItem("access_token");
       const decodedToken = KJUR.jws.JWS.parse(token);
       const userId = decodedToken.payloadObj?.id;
 
-      // Include userId in the stsmanagername property of values object
       const updatedValues = { ...values, landfillmanagername: userId };
+
+      // Fetch the selected vehicle's information based on the selected vehicle ID
+      const selectedVehicle = vehicleNumbers.find(
+        (vehicle) => vehicle.id === values.vehicleregno
+      );
+
+      // Calculate the fuel allocation cost per kilometer
+      const fuelAllocationCostPerKm = calculateFuelAllocationCostPerKm(
+        selectedVehicle.unloadedfuelcost,
+        selectedVehicle.loadedfuelcost,
+        selectedVehicle.capacity,
+        parseFloat(values.wastevolume) // Convert the waste volume to a floating-point number
+      );
+
+      console.log("Fuel Allocation Cost Per Km:", fuelAllocationCostPerKm);
+
+      
+      
+      console.log("wardNumbers:");
+wardNumbers.forEach((ward) => {
+  console.log(ward);
+});
+
+      // Calculate distance between STS and landfill
+      const stsgpscoords = wardNumbers.find((sts) => sts.id == values.wardno);
+      console.log("STS GPS Coordinates:", stsgpscoords.stsGpsCoords);
+      const landfillgpscoords = siteNumbers.find(
+        (landfill) => landfill.id == values.siteno
+      );
+      console.log("Landfill GPS Coordinates:", landfillgpscoords.landfillGpsCoords);
+
+      const distance = calculateDistance(
+        stsgpscoords.stsGpsCoords,
+        landfillgpscoords.landfillGpsCoords
+      );
+      //console.log("Distance:", distance);
+
+      // Add perKmCost and distance to updatedValues
+      updatedValues.perkmcost = fuelAllocationCostPerKm;
+      updatedValues.distance = distance;
 
       const { data } = await axios.post(
         "http://localhost:3000/dump",
         updatedValues
       );
+      console.log(updatedValues);
       if (data.error) {
         throw new Error(data.error);
       }
       message.success(successMessage);
-      setTimeout(() => {
-        window.location.reload();
-      }, 600);
       form.resetFields();
     } catch (error) {
       message.error(error.message || errorMessage);
@@ -118,6 +204,54 @@ export default function Landfill() {
       setLoading(false);
     }
   };
+
+  const calculateDistance = (stsCoords, landfillCoords) => {
+    try {
+      const [stsLat, stsLng] = stsCoords.split(",").map(parseFloat);
+      const [landfillLat, landfillLng] = landfillCoords
+        .split(",")
+        .map(parseFloat);
+
+      if (
+        isNaN(stsLat) ||
+        isNaN(stsLng) ||
+        isNaN(landfillLat) ||
+        isNaN(landfillLng)
+      ) {
+        throw new Error("Invalid coordinates provided");
+      }
+
+      const R = 6371; // Radius of the Earth in kilometers
+      const dLat = deg2rad(landfillLat - stsLat);
+      const dLng = deg2rad(landfillLng - stsLng);
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(stsLat)) *
+          Math.cos(deg2rad(landfillLat)) *
+          Math.sin(dLng / 2) *
+          Math.sin(dLng / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      let distance = R * c;
+
+      if (isNaN(distance)) {
+        throw new Error("Distance calculation resulted in NaN");
+      }
+      distance = Number(distance);
+      // Convert distance to a string with two decimal points
+      const formattedDistance = distance.toFixed(2);
+
+      return formattedDistance;
+    } catch (error) {
+      console.error("Error calculating distance:", error.message);
+      return null;
+    }
+  };
+
+  const deg2rad = (deg) => {
+    return deg * (Math.PI / 180);
+  };
+
 
   const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
   return (
@@ -185,9 +319,9 @@ export default function Landfill() {
             rules={[
               { required: true, message: "Please enter waste volume" },
               {
-                pattern: "^[1-9][0-9]{0,5}$",
-                message: "Please enter a valid volume",
-              },
+                pattern: /^(?!0(\.0+)?$)\d*(\.\d+)?$/,
+                message: "Please enter a valid volume greater than zero",
+              }, 
             ]}
           >
             <Input placeholder="Enter Waste Volume" />

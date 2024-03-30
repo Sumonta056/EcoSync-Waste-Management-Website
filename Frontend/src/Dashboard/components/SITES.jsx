@@ -22,7 +22,7 @@ function PopularProducts() {
   return (
     <div className="w-[21rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="flex gap-2 p-2 font-medium text-gray-900">
-        <FaLandmark size={20} /> Available STS-Lanfill Sites
+        <FaLandmark size={20} /> Available STS-Landfill Sites
       </strong>
       <div className="flex flex-col gap-3 mt-4">
         {popularProducts.map((product, index) => (
@@ -45,7 +45,7 @@ function PopularProducts() {
               </span>
             </div>
             <div className="text-xs text-rose-700 pl-1.5">
-              {product.capacity} Capacity
+            Capacity: {product.capacity} Ton
             </div>
           </div>
         ))}
@@ -65,11 +65,12 @@ function PopularProducts() {
               />
             </div>
             <div className="flex-1 ml-4">
-              <p className="text-sm font-medium text-gray-800">{`Ward No: ${sts.wardno}`}</p>
-              <span className="text-xs text-green-600">{sts.gpscoords}</span>
+            <p className="text-sm font-medium text-gray-800">{`Ward No: ${sts.wardno}`}</p>
+          <span className="text-xs text-green-600">{sts.gpscoords}</span>
+
             </div>
             <div className="text-xs text-rose-700 pl-1.5">
-              {sts.capacity} Capacity
+            Capacity: {sts.capacity} Ton
             </div>
           </div>
         ))}

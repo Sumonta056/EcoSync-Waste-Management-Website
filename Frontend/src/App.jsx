@@ -18,7 +18,7 @@ import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
 import Map from "./Dashboard/pages/RouteOptimize/index.jsx";
-import DumpHistory from "./Dashboard/pages/Dump History/index.jsx";
+import DumpHistory from "./Dashboard/pages/Landfill-Entry/history.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";

@@ -204,7 +204,7 @@ const handlePrintClick = (transfer) => {
               <th>Arrival Time</th>
               <th>Departure Time</th>
               <th>Date</th>
-              <th>Cost</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -270,14 +270,7 @@ const handlePrintClick = (transfer) => {
                   <td>{sts.arrivaltime}</td>
                   <td>{sts.departuretime}</td>
                   <td>{sts.currentdate}</td>
-                  <td>
-                    <button
-                      className="flex gap-2 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 "
-                      onClick={() => handlePrintClick(sts)}
-                    ><IoMdPrint size={20}/>
-                      Show
-                    </button>
-                  </td>
+                  
                 </tr>
               );
             })}

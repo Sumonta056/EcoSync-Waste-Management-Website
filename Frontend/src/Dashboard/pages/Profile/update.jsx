@@ -83,7 +83,7 @@ export default function Card() {
             <Input placeholder="Update Email Address" />
           </Form.Item>
           <Form.Item label="Phone Number" name="phone">
-            <Input placeholder="Update name" />
+            <Input placeholder="Update Phone Number" />
           </Form.Item>
           <Form.Item label="Access Roles" name="role">
             <Input placeholder="SYSTEM ADMIN" disabled={true} />
