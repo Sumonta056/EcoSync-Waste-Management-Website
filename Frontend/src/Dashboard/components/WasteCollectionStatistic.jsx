@@ -55,6 +55,8 @@ export default function TransactionChart() {
             });
           }
         });
+        // Sort the data by date in ascending order
+        aggregatedData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         setData(aggregatedData);
         console.log(aggregatedData);
@@ -63,8 +65,8 @@ export default function TransactionChart() {
 
   return (
     <div className="h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
-       <strong className="flex justify-center gap-2 font-medium text-gray-700">
-       <FaTrash /> Waste Collection Statistics
+      <strong className="flex justify-center gap-2 font-medium text-gray-700">
+        <FaTrash /> Waste Collection Statistics
       </strong>
       <div className="flex-1 w-full mt-3 text-xs">
         <ResponsiveContainer width="100%" height="100%">

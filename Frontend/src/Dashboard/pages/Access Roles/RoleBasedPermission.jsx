@@ -56,6 +56,9 @@ export default function RoleBasedPermission() {
           "Role Based Permission successfully created or updated"
         );
         form.resetFields();
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
         throw new Error("Failed to create or update permission");
       }

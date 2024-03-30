@@ -25,8 +25,6 @@ const InvoiceModal = ({
     onAddNextInvoice();
   };
 
-  
-
   const SaveAsPDFHandler = () => {
     const dom = document.getElementById("print");
     toPng(dom)
@@ -37,9 +35,9 @@ const InvoiceModal = ({
         img.onload = () => {
           // Initialize the PDF.
           const pdf = new jsPDF({
-            orientation: "landscape",
+            orientation: "potrait",
             unit: "in",
-            format: [4.5, 6.5],
+            format: [4.5, 4.5],
           });
 
           // Define reused data
@@ -126,7 +124,7 @@ const InvoiceModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block max-w-2xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
+            <div className="inline-block max-w-xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
               <div className="p-4" id="print">
                 <h1 className="flex justify-center gap-2 p-2 text-2xl font-semibold text-gray-900 ">
                   <FaMoneyBillTrendUp size={25} /> ECOSYNC BILLING DETAILS
@@ -138,7 +136,7 @@ const InvoiceModal = ({
                       {items.map((item, index) => (
                         <div
                           key={index}
-                          className="flex justify-between gap-2 mb-2 border-2 border-gray-100"
+                          className="flex flex-wrap justify-between gap-2 mb-2 border-2 border-gray-100"
                         >
                           <div className="flex gap-2">
                             <span className="p-2 bg-gray-200">Date:</span>
@@ -152,15 +150,15 @@ const InvoiceModal = ({
                           </div>
                           <div className="flex gap-2">
                             <span className="p-2 bg-gray-200">
-                              Departure Time:
-                            </span>
-                            <span className="p-2">{item.departuretime}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
                               Waste Volume:
                             </span>
                             <span className="p-2">{item.wastevolume} TON</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Departure Time:
+                            </span>
+                            <span className="p-2">{item.departuretime}</span>
                           </div>
                         </div>
                       ))}
@@ -177,19 +175,19 @@ const InvoiceModal = ({
                     </div>
                   </div>
 
-                  <table className="text-center">
+                  <table className="text-xs text-center">
                     <thead>
-                      <tr className="text-sm text-center bg-gray-200 border-2 border-gray-400 md:text-base">
-                        <th className="px-2">Vehicle</th>
-                        <th className="px-2">Type</th>
-                        <th className="px-2k">Capacity</th>
-                        <th className="px-">Loaded Fuel Cost</th>
-                        <th className="px-3">Unloaded Fuel Cost</th>
+                      <tr className="text-xs text-center bg-gray-200 border-2 border-gray-400" style={{ fontSize: '10px' }}>
+                        <th className="">Vehicle</th>
+                        <th className="">Type</th>
+                        <th className="">Capacity</th>
+                        <th className="">Loaded Fuel Cost</th>
+                        <th className="">Unloaded Fuel Cost</th>
                       </tr>
                     </thead>
                     <tbody>
                       {items.map((item) => (
-                        <tr key={item.id} className="border-2 border-gray-400">
+                        <tr key={item.id} className="text-lg border-2 border-gray-400">
                           {/* <td>{item.selectedVehicle}</td> */}
                           {vehicleData.map((vehicle) => {
                             if (vehicle._id === item.vehicleregno) {
@@ -199,8 +197,8 @@ const InvoiceModal = ({
                                   <td>{vehicle.regnumber}</td>
                                   <td>{vehicle.type}</td>
                                   <td>{vehicle.capacity}</td>
-                                  <td>{vehicle.loadedfuelcost}</td>
-                                  <td>{vehicle.unloadedfuelcost}</td>
+                                  <td>{vehicle.loadedfuelcost} TK</td>
+                                  <td>{vehicle.unloadedfuelcost} TK</td>
                                 </Fragment>
                               );
                             }
@@ -219,7 +217,8 @@ const InvoiceModal = ({
                       >
                         <span className="flex gap-1 font-bold">
                           {" "}
-                          <MdOutlinePendingActions size={20} /> Cost per kilometre:
+                          <MdOutlinePendingActions size={20} /> Cost per
+                          kilometre:
                         </span>
                         {vehicleData.map((vehicle) => {
                           if (vehicle._id === item.vehicleregno) {
@@ -232,8 +231,15 @@ const InvoiceModal = ({
                             );
                             const wastevolume = parseFloat(item.wastevolume);
                             const capacity = parseFloat(vehicle.capacity);
-                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
-                            return <span key={vehicle._id}>৳{actionValue.toFixed(2)}</span>;
+                            const actionValue =
+                              unloadedCost +
+                              (wastevolume / capacity) *
+                                (loadedCost - unloadedCost);
+                            return (
+                              <span key={vehicle._id}>
+                                ৳ {actionValue.toFixed(2)} TK
+                              </span>
+                            );
                           }
                           return null;
                         })}
@@ -249,7 +255,6 @@ const InvoiceModal = ({
                       </span>
                       <span>{distance} KM</span>
                     </div>
-                    
 
                     {/* Display Total */}
                     {items.map((item) => (
@@ -272,15 +277,19 @@ const InvoiceModal = ({
                             );
                             const wastevolume = parseFloat(item.wastevolume);
                             const capacity = parseFloat(vehicle.capacity);
-                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
-                            const totalValue = (actionValue*distance).toFixed(2);
-                            return <span key={vehicle._id}>৳{totalValue}</span>;
+                            const actionValue =
+                              unloadedCost +
+                              (wastevolume / capacity) *
+                                (loadedCost - unloadedCost);
+                            const totalValue = (actionValue * distance).toFixed(
+                              2
+                            );
+                            return <span key={vehicle._id}>৳ {totalValue} TK</span>;
                           }
                           return null;
                         })}
                       </div>
                     ))}
-
                   </div>
                 </div>
               </div>
