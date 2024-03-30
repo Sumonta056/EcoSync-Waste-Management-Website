@@ -4,7 +4,7 @@
 
 ### 📑 1. Entity-Relationship (ER) Diagram
 
-- For better version, please see the : **( [👉 PDF](./Entity%20Relationship%20Diagram/EcoSync-ER.pdf) )**
+- For better version, please see the : **( [👉 PDF](./Entity%20Relationship%20Diagram/EcoSync-ER.drawio.pdf) )**
 
 <!-- - You can also view it [here](https://app.diagrams.net/#G1g_L8rnyOr36RGzPW83tWoD-hqHwMKA1v#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D) -->
 

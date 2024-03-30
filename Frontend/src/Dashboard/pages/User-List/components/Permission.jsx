@@ -3,6 +3,7 @@ import axios from "axios";
 import { Form, Input, Button } from "antd";
 import { message } from "antd";
 import { Select } from "antd";
+import { useEffect } from "react";
 
 export default function EditUserForm({ userInfo }) {
   const [role, setRole] = useState(userInfo.role);
@@ -24,6 +25,19 @@ export default function EditUserForm({ userInfo }) {
     }
   };
 
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/rbac/roles")
+      .then((response) => {
+        setRoles(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error!", error);
+      });
+  }, []);
+
   return (
     <Form onFinish={handleSubmit} className="px-10 py-5">
       <h2 className="pb-3 text-2xl font-bold text-center text-cyan-800">
@@ -35,10 +49,11 @@ export default function EditUserForm({ userInfo }) {
         wrapperCol={{ span: 24 }}
       >
         <Select value={role} onChange={(value) => setRole(value)}>
-          <Option value="SYSTEM ADMIN">SYSTEM ADMIN</Option>
-          <Option value="LANDFILL MANAGER">LANDFILL MANAGER</Option>
-          <Option value="STS-MANAGER">STS-MANAGER</Option>
-          <Option value="UNASSIGNED">UNASSIGNED</Option>
+          {roles.map((role) => (
+            <Option key={role._id} value={role.roleName}>
+              {role.roleName}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
       <Form.Item>

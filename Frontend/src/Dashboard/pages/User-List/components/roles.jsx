@@ -22,7 +22,7 @@ export function getRoleStatus(status) {
     default:
       return (
         <span className="px-2 py-1 text-gray-900 capitalize bg-gray-100 rounded-md text-md">
-          UNASSIGNED
+          {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
   }
