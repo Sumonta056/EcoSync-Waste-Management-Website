@@ -5,3 +5,14 @@
 ## Planning
 
 ![](./Planning)
+
+
+
+## [How to Use Docker with React and Vite](https://www.webdevolution.com/blog/how-to-use-docker-with-react-and-vite)
+
+## [Dockerizing your MERN application](https://youtu.be/PhmIsxkskhY?si=izZnSmRII2xbbeFE)
+
+# Stop NPM
+
+```base
+    Ctrl 

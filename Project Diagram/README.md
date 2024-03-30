@@ -1,30 +1,32 @@
+## 📚 Eco-Sync : Diagrams
 
-# Diagrams
+<hr>
 
-## Entity-Relationship (ER) Diagram
+### 📑 1. Entity-Relationship (ER) Diagram
 
-![Entity-Relationship Diagram](./Entity%20Relationship%20Diagram/ER%20Diagram.png)
+- For better version, please see the : **( [👉 PDF](./Entity%20Relationship%20Diagram/EcoSync-ER.pdf) )**
 
-For better version, please see the [PDF](./Entity%20Relationship%20Diagram/ER%20Diagram.pdf) 
+<!-- - You can also view it [here](https://app.diagrams.net/#G1g_L8rnyOr36RGzPW83tWoD-hqHwMKA1v#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D) -->
 
-You can also view it [here](https://app.diagrams.net/#G1g_L8rnyOr36RGzPW83tWoD-hqHwMKA1v#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D)
-
----
-
-## Workflow Diagram
-
-![Workflow Diagram](./Workflow%20Diagram/Workflow%20Diagram.png)
-
-For better version, please see the [PDF](./Workflow%20Diagram/Workflow%20Diagram.pdf) 
-
-You can also view it [here](https://app.diagrams.net/#G18VnL2MHVnQJk_iHp9gi1IfTqpxwAmqFE#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
+![alt text](./Entity%20Relationship%20Diagram/image.png)
 
 ---
 
-## Activity Diagram
+### 📑 2. End to End Activity Diagram
 
-![Activity Diagram](./Activity%20Diagram/Activity%20Diagram.png)
+- For better version, please see the : **( [👉 PDF](./End-To-End%20Activity%20Diagram/Activity%20Diagram.pdf) )**
 
-For better version, please see the [PDF](./Activity%20Diagram/Activity%20Diagram.pdf) 
+![alt text](./End-To-End%20Activity%20Diagram/image.png)
 
-You can also view it [here](https://app.diagrams.net/#G1mrkuhkkVNeyLbnLKF4_s3WH2f5c3KG-N#%7B%22pageId%22%3A%22dYjFXj_nAdsBTwbrpj3l%22%7D)
+<!-- You can also view it [here](https://app.diagrams.net/#G1mrkuhkkVNeyLbnLKF4_s3WH2f5c3KG-N#%7B%22pageId%22%3A%22dYjFXj_nAdsBTwbrpj3l%22%7D) -->
+
+---
+
+### 📑 3. Workflow Diagram
+
+<!-- - For better version, please see the : **( [👉 PDF](./End-To-End%20Activity%20Diagram/Activity%20Diagram.pdf) )** -->
+
+<!-- ![alt text](./End-To-End%20Activity%20Diagram/image.png) -->
+
+
+---

@@ -18,7 +18,7 @@ function CreateUser() {
     email: "",
     name: "",
     phone: "",
-    role: "",
+    role: 'UNASSIGNED',
     password: "",
   });
 
@@ -153,7 +153,6 @@ function CreateUser() {
                 value={formData.role}
                 onChange={handleInputChange}
               >
-                
                 <option value="UNASSIGNED">UNASSIGNED</option>
                 <option value="STS-MANAGER">STS-MANAGER</option>
                 <option value="LANDFILL MANAGER">LANDFILL MANAGER</option>
