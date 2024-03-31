@@ -29,6 +29,7 @@ router.get("/landfill-manager", async (req, res, next) => {
 });
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body);
     let user = req.body;
     if (user.password) {
       const hashedPassword = bcryptjs.hashSync(user.password, 10);
@@ -66,6 +67,7 @@ router.get("/:userId", async (req, res, next) => {
 
 router.put("/:userId", async (req, res, next) => {
   try {
+    console.log(req.body);
     const user = await User.findById(req.params.userId);
     if (!user) {
       return res.send("User not found");
@@ -142,16 +144,16 @@ router.get("/roles", async (req, res, next) => {
 
 
 // PUT method for updating a user's roles (System Admin access)
-router.put("/:userId/roles", async (req, res, next) => {
-  try {
-    // Logic to update user roles, restricted to System Admin access
-    // Implement your authorization logic here
-    res.send("User roles updated successfully");
-  } catch (err) {
-    console.log(err.message);
-    res.send("Internal Server Error");
-  }
-});
+// router.put("/:userId/roles", async (req, res, next) => {
+//   try {
+//     // Logic to update user roles, restricted to System Admin access
+//     // Implement your authorization logic here
+//     res.send("User roles updated successfully");
+//   } catch (err) {
+//     console.log(err.message);
+//     res.send("Internal Server Error");
+//   }
+// });
 
 
 

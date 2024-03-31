@@ -14,6 +14,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body);
     let landfill = req.body;
     const newLandfill = new Landfill(landfill);
     console.log(newLandfill);

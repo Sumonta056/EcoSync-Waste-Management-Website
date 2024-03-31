@@ -24,9 +24,8 @@
 
 ### 📑 3. Workflow Diagram
 
-<!-- - For better version, please see the : **( [👉 PDF](./End-To-End%20Activity%20Diagram/Activity%20Diagram.pdf) )** -->
+- For better version, please see the : **( [👉 PDF](./Workflow%20Diagram/Backend%20Workflow%20Diagram.pdf) )**
 
-<!-- ![alt text](./End-To-End%20Activity%20Diagram/image.png) -->
-
+![alt text](./Workflow%20Diagram/Backend%20Workflow.png)
 
 ---

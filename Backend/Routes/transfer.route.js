@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body);
     let transfer = req.body;
     const newTransfer = new Transfer(transfer);
     console.log(newTransfer);

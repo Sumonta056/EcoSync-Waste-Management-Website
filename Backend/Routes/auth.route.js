@@ -135,7 +135,7 @@ function sendEmail({ recipient_email, OTP }) {
         console.log(error);
         return reject({ message: `An error has occured` });
       }
-      return resolve({ message: "Email sent succesfuly" });
+      return resolve({ message: "Email sent successfully", OTP });
     });
   });
 }
@@ -147,7 +147,7 @@ router.post("/reset-password/initiate", async (req, res, next) => {
     return res.json({ error: "User not found!" });
   } else {
     sendEmail(req.body)
-      .then((response) => res.send("found"))
+      .then((response) => res.send(response))
       .catch((error) => res.status(500).send(error.message));
   }
 });

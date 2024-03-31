@@ -38,14 +38,16 @@
 
 ### ❄️ Eco-Sync : UI/UX Design
 
-- UI/UX Design Using Figma : **( [ 👉 Click Here](./Project%20Diagram/README.md) )**
+- UI/UX Design Using Figma : **( [ 👉 Click Here](https://www.figma.com/file/uYbtTfanr1E3dASFK2hIZs/Team-Your_Worst_Nightmare?type=design&node-id=0-1&mode=design&t=Kc9G8bAS49CeqAKD-0) )**
 
 ### 🔮 Eco-Sync : PPTX Presentation
 
-- PPTX Presentation : **( [ 👉 Click Here](./Project%20Diagram/README.md) )**
+- PPTX Presentation : **( [ 👉 Click Here](./Powerpoint%20Presentation/YOUR%20WORST%20NIGHTMARE%20Presentation.pptx) )**
+- For better view, Use The Canva Link: **( [ 👉 Click Here](https://www.canva.com/design/DAGA_5xUDwg/jJNnwU-AmqOM9iFkxO96TA/view?utm_content=DAGA_5xUDwg&utm_campaign=designshare&utm_medium=link&utm_source=editor) )**
 
 ### 🎥 Eco-Sync : Complete Video Overview & Presentation
-- Video Overview & Final Presentation : **( [ 👉 Click Here](./Project%20Diagram/README.md) )**
+
+- Video Overview & Final Presentation : **( [ 👉 Click Here](https://drive.google.com/file/d/17pDF5jsthdlTXJAQHD3djh8NyYY4ZERE/view) )**
 
 <hr>
 
@@ -136,4 +138,3 @@ docker-compose down
 ### 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-

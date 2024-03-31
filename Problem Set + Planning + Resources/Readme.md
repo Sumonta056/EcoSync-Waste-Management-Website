@@ -15,4 +15,7 @@
 # Stop NPM
 
 ```base
-    Ctrl 
+    Ctrl + c
+```
+
+[Google Doc Resource Links](https://docs.google.com/document/d/1U29NZbspyADgVsZ7Psz341qXZPlf6G5LORipR5e4Vg4/edit?usp=sharing)
