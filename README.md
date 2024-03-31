@@ -133,6 +133,10 @@ docker-compose up
 docker-compose down
 ```
 
+- 🔖 Docker is running properly !
+
+![alt text](./Problem%20Set%20+%20Planning%20+%20Resources/image.png)
+
 <hr>
 
 ### 📄 License
