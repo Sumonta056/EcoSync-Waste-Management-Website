@@ -31,17 +31,17 @@ const Index = () => {
   const navigation = useNavigation();
   const [reports, setReports] = useState([]);
 
-  useEffect(() => {
-    fetch("http://192.168.137.210:8000/reports")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => setReports(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://192.168.137.210:8000/reports")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => setReports(data))
+  //     .catch((error) => console.error("Error:", error));
+  // }, []);
 
   useEffect(() => {
     Animated.loop(
@@ -157,6 +157,32 @@ const Index = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() => navigation.navigate("ViewReport")}
+            style={{
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              borderRadius: 15,
+              borderColor: "#0E2954",
+              borderWidth: 0.3,
+              marginHorizontal: 30,
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 5,
+              marginBottom: 5,
+              backgroundColor: "#00716F",
+            }}
+          >
+            <Entypo name="chat" size={28} color="#fff" />
+            <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
+              View Reports
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             onPress={() => navigation.navigate("Main")}
             style={{
               alignItems: "center",
@@ -182,7 +208,7 @@ const Index = () => {
             </Text>
           </TouchableOpacity>
 
-          <ScrollView style={styles.container}>
+          {/* <ScrollView style={styles.container}>
             {reports.map((report) => (
               <View style={styles.card1} key={report._id}>
                 <Text style={styles.label1}>Issue Type:</Text>
@@ -195,7 +221,7 @@ const Index = () => {
                 <Image style={styles.image1} source={{ uri: report.photo }} />
               </View>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </View>
     </GestureHandlerRootView>
