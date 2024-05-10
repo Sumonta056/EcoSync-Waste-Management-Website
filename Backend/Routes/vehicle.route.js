@@ -15,6 +15,7 @@ router.get("/", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
+    console.log(req.body);
     let vehicle = req.body;
     const newVehicle = new Vehicle(vehicle);
     console.log(newVehicle);

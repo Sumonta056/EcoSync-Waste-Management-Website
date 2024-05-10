@@ -47,6 +47,10 @@ app.use("/profile", profile);
 const vehicleRouter = require("./Routes/vehicle.route.js");
 app.use("/vehicle", vehicleRouter);
 
+// Employee routes
+const employeeRouter = require("./Routes/employee.route.js");
+app.use("/employee", employeeRouter);
+
 // STS routes
 const stsRouter = require("./Routes/sts.route.js");
 app.use("/sts", stsRouter);
