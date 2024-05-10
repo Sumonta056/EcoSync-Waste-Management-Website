@@ -13,7 +13,7 @@ export default function ContractorHistory() {
       try {
         const [contractResponse, managersResponse] = await Promise.all([
           axios.get("http://localhost:3000/contractor"),
-          axios.get("http://localhost:3000/user/sts-manager"),
+          axios.get("http://localhost:3000/user/contractor-manager"),
         ]);
 
         if (Array.isArray(contractResponse.data)) {

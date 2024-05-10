@@ -6,17 +6,16 @@ import { MdOutlinePendingActions } from "react-icons/md";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiPathDistance } from "react-icons/gi";
 import { RiMoneyDollarBoxFill } from "react-icons/ri";
+import { useState, useEffect } from "react";
 
 const InvoiceModal = ({
   isOpen,
   setIsOpen,
-  invoiceInfo,
-  items,
-  vehicleData,
-  distance,
-  correspondingWard,
-  correspondingSite,
+  transportData,
+  onClose,
+  onAddNextInvoice,
 }) => {
+  
   function closeModal() {
     setIsOpen(false);
   }
@@ -24,7 +23,6 @@ const InvoiceModal = ({
     setIsOpen(false);
     onAddNextInvoice();
   };
-
   
 
   const SaveAsPDFHandler = () => {
@@ -88,8 +86,8 @@ const InvoiceModal = ({
         console.error("oops, something went wrong!", error);
       });
   };
-  //console.log(items, vehicleData);
-  //console.log(selectedTransfer);
+  console.log("c", transportData);
+  //console.log("d"selectedContractor);
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -126,162 +124,47 @@ const InvoiceModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block max-w-2xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
+            <div className="inline-block max-w-xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
               <div className="p-4" id="print">
                 <h1 className="flex justify-center gap-2 p-2 text-2xl font-semibold text-gray-900 ">
                   <FaMoneyBillTrendUp size={25} /> ECOSYNC BILLING DETAILS
                 </h1>
                 <hr className="border-2 border-black mx-7" />
-                <div className="mt-6 border-black ">
-                  <div className="flex flex-col justify-between gap-1 mb-4 ">
-                    <div>
-                      {items.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex justify-between gap-2 mb-2 border-2 border-gray-100"
-                        >
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">Date:</span>
-                            <span className="p-2">{item.currentdate}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Arrival Time:
-                            </span>
-                            <span className="p-2">{item.arrivaltime}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Departure Time:
-                            </span>
-                            <span className="p-2">{item.departuretime}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Waste Volume:
-                            </span>
-                            <span className="p-2">{item.wastevolume} TON</span>
-                          </div>
+                <div className="mt-6 border-black">
+                  {transportData && (
+                    <div className="flex flex-col justify-between gap-1 mb-4">
+                      <div className="flex justify-between gap-2 mb-2 border-2 border-gray-100">
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Collection Date:</span>
+                          <span className="p-2">{transportData.collectiondate}</span>
                         </div>
-                      ))}
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Collection Time:</span>
+                          <span className="p-2">{transportData.collectiontime}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Waste Volume:</span>
+                          <span className="p-2">{transportData.wasteamount}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Vehicle Reg No:</span>
+                          <span className="p-2">{transportData.vehicleregno}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Waste Type:</span>
+                          <span className="p-2">{transportData.wastetype}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Ward No:</span>
+                          <span className="p-2">{transportData.wardno}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Contractor ID:</span>
+                          <span className="p-2">{transportData._id}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-center gap-10 font-semibold border-2 border-gray-300">
-                      <div className="flex gap-3">
-                        <span className="p-2">STS Ward No:</span>
-                        <span className="p-2">{correspondingWard}</span>
-                      </div>
-                      <div className="flex gap-3">
-                        <span className="p-2">Landfill Site No:</span>
-                        <span className="p-2">{correspondingSite}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <table className="text-center">
-                    <thead>
-                      <tr className="text-sm text-center bg-gray-200 border-2 border-gray-400 md:text-base">
-                        <th className="px-2">Vehicle</th>
-                        <th className="px-2">Type</th>
-                        <th className="px-2k">Capacity</th>
-                        <th className="px-">Loaded Fuel Cost</th>
-                        <th className="px-3">Unloaded Fuel Cost</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item) => (
-                        <tr key={item.id} className="border-2 border-gray-400">
-                          {/* <td>{item.selectedVehicle}</td> */}
-                          {vehicleData.map((vehicle) => {
-                            if (vehicle._id === item.vehicleregno) {
-                              console.log("yes");
-                              return (
-                                <Fragment key={vehicle._id}>
-                                  <td>{vehicle.regnumber}</td>
-                                  <td>{vehicle.type}</td>
-                                  <td>{vehicle.capacity}</td>
-                                  <td>{vehicle.loadedfuelcost}</td>
-                                  <td>{vehicle.unloadedfuelcost}</td>
-                                </Fragment>
-                              );
-                            }
-                            return null;
-                          })}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-
-                  <div className="flex flex-col items-end m-2 space-y-2">
-                    {items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between w-full gap-32 px-2 pt-2 border-t border-black/10"
-                      >
-                        <span className="flex gap-1 font-bold">
-                          {" "}
-                          <MdOutlinePendingActions size={20} /> Cost per kilometre:
-                        </span>
-                        {vehicleData.map((vehicle) => {
-                          if (vehicle._id === item.vehicleregno) {
-                            //console.log("bigyes");
-                            const loadedCost = parseFloat(
-                              vehicle.loadedfuelcost
-                            );
-                            const unloadedCost = parseFloat(
-                              vehicle.unloadedfuelcost
-                            );
-                            const wastevolume = parseFloat(item.wastevolume);
-                            const capacity = parseFloat(vehicle.capacity);
-                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
-                            return <span key={vehicle._id}>৳{actionValue.toFixed(2)}</span>;
-                          }
-                          return null;
-                        })}
-                      </div>
-                    ))}
-
-                    {/* Display Distance */}
-                    <div className="flex justify-between w-full gap-32 px-2 pt-2 border-t border-black/10">
-                      <span className="flex gap-2 font-bold">
-                        {" "}
-                        <GiPathDistance size={20} />
-                        Distance:
-                      </span>
-                      <span>{distance} KM</span>
-                    </div>
-                    
-
-                    {/* Display Total */}
-                    {items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between w-full gap-32 px-2 pt-2 border-t border-black/10"
-                      >
-                        <span className="flex gap-1 font-bold">
-                          {" "}
-                          <RiMoneyDollarBoxFill size={20} /> Total Cost:
-                        </span>
-                        {vehicleData.map((vehicle) => {
-                          if (vehicle._id === item.vehicleregno) {
-                            //console.log("bigyes");
-                            const loadedCost = parseFloat(
-                              vehicle.loadedfuelcost
-                            );
-                            const unloadedCost = parseFloat(
-                              vehicle.unloadedfuelcost
-                            );
-                            const wastevolume = parseFloat(item.wastevolume);
-                            const capacity = parseFloat(vehicle.capacity);
-                            const actionValue = unloadedCost + (wastevolume/capacity)*(loadedCost - unloadedCost);
-                            const totalValue = (actionValue*distance).toFixed(2);
-                            return <span key={vehicle._id}>৳{totalValue}</span>;
-                          }
-                          return null;
-                        })}
-                      </div>
-                    ))}
-
-                  </div>
+                  )}
                 </div>
               </div>
               <div className="flex px-4 pb-6 space-x-2">

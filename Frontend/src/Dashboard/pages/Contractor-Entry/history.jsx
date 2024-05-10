@@ -15,20 +15,38 @@ export default function ContractorHistory() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTransfer, setSelectedTransfer] = useState(null);
   const [selectedContractor, setSelectedContractor] = useState(null);
+  const [selectedTransport, setSelectedTransport] = useState(null);
   const [distance, setDistance] = useState("");
   // const[transfers, setTransfers] = useState([]);
 
   const [contractors, setContractors] = useState([]);
-  const [contractorLoading, setContractorLoading] = useState(true);
+  const [transport, setTransport] = useState([]);
+  const [contractor, setContractor] = useState([]);
+  const [transportLoading, setTransportLoading] = useState(true);
   const [vehicleLoading, setVehicleLoading] = useState(true);
+  const [contractorLoading, setContractorLoading] = useState(true);
   const [contractorError, setContractorError] = useState(null);
   const [vehicleError, setVehicleError] = useState(null);
+  const [transportError, setTransportError] = useState(null);
 
   useEffect(() => {
-    const fetchContractors = async () => {
+    const fetchTransport = async () => {
       try {
         const response = await axios.get("http://localhost:3000/transport");
-        setContractors(response.data);
+        setTransport(response.data);
+        console.log("Transport data:", JSON.stringify(response.data));
+      } catch (error) {
+        console.error("Error fetching transport data:", error);
+        setTransportError("Error fetching transport data. Please try again later.");
+      } finally {
+        setTransportLoading(false);
+        setLoading(false); // Update loading state here
+      }
+    };
+    const fetchContractor = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/contractor");
+        setContractor(response.data);
         console.log("Contractor data:", JSON.stringify(response.data));
       } catch (error) {
         console.error("Error fetching contractor data:", error);
@@ -52,24 +70,28 @@ export default function ContractorHistory() {
       }
     };
   
-    fetchContractors();
+    fetchTransport();
+    fetchContractor();
     fetchVehicles();
   }, []); 
   
 
 
-  const handlePrintClick = (contractorId) => {
-    console.log("Clicked contractorId:", contractorId);
-    // Find the contractor with the given ID
-    const selectedContractor = contractors.find((contractor) => contractor._id === contractorId);
-    console.log("Selected contractor:", selectedContractor);
-    if (selectedContractor) {
-      setSelectedContractor(selectedContractor);
+  const handlePrintClick = (clickedTransport) => {
+    const transportId = clickedTransport._id; // Extracting the ID from the transport object
+    console.log("Clicked transportId:", transportId);
+    // Find the transport with the given ID
+    const selectedTransport = transport.find((t) => t._id === transportId);
+    console.log("Selected transport:", selectedTransport);
+    if (selectedTransport) {
+      setSelectedTransport(selectedTransport);
       setIsModalOpen(true);
     } else {
-      console.error(`Contractor with ID ${contractorId} not found.`);
+      console.error(`Transport with ID ${transportId} not found.`);
     }
   };
+  
+  
   
   
 
@@ -116,7 +138,7 @@ export default function ContractorHistory() {
   return (
     <div className="flex-1 px-4 pt-3 pb-4 bg-white border border-gray-200 rounded-sm">
     <strong className="flex gap-2 px-4 mx-auto text-2xl text-center text-rose-900">
-      <FaHistory size={30} /> STS Transfer History
+      <FaHistory size={30} /> Contractor to STS Transport History
     </strong>
     <div className="mt-3 border-gray-200 rounded-sm border-x">
       <table className="w-full text-gray-700">
@@ -134,22 +156,25 @@ export default function ContractorHistory() {
           </tr>
         </thead>
         <tbody>
-          {contractors.map((contractor) => (
-            <tr key={contractor._id}>
-              <td>{contractor.collectiondate}</td>
-              <td>{contractor.collectiontime}</td>
-              <td>{contractor.wasteamount}</td>
+          {transport.map((transport) => (
+            <tr key={transport._id}>
+              <td>{transport.collectiondate}</td>
+              <td>{transport.collectiontime}</td>
+              <td>{transport.wasteamount}</td>
               <td>
                 {/* Find the vehicle registration number from vehicles data */}
-                {vehicles.find(vehicle => vehicle._id === contractor.vehicleregno)?.regnumber || "Not found"}
+                {vehicles.find(vehicle => vehicle._id === transport.vehicleregno)?.regnumber || "Not found"}
               </td>
-              <td>{contractor.contractorid}</td>
-              <td>{contractor.wastetype}</td>
-              <td>{contractor.wardno}</td>
+              <td>
+                {/* Find the vehicle registration number from vehicles data */}
+                {contractor.find(contractor => contractor._id === transport.contractorid)?.companyName || "Not found"}
+              </td>
+              <td>{transport.wastetype}</td>
+              <td>{transport.wardno}</td>
               <td>
                     <button
                       className="flex gap-2 text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 me-2 "
-                      onClick={() => handlePrintClick(contractor)}
+                      onClick={() => handlePrintClick(transport)}
                     ><IoMdPrint size={20}/>
                       Show
                     </button>
@@ -160,13 +185,12 @@ export default function ContractorHistory() {
         </tbody>
       </table>
     </div>
-    {isModalOpen && selectedContractor && (
+    {isModalOpen && selectedTransport && (
         <InvoiceModal
-          isOpen={isModalOpen}
-          setIsOpen={setIsModalOpen}
-          contractorData={selectedContractor}
-          // Pass other necessary props to InvoiceModal
-        />
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        transportData={selectedTransport}
+      />
       )}
 
     </div>

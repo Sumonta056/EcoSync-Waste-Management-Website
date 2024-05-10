@@ -149,22 +149,23 @@ export default function STSLoadEntry() {
 
 
 <Form.Item
-      label="Contractor ID"
+      label="Contractor Company"
       name="contractorid"
       rules={[
         {
           required: true,
-          message: "Please select the contractor ID!"
+          message: "Please select the contractor company!"
         }
       ]}
     >
       <Select placeholder="Select a contractor">
-        {contractors.map(contractor => (
-          <Option key={contractor._id} value={contractor.companyName}>
-            {contractor.name}
-          </Option>
-        ))}
-      </Select>
+              {/* Map over contractors to generate Option components */}
+              {contractors.map(contractor => (
+                <Option key={contractor._id} value={contractor._id}>
+                  {contractor.companyName}
+                </Option>
+              ))}
+            </Select>
     </Form.Item>
         <Form.Item label="Type of Waste" name="wastetype" rules={[{ required: true, message: "Please select the type of waste collected!" }]}>
           <Select placeholder="Select a waste type">
