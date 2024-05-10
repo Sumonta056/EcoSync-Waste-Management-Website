@@ -15,6 +15,7 @@ import { MdHistory } from "react-icons/md";
 import { IoCreateSharp } from "react-icons/io5";
 import { FaPeopleRobbery } from "react-icons/fa6";
 import { FaDumpster } from "react-icons/fa";
+import { FaHandsHelping, FaDolly } from "react-icons/fa";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -82,6 +83,18 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     label: "Landfill Entry Form",
     path: "/landfill",
     icon: <FaLandmark />,
+  },
+  {
+    key: "create-contractor",  // new case
+    label: "Create Contractor",
+    path: "/contractor",
+    icon: <FaHandsHelping />
+  },
+  {
+    key: "transport-entry", // new case
+    label: "Transport Entry",
+    path: "/stsLoad",
+    icon: <FaDolly/>
   },
   {
     key: "dump-history",
