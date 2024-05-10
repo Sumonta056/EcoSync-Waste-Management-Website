@@ -21,6 +21,7 @@ import FirstTransferEntry from "./Dashboard/pages/ThirdParty-Entry/index.jsx";
 import HomeCollectionEntry from "./Dashboard/pages/HomeCollection-Entry/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
+import ContractorHistory from "./Dashboard/pages/Contractor-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
 import Map from "./Dashboard/pages/RouteOptimize/index.jsx";
@@ -142,6 +143,7 @@ function App() {
         {/* Anyone  can access */}
 
         {/* Only any Logged in can access */}
+        
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={dashboard ? <Dashboard /> : <NOACCESS />} />
         </Route>
@@ -244,6 +246,12 @@ function App() {
           <Route
             index
             element={seeTransferHistory ? <STSHistory /> : <NOACCESS />}
+          />
+        </Route>
+        <Route path="/contractorhistory" element={<Layout />}>
+          <Route
+            index
+            element={ContractorHistory ? <ContractorHistory /> : <NOACCESS />}
           />
         </Route>
         <Route path="/map" element={<Layout />}>

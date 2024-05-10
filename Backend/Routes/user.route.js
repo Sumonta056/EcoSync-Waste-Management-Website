@@ -19,6 +19,14 @@ router.get("/sts-manager", async (req, res, next) => {
     console.log(err.message);
   }
 });
+router.get("/contractor-manager", async (req, res, next) => {
+  try {
+    const result = await User.find({ role: 'CONTRACTOR-MANAGER' });
+    res.send(result);
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 router.get("/landfill-manager", async (req, res, next) => {
   try {
     const result = await User.find({ role: 'LANDFILL MANAGER' });

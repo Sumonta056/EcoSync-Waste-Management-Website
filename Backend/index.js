@@ -63,6 +63,9 @@ app.use("/landfill", landfillRouter);
 const transferRouter = require("./Routes/transfer.route.js");
 app.use("/transfer", transferRouter);
 
+const transportRouter = require("./Routes/transport.route.js");
+app.use("/transport", transportRouter);
+
 // Waste dump of Landfill routes
 const dumpRouter = require("./Routes/dump.route.js");
 app.use("/dump", dumpRouter);
