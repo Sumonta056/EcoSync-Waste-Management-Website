@@ -85,7 +85,13 @@ const HomeScreen = () => {
         />
       </View>
 
-      <View style={{ marginTop: 20 }}>
+      <View style={{ alignItems: "center", marginTop: 5 }}>
+        <Text style={{ fontSize: 24, fontWeight: "bold" }}>
+          Community Discussion
+        </Text>
+      </View>
+
+      <View style={{ marginTop: 5 }}>
         {posts?.map((post) => (
           <View
             style={{
@@ -112,14 +118,12 @@ const HomeScreen = () => {
             </View>
 
             <View>
-              <Text
-                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 4 }}
-              >
+              <Text style={{ fontSize: 20, color: "#00716F", marginBottom: 4 }}>
                 {post?.user?.name}
               </Text>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 18,
                   color: "gray",
                   paddingBottom: 10,
                 }}

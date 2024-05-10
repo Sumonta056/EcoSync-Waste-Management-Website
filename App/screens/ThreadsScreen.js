@@ -71,7 +71,6 @@ const ThreadsScreen = () => {
 
       <View
         style={{
-      
           justifyContent: "center",
           alignItems: "center",
           paddingTop: 20,

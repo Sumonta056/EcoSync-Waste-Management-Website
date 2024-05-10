@@ -47,7 +47,7 @@ const ProfileScreen = () => {
               backgroundColor: "#D0D0D0",
             }}
           >
-            <Text>Threads.net</Text>
+            
           </View>
         </View>
 
@@ -68,7 +68,7 @@ const ProfileScreen = () => {
                 resizeMode: "contain",
               }}
               source={{
-                uri: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
+                uri: "https://randomuser.me/api/portraits/men/42.jpg",
               }}
             />
           </View>
@@ -76,7 +76,7 @@ const ProfileScreen = () => {
           <View>
             <Text style={{ fontSize: 15, fontWeight: "400" }}>BTech.</Text>
             <Text style={{ fontSize: 15, fontWeight: "400" }}>
-              Movie Buff | Musical Nerd
+              Landfill Manager
             </Text>
             <Text style={{ fontSize: 15, fontWeight: "400" }}>
               Love Yourself
