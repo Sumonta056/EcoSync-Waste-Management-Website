@@ -12,6 +12,7 @@ import UpdateProfile from "./Dashboard/pages/UpdateProfile/index.jsx";
 import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFillEntry from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
+import CreateContract from "./Dashboard/pages/CreateContractor/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
@@ -41,6 +42,7 @@ function App() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
+  const [createContract, setCreateContract] = useState(false);
   const [stsEntry, setStsEntry] = useState(false);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
@@ -75,6 +77,9 @@ function App() {
                 break;
               case "Create-Landfill":
                 setCreateLandfill(permission.status);
+                break;
+              case "Create-Contract":
+                setCreateContract(permission.status);
                 break;
               case "STS-Entry":
                 setStsEntry(permission.status);
@@ -128,6 +133,12 @@ function App() {
         <Route path="/profile" element={<Layout />}>
           <Route index element={profile ? <Profile /> : <NOACCESS />} />
         </Route>
+        <Route path="/contract" element={<Layout />}>
+          <Route
+            index
+            element={createContract ? <CreateContract /> : <NOACCESS />}
+          />
+        </Route>
         {/* Only any Logged in can access */}
 
         {/* Only Admin can access */}
@@ -157,6 +168,10 @@ function App() {
             element={createLandfill ? <CreateLandfill /> : <NOACCESS />}
           />
         </Route>
+
+        
+
+
         <Route path="/userRoles" element={<Layout />}>
           <Route index element={accessRoles ? <AccessRoles /> : <NOACCESS />} />
         </Route>
