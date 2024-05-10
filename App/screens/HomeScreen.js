@@ -106,19 +106,38 @@ const HomeScreen = () => {
                   resizeMode: "contain",
                 }}
                 source={{
-                  uri: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
+                  uri: "https://randomuser.me/api/portraits/men/45.jpg",
                 }}
               />
             </View>
 
             <View>
               <Text
-                style={{ fontSize: 15, fontWeight: "bold", marginBottom: 4 }}
+                style={{ fontSize: 25, fontWeight: "bold", marginBottom: 4 }}
               >
                 {post?.user?.name}
               </Text>
-              <Text>{post?.content}</Text>
-
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "gray",
+                  paddingBottom: 10,
+                }}
+              >
+                {post?.content}
+              </Text>
+              {/* Add this block to display the image */}
+              {post?.photo && (
+                <Image
+                  style={{
+                    width: 300,
+                    height: 200,
+                    resizeMode: "cover",
+                    padding: 10,
+                  }}
+                  source={{ uri: post.photo }}
+                />
+              )}
               <View
                 style={{
                   flexDirection: "row",

@@ -20,6 +20,33 @@ export default class ReportIssue extends React.Component {
     photo: null,
     anonymous: false,
   };
+  handleSubmit = async () => {
+    console.log(this.state.photo); // Print the image URI
+
+    // const response = await fetch("http://192.168.137.210:3000/report", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     location: this.state.location,
+    //     issueType: this.state.issueType,
+    //     description: this.state.description,
+    //     photo: this.state.photo, // Send the image URI to the backend
+    //     anonymous: this.state.anonymous,
+    //   }),
+    // });
+
+    // const data = await response.json();
+
+    // if (response.ok) {
+    //   // Handle successful report
+    //   navigate("Dashboard");
+    // } else {
+    //   // Handle error
+    //   console.error(data);
+    // }
+  };
 
   render() {
     const { navigate } = this.props.navigation;

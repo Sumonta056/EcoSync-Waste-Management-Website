@@ -193,10 +193,11 @@ app.post("/users/unfollow", async (req, res) => {
 //endpoint to create a new post in the backend
 app.post("/create-post", async (req, res) => {
   try {
-    const { content, userId } = req.body;
+    const { content, userId, photo } = req.body;
 
     const newPostData = {
       user: userId,
+      photo, // add this line
     };
 
     if (content) {

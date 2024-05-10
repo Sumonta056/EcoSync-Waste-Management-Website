@@ -21,8 +21,8 @@ import unnamedImage from "./assets/image.jpg";
 import avatarImage from "./assets/notification.png";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
-import { useNavigation } from '@react-navigation/native';
-
+import Entypo from "@expo/vector-icons/Entypo";
+import { useNavigation } from "@react-navigation/native";
 
 const Index = () => {
   const windowWidth = Dimensions.get("window").width;
@@ -143,7 +143,6 @@ const Index = () => {
             </Text>
           </TouchableOpacity>
 
-
           <TouchableOpacity
             onPress={() => navigation.navigate("Main")}
             style={{
@@ -164,7 +163,7 @@ const Index = () => {
               backgroundColor: "#00716F",
             }}
           >
-            <Octicons name="report" size={24} color="#fff" />
+            <Entypo name="chat" size={28} color="#fff" />
             <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
               Community
             </Text>
