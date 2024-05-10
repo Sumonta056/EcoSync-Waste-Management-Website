@@ -13,6 +13,7 @@ import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFillEntry from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
+import CreateEmployee from "./Dashboard/pages/CreateEmployee/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
@@ -150,6 +151,9 @@ function App() {
         </Route>
         <Route path="/createSTS" element={<Layout />}>
           <Route index element={createSTS ? <CreateSTS /> : <NOACCESS />} />
+        </Route>
+        <Route path="/createEmployee" element={<Layout />}>
+          <Route index element={CreateEmployee ? <CreateEmployee /> : <NOACCESS />} />
         </Route>
         <Route path="/createLandfill" element={<Layout />}>
           <Route
