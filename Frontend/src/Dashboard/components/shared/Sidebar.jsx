@@ -29,6 +29,8 @@ export default function Sidebar() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
+  const [createContractor, setContractor] = useState(true); // set to true
+  const [stsoadEntry, setStsLoadEntry] = useState(true); // set to true
   const [stsEntry, setStsEntry] = useState(false);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
@@ -74,6 +76,10 @@ export default function Sidebar() {
               case "See-Dump-History":
                 setSeeDumpHistory(permission.status);
                 break;
+              case "Create-Constractor": // new case
+                setContractor(permission.status);
+              case "Create-transport": // new case
+                setStsLoadEntry(permission.status);    
               case "Access-Roles":
                 setAccessRoles(permission.status);
                 break;
@@ -153,6 +159,14 @@ export default function Sidebar() {
             case "landfill-entry":
               return (
                 landfillEntry && <SidebarLink key={link.key} link={link} />
+              );
+            case "create-contractor": // new case
+              return (
+                createContractor && <SidebarLink key={link.key} link={link} />
+              );
+            case "transport-entry": // new case
+              return (
+                stsoadEntry && <SidebarLink key={link.key} link={link} />
               );
             case "dump-history":
               return (
