@@ -67,7 +67,12 @@ app.use("/transfer", transferRouter);
 const dumpRouter = require("./Routes/dump.route.js");
 app.use("/dump", dumpRouter);
 
+// Home collection routes
+const homecollectionRouter = require("./Routes/homecollection.route.js");
+app.use("/homecollection", homecollectionRouter);
 
+const contractorRouter = require("./Routes/contractor.route.js");
+app.use("/contractor", contractorRouter);
 // Main Router
 app.get("/", (req, res, next) => {
   res.send("Hello World");

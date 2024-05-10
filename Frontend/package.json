@@ -20,6 +20,7 @@
     "@react-pdf/renderer": "^3.4.2",
     "antd": "^5.15.2",
     "axios": "^1.6.8",
+    "canvg": "^4.0.1",
     "classnames": "^2.3.1",
     "date-fns": "^2.28.0",
     "framer-motion": "^6",
