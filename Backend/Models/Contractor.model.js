@@ -43,6 +43,10 @@ const ContractorScheme = new Schema({
     type: String,
     required: true,
   },
+  managername:{
+    type: String,
+    required: true,
+  },
 });
 
 const Contractor = mongoose.model("Contractor", ContractorScheme);

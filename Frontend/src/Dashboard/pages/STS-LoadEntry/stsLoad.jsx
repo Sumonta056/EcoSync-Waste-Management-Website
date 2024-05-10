@@ -1,61 +1,39 @@
 import { Form, Input, Select, Button, message } from "antd";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
-import { KJUR } from "jsrsasign";
 import { MdTransferWithinAStation } from "react-icons/md";
 export default function STSLoadEntry() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [wardNumbers, setWardNumbers] = useState([]);
-  const [siteNumbers, setSiteNumbers] = useState([]);
-  const [stsManagerName, setStsManagerName] = useState("");
   const [stsManager, setStsManager] = useState([]);
   const [vehicleNumbers, setVehicleNumbers] = useState([]);
+  const [contractors, setContractors] = useState([]);
+  const [sts, setSts] = useState([]);
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    let userId = null;
+    const fetchContractors = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/contractor");
+        setContractors(response.data);
+      } catch (error) {
+        console.error('Error fetching contractors:', error);
+      }
+    };
 
-    if (token) {
-      const decodedToken = KJUR.jws.JWS.parse(token);
-      userId = decodedToken.payloadObj?.id;
-
-      axios
-        .get(`http://localhost:3000/user/${userId}`)
-        .then((response) => {
-          const userName = response.data.name;
-          setStsManagerName(userName);
-          console.log(userName); // Log the fetched user name
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    }
+    const fetchSts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/sts");
+        setSts(response.data);
+      } catch (error) {
+        console.error('Error fetching sts:', error);
+      }
+    };
+    
 
     const fetchData = async () => {
       try {
-        const wardNumbersResponse = await axios.get(
-          "http://localhost:3000/sts"
-        );
-        setWardNumbers(
-          wardNumbersResponse.data.map((sts) => ({
-            id: sts._id,
-            wardNumber: sts.wardno,
-            stsGpsCoords: sts.gpscoords,
-          }))
-        );
 
-        const siteNumbersResponse = await axios.get(
-          "http://localhost:3000/landfill"
-        );
-        setSiteNumbers(
-          siteNumbersResponse.data.map((landfill) => ({
-            id: landfill._id,
-            siteNumber: landfill.siteno,
-            landfillGpsCoords: landfill.gpscoords,
-          }))
-        );
         const stsManagerResponse = await axios.get(
           "http://localhost:3000/user"
         );
@@ -83,111 +61,23 @@ export default function STSLoadEntry() {
       }
     };
     fetchData();
-
-    if (userId) {
-      axios
-        .get(`http://localhost:3000/sts`)
-        .then((response) => {
-          console.log(response);
-          if (Array.isArray(response.data)) {
-            const managerWards = response.data.filter(
-              (ward) => ward.managerId === userId
-            );
-            setWardNumbers(managerWards);
-            console.log(managerWards);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching ward numbers:", error);
-        });
-    }
+    fetchSts();
+    fetchContractors();
   }, []);
-  console.log(wardNumbers);
-  const calculateFuelAllocationCostPerKm = (
-    cUnloaded,
-    cLoaded,
-    capacity,
-    wasteVolume
-  ) => {
-    try {
-      // Convert capacity to a number by removing the "TON" suffix
-      const numericCapacity = parseFloat(capacity.replace(" TON", ""));
-      const numericCUnloaded = parseFloat(cUnloaded);
-      const numericCLoaded = parseFloat(cLoaded);
-      const numericWasteVolume = parseFloat(wasteVolume);
 
-      // Calculate the fuel allocation cost per kilometer using the provided formula
-      let perKmCost =
-        numericCUnloaded +
-        (numericWasteVolume / numericCapacity) *
-          (numericCLoaded - numericCUnloaded);
-
-      console.log("Per Km Cost:", perKmCost);
-
-      return perKmCost;
-    } catch (error) {
-      console.error(
-        "Error calculating fuel allocation cost per kilometer:",
-        error.message
-      );
-      return null;
-    }
-  };
 
   const onFinish = async (values) => {
-    let successMessage = "Transfer entry added successfully";
-    let errorMessage = "Failed to add transfer entry";
-
+    let successMessage = "Transport entry added successfully";
+    let errorMessage = "Failed to add transport entry";
+  
     try {
       setLoading(true);
-
-      const token = localStorage.getItem("access_token");
-      const decodedToken = KJUR.jws.JWS.parse(token);
-      const userId = decodedToken.payloadObj?.id;
-
-      const updatedValues = { ...values, stsmanagername: userId };
-
-      // Fetch the selected vehicle's information based on the selected vehicle ID
-      const selectedVehicle = vehicleNumbers.find(
-        (vehicle) => vehicle.id === values.vehicleregno
-      );
-
-      // Calculate the fuel allocation cost per kilometer
-      const fuelAllocationCostPerKm = calculateFuelAllocationCostPerKm(
-        selectedVehicle.unloadedfuelcost,
-        selectedVehicle.loadedfuelcost,
-        selectedVehicle.capacity,
-        parseFloat(values.wastevolume) // Convert the waste volume to a floating-point number
-      );
-
-      console.log("Fuel Allocation Cost Per Km:", fuelAllocationCostPerKm);
-
-      
-      
-      console.log(wardNumbers);
-      // Calculate distance between STS and landfill
-      const stsgpscoords = wardNumbers.find((sts) => sts._id == values.wardno);
-      console.log("STS GPS Coordinates:", stsgpscoords.gpscoords);
-      const landfillgpscoords = siteNumbers.find(
-        (landfill) => landfill.id == values.siteno
-      );
-      console.log("Landfill GPS Coordinates:", landfillgpscoords.landfillGpsCoords);
-
-      const distance = calculateDistance(
-        stsgpscoords.gpscoords,
-        landfillgpscoords.landfillGpsCoords
-      );
-      //console.log("Distance:", distance);
-
-      // Add perKmCost and distance to updatedValues
-      updatedValues.perkmcost = fuelAllocationCostPerKm;
-      updatedValues.distance = distance;
-
+  
       const { data } = await axios.post(
-        "http://localhost:3000/transfer",
-        updatedValues
+        "http://localhost:3000/transport",
+        values // Use 'values' directly instead of 'updatedValues'
       );
-      console.log(updatedValues);
+      console.log(values); // Log the form values submitted
       if (data.error) {
         throw new Error(data.error);
       }
@@ -199,43 +89,120 @@ export default function STSLoadEntry() {
       setLoading(false);
     }
   };
+  
 
   
 
 
   const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+  const dateRegex = /^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-\d{4}$/;
   return (
     <div className="w-[40rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="flex justify-center w-full gap-2 pb-2 text-2xl text-center text-stone-700">
-        <MdTransferWithinAStation size={30} /> STS Load Entry
+        <MdTransferWithinAStation size={30} /> Contractor to STS Transport Entry
       </strong>
       <div className="flex flex-col gap-3 mt-4">
         <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item label="Date of Collection" name="collectionDate" rules={[{ required: true, message: "Please input the collection date!" }]}>
-          <Input type="date" />
-        </Form.Item>
-        <Form.Item label="Time of Collection" name="collectionTime" rules={[{ required: true, message: "Please input the collection time!" }]}>
-          <Input type="time" />
-        </Form.Item>
-        <Form.Item label="Amount of Waste Collected (in kilograms)" name="wasteAmount" rules={[{ required: true, message: "Please input the amount of waste collected!" }]}>
-          <Input type="number" />
-        </Form.Item>
-        <Form.Item label="Contractor ID" name="contractorId" rules={[{ required: true, message: "Please input the contractor ID!" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Type of Waste Collected" name="wasteType" rules={[{ required: true, message: "Please select the type of waste collected!" }]}>
+        <Form.Item
+        label="Collection Date"
+        name="collectiondate"
+        rules={[
+          { required: true, message: "Please enter collection date" },
+          {
+            pattern: dateRegex,
+            message: "Please enter a valid date in dd-mm-yyyy format",
+          },
+        ]}
+      >
+        <Input placeholder="Enter Collection Date" />
+      </Form.Item>
+        <Form.Item
+              label="Collection Time"
+              className="w-full block-style"
+              name="collectiontime"
+              rules={[
+                { required: true, message: "Please enter collection time" },
+                {
+                  pattern: timeRegex,
+                  message: "Please enter a valid time in HH:mm format",
+                },
+              ]}
+            >
+              <Input placeholder="Enter Collection Time" />
+            </Form.Item>
+            <Form.Item
+  label="Amount of Waste Collected (in kilograms)"
+  name="wasteamount"
+  rules={[
+    {
+      required: true,
+      message: "Please input the amount of waste collected!",
+    },
+    {
+      pattern: /^\d+(\.\d+)?$/,
+      message: "Please enter a valid number.",
+    },
+  ]}
+>
+  <Input placeholder="Waste Amount" />
+</Form.Item>
+
+
+<Form.Item
+      label="Contractor ID"
+      name="contractorid"
+      rules={[
+        {
+          required: true,
+          message: "Please select the contractor ID!"
+        }
+      ]}
+    >
+      <Select placeholder="Select a contractor">
+        {contractors.map(contractor => (
+          <Option key={contractor._id} value={contractor.companyName}>
+            {contractor.name}
+          </Option>
+        ))}
+      </Select>
+    </Form.Item>
+        <Form.Item label="Type of Waste" name="wastetype" rules={[{ required: true, message: "Please select the type of waste collected!" }]}>
           <Select placeholder="Select a waste type">
             <Select.Option value="domestic">Domestic</Select.Option>
             <Select.Option value="plastic">Plastic</Select.Option>
             <Select.Option value="construction">Construction</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Designated STS for Deposit" name="designatedSTS" rules={[{ required: true, message: "Please input the designated STS for deposit!" }]}>
-          <Input />
-        </Form.Item>
-        <Form.Item label="Vehicle Used for Transportation" name="vehicle" rules={[{ required: true, message: "Please input the vehicle used for transportation!" }]}>
-          <Input />
-        </Form.Item>
+        <Form.Item
+            label="Designated STS"
+            name="wardno"
+            rules={[
+              { required: true, message: "Please select STS" },
+            ]}
+          >
+            <Select placeholder="Select a contractor">
+        {sts.map(sts => (
+          <Option key={sts._id} value={sts.wardno}>
+            {sts.wardno}
+          </Option>
+        ))}
+      </Select>
+          </Form.Item>
+        <Form.Item
+            label="Vehicle Registration Number"
+            name="vehicleregno"
+            rules={[
+              { required: true, message: "Please select vehicle number" },
+            ]}
+          >
+            <Select placeholder="Select a Vehicle Number">
+              {vehicleNumbers.map((vehicle) => (
+                <Select.Option key={vehicle._id} value={vehicle.id}>
+                  {vehicle.regNumber}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item>
             <Button
               type="primary"

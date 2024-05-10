@@ -7,6 +7,7 @@ export default function Contractor() {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [stsRoutes, setStsRoutes] = useState([]);
+  const [contractorManagers, setContractorManagers] = useState([]);
 
   useEffect(() => {
     const fetchStsRoutes = async () => {
@@ -22,6 +23,18 @@ export default function Contractor() {
 
     fetchStsRoutes();
   }, []);
+  // Inside the useEffect hook
+const fetchContractorManagers = async () => {
+  try {
+    const { data } = await axios.get("http://localhost:3000/user/contractor-manager");
+    setContractorManagers(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+fetchContractorManagers();
+
 
   const onFinish = async (values) => {
     let successMessage = "STS entry added successfully";
@@ -213,6 +226,26 @@ export default function Contractor() {
               ))}
             </Select>
           </Form.Item>
+
+          <Form.Item
+  label="Select Contractor Manager"
+  name="managername" 
+  rules={[
+    { 
+      required: true, 
+      message: "Please select contractor manager" 
+    }
+  ]}
+>
+  <Select placeholder="Select contractor manager">
+    {contractorManagers.map(manager => (
+      <Select.Option key={manager._id} value={manager._id}>
+        {manager.name}
+      </Select.Option>
+    ))}
+  </Select>
+</Form.Item>
+
   
           <Form.Item>
             <Button

@@ -50,7 +50,8 @@ export default function ContractorHistory() {
           <table className="w-full text-gray-700">
             <thead>
               <tr>
-                <th>Name of the Company</th>
+                <th>Company Name</th>
+                <th>Contractor Manager</th>
                 <th>Contact No</th>
                 <th>Workforce Size</th>
                 <th>Payment per ton</th>
@@ -84,7 +85,8 @@ export default function ContractorHistory() {
         <table className="w-full text-gray-700">
           <thead>
             <tr>
-                <th>Name of the Company</th>
+               <th>Company Name</th>
+                <th>Contractor Manager</th>
                 <th>Contact No</th>
                 <th>Workforce Size</th>
                 <th>Payment per ton</th>
@@ -101,6 +103,7 @@ export default function ContractorHistory() {
                 return (
                   <tr key={contract._id}>
                     <td>{contract.companyName}</td>
+                    <td>{contract.managername}</td>
                     <td>{contract.contactNo}</td>
                     <td>{contract.workForceSize}</td>
                     <td>{contract.paymentPerTon}</td>
