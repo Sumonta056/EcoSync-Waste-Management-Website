@@ -15,7 +15,6 @@ const InvoiceModal = ({
   onClose,
   onAddNextInvoice,
 }) => {
-  
   function closeModal() {
     setIsOpen(false);
   }
@@ -23,7 +22,6 @@ const InvoiceModal = ({
     setIsOpen(false);
     onAddNextInvoice();
   };
-  
 
   const SaveAsPDFHandler = () => {
     const dom = document.getElementById("print");
@@ -124,7 +122,7 @@ const InvoiceModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block max-w-xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
+            <div className="inline-block max-w-3xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
               <div className="p-4" id="print">
                 <h1 className="flex justify-center gap-2 p-2 text-2xl font-semibold text-gray-900 ">
                   <FaMoneyBillTrendUp size={25} /> ECOSYNC BILLING DETAILS
@@ -132,35 +130,64 @@ const InvoiceModal = ({
                 <hr className="border-2 border-black mx-7" />
                 <div className="mt-6 border-black">
                   {transportData && (
-                    <div className="flex flex-col justify-between gap-1 mb-4">
-                      <div className="flex justify-between gap-2 mb-2 border-2 border-gray-100">
+                    <div className="flex flex-col justify-between gap-3 mb-4">
+                      <div className="mb-2 border-2 border-gray-100">
                         <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Collection Date:</span>
-                          <span className="p-2">{transportData.collectiondate}</span>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Collection Date:
+                            </span>
+                            <span className="p-2">
+                              {transportData.collectiondate}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Collection Time:
+                            </span>
+                            <span className="p-2">
+                              {transportData.collectiontime}
+                            </span>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">Ward No:</span>
+                            <span className="p-2">{transportData.wardno}</span>
+                          </div>
                         </div>
+
                         <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Collection Time:</span>
-                          <span className="p-2">{transportData.collectiontime}</span>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Contractor ID:
+                            </span>
+                            <span className="p-2">{transportData._id}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Vehicle Reg No:
+                            </span>
+                            <span className="p-2">
+                              {transportData.vehicleregno}
+                            </span>
+                          </div>
                         </div>
+
                         <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Waste Volume:</span>
-                          <span className="p-2">{transportData.wasteamount}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Vehicle Reg No:</span>
-                          <span className="p-2">{transportData.vehicleregno}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Waste Type:</span>
-                          <span className="p-2">{transportData.wastetype}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Ward No:</span>
-                          <span className="p-2">{transportData.wardno}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          <span className="p-2 bg-gray-200">Contractor ID:</span>
-                          <span className="p-2">{transportData._id}</span>
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">
+                              Waste Volume:
+                            </span>
+                            <span className="p-2">
+                              {transportData.wasteamount}
+                            </span>
+                          </div>
+
+                          <div className="flex gap-2">
+                            <span className="p-2 bg-gray-200">Waste Type:</span>
+                            <span className="p-2">
+                              {transportData.wastetype}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
