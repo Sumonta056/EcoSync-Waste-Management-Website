@@ -14,7 +14,12 @@ const InvoiceModal = ({
   transportData,
   onClose,
   onAddNextInvoice,
+  associatedVehicleNo,
+  associatedCompanyName,
+  associatedWastePerDay,
+  associatedWastePayment,
 }) => {
+  
   function closeModal() {
     setIsOpen(false);
   }
@@ -22,6 +27,7 @@ const InvoiceModal = ({
     setIsOpen(false);
     onAddNextInvoice();
   };
+  
 
   const SaveAsPDFHandler = () => {
     const dom = document.getElementById("print");
@@ -86,6 +92,7 @@ const InvoiceModal = ({
   };
   console.log("c", transportData);
   //console.log("d"selectedContractor);
+  
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -122,73 +129,86 @@ const InvoiceModal = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block max-w-3xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
+            <div className="inline-block my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-xl">
               <div className="p-4" id="print">
                 <h1 className="flex justify-center gap-2 p-2 text-2xl font-semibold text-gray-900 ">
                   <FaMoneyBillTrendUp size={25} /> ECOSYNC BILLING DETAILS
                 </h1>
                 <hr className="border-2 border-black mx-7" />
                 <div className="mt-6 border-black">
-                  {transportData && (
-                    <div className="flex flex-col justify-between gap-3 mb-4">
-                      <div className="mb-2 border-2 border-gray-100">
+                {transportData && (
+                    <div className="flex flex-col justify-between gap-1 mb-4">
+                      <div className="flex justify-between gap-2 mb-2 border-2 border-gray-100">
                         <div className="flex gap-2">
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Collection Date:
-                            </span>
-                            <span className="p-2">
-                              {transportData.collectiondate}
-                            </span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Collection Time:
-                            </span>
-                            <span className="p-2">
-                              {transportData.collectiontime}
-                            </span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">Ward No:</span>
-                            <span className="p-2">{transportData.wardno}</span>
-                          </div>
+                          <span className="p-2 bg-gray-200">Collection Date:</span>
+                          <span className="p-2">{transportData.collectiondate}</span>
                         </div>
-
                         <div className="flex gap-2">
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Contractor ID:
-                            </span>
-                            <span className="p-2">{transportData._id}</span>
-                          </div>
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Vehicle Reg No:
-                            </span>
-                            <span className="p-2">
-                              {transportData.vehicleregno}
-                            </span>
-                          </div>
+                          <span className="p-2 bg-gray-200">Collection Time:</span>
+                          <span className="p-2">{transportData.collectiontime}</span>
                         </div>
-
                         <div className="flex gap-2">
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">
-                              Waste Volume:
-                            </span>
-                            <span className="p-2">
-                              {transportData.wasteamount}
-                            </span>
-                          </div>
-
-                          <div className="flex gap-2">
-                            <span className="p-2 bg-gray-200">Waste Type:</span>
-                            <span className="p-2">
-                              {transportData.wastetype}
-                            </span>
-                          </div>
+                    <span className="p-2 bg-gray-200">Contractor:</span>
+                    <span className="p-2">{associatedCompanyName}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="p-2 bg-gray-200">Waste Per Day (Wr):</span>
+                    <span className="p-2">{associatedWastePerDay}</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="p-2 bg-gray-200">Payment Per Ton:</span>
+                    <span className="p-2">{associatedWastePayment}</span>
+                  </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Waste Volume (Wc):</span>
+                          <span className="p-2">{transportData.wasteamount}</span>
                         </div>
+                        <div className="flex gap-2">
+                        <span className="p-2 bg-gray-200">Vehicle Reg No:</span>
+                        <span className="p-2">{associatedVehicleNo}</span> 
+                      </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Waste Type:</span>
+                          <span className="p-2">{transportData.wastetype}</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="p-2 bg-gray-200">Ward No:</span>
+                          <span className="p-2">{transportData.wardno}</span>
+                        </div>
+                        <div className="flex gap-2">
+                        <span className="p-2 bg-gray-200">Basic Pay:</span>
+                        <span className="p-2">
+                          {/* Calculate basic pay (Wc * payment per ton) */}
+                          {parseFloat(transportData.wasteamount) * parseFloat(associatedWastePayment)}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                      <span className="p-2 bg-gray-200">Deficit:</span>
+                      <span className="p-2">
+                        {/* Calculate deficit (max(0, Wr - Wc)) */}
+                        {Math.max(0, parseFloat(associatedWastePerDay) - parseFloat(transportData.wasteamount))}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <span className="p-2 bg-gray-200">F:</span>
+                      <span className="p-2">
+                        500 tk
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                    <span className="p-2 bg-gray-200">Fine:</span>
+                    <span className="p-2">
+                      {/* Calculate fine (deficit * 500) */}
+                      {Math.max(0, parseFloat(associatedWastePerDay) - parseFloat(transportData.wasteamount)) * 500}
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                  <span className="p-2 bg-gray-200">Total Bill:</span>
+                  <span className="p-2">
+                    {/* Calculate total bill (Basic Pay - Fine) */}
+                    {parseFloat(transportData.wasteamount) * parseFloat(associatedWastePayment) - (Math.max(0, parseFloat(associatedWastePerDay) - parseFloat(transportData.wasteamount)) * 500)}
+                  </span>
+                </div>
                       </div>
                     </div>
                   )}
@@ -237,8 +257,10 @@ const InvoiceModal = ({
                 </button>
               </div>
             </div>
+            
           </Transition.Child>
         </div>
+        
       </Dialog>
     </Transition>
   );

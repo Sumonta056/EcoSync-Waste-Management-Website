@@ -78,18 +78,27 @@ export default function ContractorHistory() {
 
 
   const handlePrintClick = (clickedTransport) => {
-    const transportId = clickedTransport._id; // Extracting the ID from the transport object
-    console.log("Clicked transportId:", transportId);
-    // Find the transport with the given ID
+    const transportId = clickedTransport._id;
     const selectedTransport = transport.find((t) => t._id === transportId);
-    console.log("Selected transport:", selectedTransport);
     if (selectedTransport) {
-      setSelectedTransport(selectedTransport);
+      const associatedVehicle = vehicles.find(vehicle => vehicle._id === selectedTransport.vehicleregno);
+      const associatedVehicleNo = associatedVehicle ? associatedVehicle.regnumber : "Not found";
+  
+      const associatedContractor = contractor.find(contractor => contractor._id === selectedTransport.contractorid);
+      const associatedCompanyName = associatedContractor.companyName ;
+
+      const associatedWastePerDay = associatedContractor.wastePerDay ;
+      const associatedWastePayment = associatedContractor.paymentPerTon ;
+  
+      setSelectedTransport({ ...selectedTransport, associatedVehicleNo, associatedCompanyName, associatedWastePerDay, associatedWastePayment });
       setIsModalOpen(true);
+  
+      console.log("company", associatedCompanyName); // Move console.log here
     } else {
       console.error(`Transport with ID ${transportId} not found.`);
     }
   };
+  
   
   
   
@@ -186,11 +195,15 @@ export default function ContractorHistory() {
       </table>
     </div>
     {isModalOpen && selectedTransport && (
-        <InvoiceModal
-        isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
-        transportData={selectedTransport}
-      />
+       <InvoiceModal
+       isOpen={isModalOpen}
+       setIsOpen={setIsModalOpen}
+       transportData={selectedTransport}
+       associatedVehicleNo={selectedTransport?.associatedVehicleNo}
+       associatedCompanyName={selectedTransport?.associatedCompanyName}
+       associatedWastePayment={selectedTransport?.associatedWastePayment}
+       associatedWastePerDay={selectedTransport?.associatedWastePerDay}
+     />     
       )}
 
     </div>
