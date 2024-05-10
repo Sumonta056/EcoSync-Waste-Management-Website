@@ -37,6 +37,7 @@ export default function Sidebar() {
   const [seeTransferHistory, setSeeTransferHistory] = useState(false);
   const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
+  const [CreateEmployees, setCreateEmployee] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -87,6 +88,9 @@ export default function Sidebar() {
                 break;
               case "Add-Vehicle-Entry":
                 setAddVehicleEntry(permission.status);
+                break;
+              case "Registration-Employee":
+                setCreateEmployee(permission.status);
                 break;
               default:
             }
@@ -155,6 +159,9 @@ export default function Sidebar() {
                 seeDumpHistory && <SidebarLink key={link.key} link={link} />
               );
             case "profile":
+              return profile && <SidebarLink key={link.key} link={link} />;
+
+            case "Registration-Employee":
               return profile && <SidebarLink key={link.key} link={link} />;
 
             default:

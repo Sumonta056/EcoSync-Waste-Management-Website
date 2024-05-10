@@ -89,6 +89,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     path: "/dumpHistory",
     icon: <FaDumpster />,
   },
+  {
+    key: "Registration-Employee",
+    label: "Create Employee",
+    path: "/createEmployee",
+    icon: <FaDumpster />,
+  },
 ];
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [

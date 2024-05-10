@@ -142,6 +142,33 @@ const Index = () => {
               Create Report
             </Text>
           </TouchableOpacity>
+
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Main")}
+            style={{
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              borderRadius: 15,
+              borderColor: "#0E2954",
+              borderWidth: 0.3,
+              marginHorizontal: 30,
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 5,
+              marginBottom: 5,
+              backgroundColor: "#00716F",
+            }}
+          >
+            <Octicons name="report" size={24} color="#fff" />
+            <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
+              Community
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </GestureHandlerRootView>
@@ -154,6 +181,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingTop: 40,
   },
   cardContainer: {
     height: 150,
