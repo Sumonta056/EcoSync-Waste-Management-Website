@@ -18,6 +18,13 @@ export function getRoleStatus(status) {
           {status.replaceAll("_", " ").toUpperCase()}
         </span>
       );
+      case "CONTRACT-MANAGER":
+      return (
+        <span className="px-2 py-1 capitalize rounded-md text-rose-600 bg-rose-100 text-md">
+          {status.replaceAll("_", " ").toUpperCase()}
+        </span>
+      );
+
 
     default:
       return (

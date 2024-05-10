@@ -28,7 +28,7 @@ import DumpHistory from "./Dashboard/pages/Landfill-Entry/history.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
-import About from "./Dashboard/pages/About/index.jsx"
+import About from "./Dashboard/pages/About/index.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -57,6 +57,7 @@ function App() {
   const [seeTransferHistory, setSeeTransferHistory] = useState(false);
   const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
+  const [CreateEmployees, setCreateEmployee] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -111,6 +112,11 @@ function App() {
               case "Add-Vehicle-Entry":
                 setAddVehicleEntry(permission.status);
                 break;
+
+              case "Registration-Employee":
+                setCreateEmployee(permission.status);
+                break;
+
               case "STS-Load-Entry":
                 setSTSLoadEntry(permission.status);
                 break;
@@ -149,7 +155,10 @@ function App() {
           />
         </Route>
         <Route path="/stsLoad" element={<Layout />}>
-          <Route index element={stsLoadEntry ? <STSLoadEntry /> : <NOACCESS />} />
+          <Route
+            index
+            element={stsLoadEntry ? <STSLoadEntry /> : <NOACCESS />}
+          />
         </Route>
         {/* Only any Logged in can access */}
 
@@ -175,7 +184,10 @@ function App() {
           <Route index element={createSTS ? <CreateSTS /> : <NOACCESS />} />
         </Route>
         <Route path="/createEmployee" element={<Layout />}>
-          <Route index element={CreateEmployee ? <CreateEmployee /> : <NOACCESS />} />
+          <Route
+            index
+            element={CreateEmployees ? <CreateEmployee /> : <NOACCESS />}
+          />
         </Route>
         <Route path="/createLandfill" element={<Layout />}>
           <Route
@@ -183,9 +195,6 @@ function App() {
             element={createLandfill ? <CreateLandfill /> : <NOACCESS />}
           />
         </Route>
-
-        
-
 
         <Route path="/userRoles" element={<Layout />}>
           <Route index element={accessRoles ? <AccessRoles /> : <NOACCESS />} />
@@ -209,13 +218,24 @@ function App() {
 
         {/* Only STS Manager + Admin can access */}
         <Route path="/firsttransfer" element={<Layout />}>
-          <Route index element={FirstTransferEntry ? <FirstTransferEntry /> : <NOACCESS />} />
+          <Route
+            index
+            element={FirstTransferEntry ? <FirstTransferEntry /> : <NOACCESS />}
+          />
         </Route>
         <Route path="/contractor" element={<Layout />}>
-          <Route index element={CreateContractor ? <CreateContractor /> : <NOACCESS />} />
+          <Route
+            index
+            element={CreateContractor ? <CreateContractor /> : <NOACCESS />}
+          />
         </Route>
         <Route path="/homecollection" element={<Layout />}>
-          <Route index element={HomeCollectionEntry ? <HomeCollectionEntry /> : <NOACCESS />} />
+          <Route
+            index
+            element={
+              HomeCollectionEntry ? <HomeCollectionEntry /> : <NOACCESS />
+            }
+          />
         </Route>
         <Route path="/sts" element={<Layout />}>
           <Route index element={stsEntry ? <STSEntry /> : <NOACCESS />} />
@@ -229,7 +249,7 @@ function App() {
         <Route path="/map" element={<Layout />}>
           <Route index element={seeOptimizeRoute ? <Map /> : <NOACCESS />} />
         </Route>
-        
+
         {/* Only STS Manager + Admin can access */}
 
         {/* Not Decided YET */}
@@ -241,10 +261,7 @@ function App() {
           />
         </Route>
         <Route path="/about" element={<Layout />}>
-          <Route
-            index
-            element={showTransaction ? <About /> : <NOACCESS />}
-          />
+          <Route index element={showTransaction ? <About /> : <NOACCESS />} />
         </Route>
         {/* Not Decided YET */}
       </Routes>

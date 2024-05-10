@@ -165,6 +165,9 @@ export default function RoleBasedPermission() {
                 <Select.Option value="See-Dump-History">
                   See-Dump-History
                 </Select.Option>
+                <Select.Option value="Registration-Employee">
+                  Registration Employee
+                </Select.Option>
               </Select>
             </Form.Item>
             <Form.Item
