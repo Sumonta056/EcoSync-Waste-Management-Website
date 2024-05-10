@@ -12,6 +12,8 @@ import UpdateProfile from "./Dashboard/pages/UpdateProfile/index.jsx";
 import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFillEntry from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
+import CreateContract from "./Dashboard/pages/CreateContractor/index.jsx";
+import STSLoadEntry from "./Dashboard/pages/STS-LoadEntry/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
 import CreateContractor from "./Dashboard/pages/CreateContractor/index.jsx";
 import CreateEmployee from "./Dashboard/pages/CreateEmployee/index.jsx";
@@ -45,7 +47,9 @@ function App() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
+  const [createContract, setCreateContract] = useState(true);
   const [stsEntry, setStsEntry] = useState(false);
+  const [stsLoadEntry, setSTSLoadEntry] = useState(true);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
   const [accessRoles, setAccessRoles] = useState(false);
@@ -80,6 +84,9 @@ function App() {
               case "Create-Landfill":
                 setCreateLandfill(permission.status);
                 break;
+              case "Create-Contract":
+                setCreateContract(permission.status);
+                break;
               case "STS-Entry":
                 setStsEntry(permission.status);
                 break;
@@ -103,6 +110,9 @@ function App() {
                 break;
               case "Add-Vehicle-Entry":
                 setAddVehicleEntry(permission.status);
+                break;
+              case "STS-Load-Entry":
+                setSTSLoadEntry(permission.status);
                 break;
               default:
             }
@@ -131,6 +141,15 @@ function App() {
         </Route>
         <Route path="/profile" element={<Layout />}>
           <Route index element={profile ? <Profile /> : <NOACCESS />} />
+        </Route>
+        <Route path="/contract" element={<Layout />}>
+          <Route
+            index
+            element={createContract ? <CreateContract /> : <NOACCESS />}
+          />
+        </Route>
+        <Route path="/stsLoad" element={<Layout />}>
+          <Route index element={stsLoadEntry ? <STSLoadEntry /> : <NOACCESS />} />
         </Route>
         {/* Only any Logged in can access */}
 
@@ -164,6 +183,10 @@ function App() {
             element={createLandfill ? <CreateLandfill /> : <NOACCESS />}
           />
         </Route>
+
+        
+
+
         <Route path="/userRoles" element={<Layout />}>
           <Route index element={accessRoles ? <AccessRoles /> : <NOACCESS />} />
         </Route>
@@ -206,6 +229,7 @@ function App() {
         <Route path="/map" element={<Layout />}>
           <Route index element={seeOptimizeRoute ? <Map /> : <NOACCESS />} />
         </Route>
+        
         {/* Only STS Manager + Admin can access */}
 
         {/* Not Decided YET */}
