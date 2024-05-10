@@ -16,6 +16,7 @@ import SplashScreen from "./screens/SplashScreen.js";
 import Dashboard from "./screens/Dashboard/Index.js";
 import UserReport from "./screens/UserReport/UserReport.js";
 import ViewReport from "./screens/UserReport/ReportView.js";
+import Map from "./screens/Map.js";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -139,6 +140,12 @@ const StackNavigator = () => {
         <Stack.Screen
           name="ViewReport"
           component={ViewReport}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="Map"
+          component={Map}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
