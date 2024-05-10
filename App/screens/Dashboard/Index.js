@@ -24,24 +24,13 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useNavigation } from "@react-navigation/native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const Index = () => {
   const windowWidth = Dimensions.get("window").width;
   const translateX = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
   const [reports, setReports] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("http://192.168.137.210:8000/reports")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => setReports(data))
-  //     .catch((error) => console.error("Error:", error));
-  // }, []);
 
   useEffect(() => {
     Animated.loop(
@@ -176,7 +165,8 @@ const Index = () => {
               backgroundColor: "#00716F",
             }}
           >
-            <Entypo name="chat" size={28} color="#fff" />
+            <Entypo name="news" size={28} color="#fff" />
+
             <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
               View Reports
             </Text>
@@ -208,6 +198,33 @@ const Index = () => {
             </Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Map")}
+            style={{
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              borderRadius: 15,
+              borderColor: "#0E2954",
+              borderWidth: 0.3,
+              marginHorizontal: 30,
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 5,
+              marginBottom: 5,
+              backgroundColor: "#00716F",
+            }}
+          >
+            <FontAwesome name="map-signs" size={28} color="#fff" />
+
+            <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
+              Map Route
+            </Text>
+          </TouchableOpacity>
+
           {/* <ScrollView style={styles.container}>
             {reports.map((report) => (
               <View style={styles.card1} key={report._id}>
@@ -233,7 +250,7 @@ export default Index;
 const styles = StyleSheet.create({
   container1: {
     flex: 1,
-    padding: 10,
+    marginTop: 40,
   },
   card1: {
     borderWidth: 1,
