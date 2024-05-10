@@ -15,6 +15,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import SplashScreen from "./screens/SplashScreen.js";
 import Dashboard from "./screens/Dashboard/Index.js";
 import UserReport from "./screens/UserReport/UserReport.js";
+import ViewReport from "./screens/UserReport/ReportView.js";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -24,7 +25,7 @@ const StackNavigator = () => {
       <Tab.Navigator
         screenOptions={{
           tabBarStyle: {
-            paddingBottom: 10, 
+            paddingBottom: 10,
           },
         }}
       >
@@ -132,6 +133,12 @@ const StackNavigator = () => {
         <Stack.Screen
           name="UserReport"
           component={UserReport}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="ViewReport"
+          component={ViewReport}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

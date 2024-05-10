@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { useEffect, useRef } from "react";
+import { useState } from "react";
 
 import {
   TouchableOpacity,
@@ -21,14 +22,26 @@ import unnamedImage from "./assets/image.jpg";
 import avatarImage from "./assets/notification.png";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Octicons from "@expo/vector-icons/Octicons";
-import { useNavigation } from '@react-navigation/native';
-
+import Entypo from "@expo/vector-icons/Entypo";
+import { useNavigation } from "@react-navigation/native";
 
 const Index = () => {
   const windowWidth = Dimensions.get("window").width;
   const translateX = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation();
-  // ...
+  const [reports, setReports] = useState([]);
+
+  // useEffect(() => {
+  //   fetch("http://192.168.137.210:8000/reports")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => setReports(data))
+  //     .catch((error) => console.error("Error:", error));
+  // }, []);
 
   useEffect(() => {
     Animated.loop(
@@ -143,6 +156,31 @@ const Index = () => {
             </Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ViewReport")}
+            style={{
+              alignItems: "center",
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              borderRadius: 15,
+              borderColor: "#0E2954",
+              borderWidth: 0.3,
+              marginHorizontal: 30,
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 5,
+              marginBottom: 5,
+              backgroundColor: "#00716F",
+            }}
+          >
+            <Entypo name="chat" size={28} color="#fff" />
+            <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
+              View Reports
+            </Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => navigation.navigate("Main")}
@@ -164,11 +202,26 @@ const Index = () => {
               backgroundColor: "#00716F",
             }}
           >
-            <Octicons name="report" size={24} color="#fff" />
+            <Entypo name="chat" size={28} color="#fff" />
             <Text style={{ color: "#fff", fontSize: 20, marginLeft: 10 }}>
               Community
             </Text>
           </TouchableOpacity>
+
+          {/* <ScrollView style={styles.container}>
+            {reports.map((report) => (
+              <View style={styles.card1} key={report._id}>
+                <Text style={styles.label1}>Issue Type:</Text>
+                <Text style={styles.title1}>{report.issueType}</Text>
+
+                <Text style={styles.label1}>Description:</Text>
+                <Text style={styles.description1}>{report.description}</Text>
+
+                <Text style={styles.label1}>Photo:</Text>
+                <Image style={styles.image1} source={{ uri: report.photo }} />
+              </View>
+            ))}
+          </ScrollView> */}
         </View>
       </View>
     </GestureHandlerRootView>
@@ -178,6 +231,34 @@ const Index = () => {
 export default Index;
 
 const styles = StyleSheet.create({
+  container1: {
+    flex: 1,
+    padding: 10,
+  },
+  card1: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
+  },
+  label1: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  title1: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  description1: {
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  image1: {
+    width: "100%",
+    height: 200,
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",

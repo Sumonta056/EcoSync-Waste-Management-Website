@@ -36,6 +36,7 @@ app.listen(port, () => {
 });
 
 const User = require("./models/user");
+const Report = require("./models/report");
 const Post = require("./models/post");
 
 //endpoint to register a user in the backend
@@ -193,10 +194,11 @@ app.post("/users/unfollow", async (req, res) => {
 //endpoint to create a new post in the backend
 app.post("/create-post", async (req, res) => {
   try {
-    const { content, userId } = req.body;
+    const { content, userId, photo } = req.body;
 
     const newPostData = {
       user: userId,
+      photo, // add this line
     };
 
     if (content) {
@@ -298,5 +300,39 @@ app.get("/profile/:userId", async (req, res) => {
     return res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ message: "Error while getting the profile" });
+  }
+});
+
+app.post("/report", async (req, res) => {
+  try {
+    const { location, issueType, description, photo, anonymous, userId } =
+      req.body; // Add userId here
+
+    console.log(req.body);
+    const newReport = new Report({
+      location,
+      issueType,
+      description,
+      photo,
+      anonymous,
+      userId, // And here
+    });
+
+    await newReport.save();
+
+    res.status(200).json({ message: "Report saved successfully" });
+  } catch (error) {
+    console.log("error creating report", error);
+    res.status(500).json({ message: "Error creating report" });
+  }
+});
+
+app.get("/reports", async (req, res) => {
+  try {
+    const reports = await Report.find({});
+    res.status(200).json(reports);
+  } catch (error) {
+    console.log("error fetching reports", error);
+    res.status(500).json({ message: "Error fetching reports" });
   }
 });
