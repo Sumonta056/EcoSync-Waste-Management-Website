@@ -13,7 +13,10 @@ import AccessRoles from "./Dashboard/pages/Access Roles/index.jsx";
 import LandFillEntry from "./Dashboard/pages/Landfill-Entry/index.jsx";
 import CreateLandfill from "./Dashboard/pages/CreateLandfill/index.jsx";
 import CreateSTS from "./Dashboard/pages/CreateSTS/index.jsx";
+import CreateContractor from "./Dashboard/pages/CreateContractor/index.jsx";
 import CreateEmployee from "./Dashboard/pages/CreateEmployee/index.jsx";
+import FirstTransferEntry from "./Dashboard/pages/ThirdParty-Entry/index.jsx";
+import HomeCollectionEntry from "./Dashboard/pages/HomeCollection-Entry/index.jsx";
 import STSEntry from "./Dashboard/pages/STS-Entry/index.jsx";
 import STSHistory from "./Dashboard/pages/STS-Entry/history.jsx";
 import Transaction from "./Dashboard/pages/Transaction/index.jsx";
@@ -182,6 +185,15 @@ function App() {
         {/* Only landfil + Admin can access */}
 
         {/* Only STS Manager + Admin can access */}
+        <Route path="/firsttransfer" element={<Layout />}>
+          <Route index element={FirstTransferEntry ? <FirstTransferEntry /> : <NOACCESS />} />
+        </Route>
+        <Route path="/contractor" element={<Layout />}>
+          <Route index element={CreateContractor ? <CreateContractor /> : <NOACCESS />} />
+        </Route>
+        <Route path="/homecollection" element={<Layout />}>
+          <Route index element={HomeCollectionEntry ? <HomeCollectionEntry /> : <NOACCESS />} />
+        </Route>
         <Route path="/sts" element={<Layout />}>
           <Route index element={stsEntry ? <STSEntry /> : <NOACCESS />} />
         </Route>
