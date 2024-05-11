@@ -43,6 +43,7 @@ export default function Sidebar() {
   const [ContractHistory, setContractHistory] = useState(false);
   const [CreateCollection, setCreateCollection] = useState(false);
   const [contractorMonitor, setContractorMonitor] = useState(false);
+  const [ScheduleHistory, setScheduleHistory] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -110,6 +111,9 @@ export default function Sidebar() {
                 break;
               case "Monitor-Workers":
                 setContractorMonitor(permission.status);
+                break;
+              case "Schedule-History":
+                setScheduleHistory(permission.status);
                 break;
               default:
             }
@@ -208,6 +212,10 @@ export default function Sidebar() {
             case "Monitor-Workers":
               return (
                 contractorMonitor && <SidebarLink key={link.key} link={link} />
+              );
+            case "Schedule-History":
+              return (
+                ScheduleHistory && <SidebarLink key={link.key} link={link} />
               );
             default:
               return null;

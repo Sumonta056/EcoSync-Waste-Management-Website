@@ -27,7 +27,7 @@ import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
 import Map from "./Dashboard/pages/RouteOptimize/index.jsx";
 import DumpHistory from "./Dashboard/pages/Landfill-Entry/history.jsx";
-import ScheduleHistory from "./Dashboard/pages/Schedule-Entry/history.jsx";
+import ScheduleHistory2 from "./Dashboard/pages/Schedule-Entry/history.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
@@ -64,6 +64,7 @@ function App() {
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
   const [CreateCollection, setCreateCollection] = useState(false);
   const [createEmployees, setCreateEmployee] = useState(false);
+  const [ScheduleHistory, setScheduleHistory] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -130,6 +131,9 @@ function App() {
               case "Monitor-Workers":
                 setContractorMonitor(permission.status);
                 break;
+              case "Schedule-History":
+                setScheduleHistory(permission.status);
+                break;
               default:
             }
           });
@@ -157,7 +161,12 @@ function App() {
           <Route index element={dashboard ? <Dashboard /> : <NOACCESS />} />
         </Route>
         <Route path="/contractordashboard" element={<Layout />}>
-          <Route index element={ContractorDashboard ? <ContractorDashboard /> : <NOACCESS />} />
+          <Route
+            index
+            element={
+              ContractorDashboard ? <ContractorDashboard /> : <NOACCESS />
+            }
+          />
         </Route>
         <Route path="/profile" element={<Layout />}>
           <Route index element={profile ? <Profile /> : <NOACCESS />} />
@@ -237,7 +246,7 @@ function App() {
         <Route path="/scheduleHistory" element={<Layout />}>
           <Route
             index
-            element={ScheduleHistory ? <ScheduleHistory /> : <NOACCESS />}
+            element={ScheduleHistory ? <ScheduleHistory2 /> : <NOACCESS />}
           />
         </Route>
         {/* Only landfil + Admin can access */}
