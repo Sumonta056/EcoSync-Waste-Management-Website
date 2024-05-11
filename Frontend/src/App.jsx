@@ -32,6 +32,7 @@ import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
 import About from "./Dashboard/pages/About/index.jsx";
+import ContratMonitor from "./Dashboard/pages/ContractorMonitor/index.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -50,9 +51,10 @@ function App() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
-  const [createContract, setCreateContract] = useState(true);
+  const [createContract, setCreateContract] = useState(true); // set to true
+  const [contractorMonitor, setContractorMonitor] = useState(true); // set to true
   const [stsEntry, setStsEntry] = useState(false);
-  const [stsLoadEntry, setSTSLoadEntry] = useState(true);
+  const [stsLoadEntry, setSTSLoadEntry] = useState(true); // set to true
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
   const [accessRoles, setAccessRoles] = useState(false);
@@ -60,7 +62,7 @@ function App() {
   const [seeTransferHistory, setSeeTransferHistory] = useState(false);
   const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
-  const [CreateEmployees, setCreateEmployee] = useState(false);
+  const [createEmployees, setCreateEmployee] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -124,6 +126,9 @@ function App() {
                 setSTSLoadEntry(permission.status);
                 break;
               default:
+              case "Contractor-Monitor":
+                setContractorMonitor(permission.status);
+                break;
             }
           });
         })
@@ -167,6 +172,12 @@ function App() {
             element={stsLoadEntry ? <STSLoadEntry /> : <NOACCESS />}
           />
         </Route>
+        <Route path="/contractMonitor" element={<Layout />}>
+          <Route
+            index
+            element={contractorMonitor ? <ContratMonitor /> : <NOACCESS />}
+          />
+        </Route>
         {/* Only any Logged in can access */}
 
         {/* Only Admin can access */}
@@ -193,7 +204,7 @@ function App() {
         <Route path="/createEmployee" element={<Layout />}>
           <Route
             index
-            element={CreateEmployees ? <CreateEmployee /> : <NOACCESS />}
+            element={createEmployees ? <CreateEmployee /> : <NOACCESS />}
           />
         </Route>
         <Route path="/createLandfill" element={<Layout />}>
@@ -268,7 +279,7 @@ function App() {
         <Route path="/map" element={<Layout />}>
           <Route index element={seeOptimizeRoute ? <Map /> : <NOACCESS />} />
         </Route>
-
+        
         {/* Only STS Manager + Admin can access */}
 
         {/* Not Decided YET */}
