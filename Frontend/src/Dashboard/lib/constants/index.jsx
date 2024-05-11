@@ -136,7 +136,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     key: "Monitor-Workers",
     label: "Monitor-Workers",
     path: "/contractMonitor",
-    icon: <MdMonitorHeart/>,
+    icon: <MdMonitorHeart />,
+  },
+  {
+    key: "Schedule-History",
+    label: "Schedule History",
+    path: "/scheduleHistory",
+    icon: <MdMonitorHeart />,
   },
 ];
 
