@@ -4,6 +4,7 @@ import Home from "./Home/Home.jsx";
 import Login from "./Login/Login.jsx";
 import Layout from "./Dashboard/components/shared/Layout.jsx";
 import Dashboard from "./Dashboard/pages/Dashboard.jsx";
+import ContractorDashboard from "./Dashboard/pages/ContractorDashboard.jsx";
 import UserList from "./Dashboard/pages/User-List/UserList.jsx";
 import CreateUser from "./Dashboard/pages/User-Create/CreateUser.jsx";
 import AddVehicle from "./Dashboard/pages/AddVehicle/Index.jsx";
@@ -26,6 +27,7 @@ import Transaction from "./Dashboard/pages/Transaction/index.jsx";
 import NOACCESS from "./Dashboard/pages/Unauthorized/index.jsx";
 import Map from "./Dashboard/pages/RouteOptimize/index.jsx";
 import DumpHistory from "./Dashboard/pages/Landfill-Entry/history.jsx";
+import ScheduleHistory from "./Dashboard/pages/Schedule-Entry/history.jsx";
 import ForgetPass1 from "./Forget-Pass/Forget-pass1.jsx";
 import ForgetPass2 from "./Forget-Pass/Forget-pass2.jsx";
 import ForgetPass3 from "./Forget-Pass/Forget-pass3.jsx";
@@ -147,6 +149,9 @@ function App() {
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={dashboard ? <Dashboard /> : <NOACCESS />} />
         </Route>
+        <Route path="/contractordashboard" element={<Layout />}>
+          <Route index element={ContractorDashboard ? <ContractorDashboard /> : <NOACCESS />} />
+        </Route>
         <Route path="/profile" element={<Layout />}>
           <Route index element={profile ? <Profile /> : <NOACCESS />} />
         </Route>
@@ -214,6 +219,12 @@ function App() {
           <Route
             index
             element={seeDumpHistory ? <DumpHistory /> : <NOACCESS />}
+          />
+        </Route>
+        <Route path="/scheduleHistory" element={<Layout />}>
+          <Route
+            index
+            element={ScheduleHistory ? <ScheduleHistory /> : <NOACCESS />}
           />
         </Route>
         {/* Only landfil + Admin can access */}
