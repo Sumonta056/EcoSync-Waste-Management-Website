@@ -157,7 +157,7 @@ function CreateUser() {
                 <option value="STS-MANAGER">STS-MANAGER</option>
                 <option value="LANDFILL MANAGER">LANDFILL MANAGER</option>
                 <option value="SYSTEM ADMIN">SYSTEM ADMIN</option>
-                <option value="SYSTEM ADMIN">3RD PARTY CONTRACTOR</option>
+                <option value="CONTRACTOR-MANAGER">CONTRACTOR-MANAGER</option>
               </select>
             </div>
             <div className="flex flex-col mb-3">

@@ -29,8 +29,8 @@ export default function Sidebar() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
-  const [createContractor, setContractor] = useState(true); // set to true
-  const [stsoadEntry, setStsLoadEntry] = useState(true); // set to true
+  const [createContractor, setContractor] = useState(false); // set to true
+  const [stsoadEntry, setStsLoadEntry] = useState(false); // set to true
   const [stsEntry, setStsEntry] = useState(false);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
@@ -40,6 +40,8 @@ export default function Sidebar() {
   const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
   const [CreateEmployees, setCreateEmployee] = useState(false);
+  const [ContractHistory, setContractHistory] = useState(false);
+  const [CreateCollection, setCreateCollection] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -76,10 +78,8 @@ export default function Sidebar() {
               case "See-Dump-History":
                 setSeeDumpHistory(permission.status);
                 break;
-              case "Create-Constractor": // new case
-                setContractor(permission.status);
-              case "Create-transport": // new case
-                setStsLoadEntry(permission.status);    
+              case "STS-Load-Entry": // new case
+                setStsLoadEntry(permission.status);
               case "Access-Roles":
                 setAccessRoles(permission.status);
                 break;
@@ -97,6 +97,15 @@ export default function Sidebar() {
                 break;
               case "Registration-Employee":
                 setCreateEmployee(permission.status);
+                break;
+              case "Create-Contract-Manager":
+                setContractor(permission.status);
+                break;
+              case "contractorhistory":
+                setContractHistory(permission.status);
+                break;
+              case "Collection-Plan":
+                setCreateCollection(permission.status);
                 break;
               default:
             }
@@ -164,10 +173,8 @@ export default function Sidebar() {
               return (
                 createContractor && <SidebarLink key={link.key} link={link} />
               );
-            case "transport-entry": // new case
-              return (
-                stsoadEntry && <SidebarLink key={link.key} link={link} />
-              );
+            case "STS-Load-Entry": // new case
+              return stsoadEntry && <SidebarLink key={link.key} link={link} />;
             case "dump-history":
               return (
                 seeDumpHistory && <SidebarLink key={link.key} link={link} />
@@ -176,7 +183,24 @@ export default function Sidebar() {
               return profile && <SidebarLink key={link.key} link={link} />;
 
             case "Registration-Employee":
-              return profile && <SidebarLink key={link.key} link={link} />;
+              return (
+                CreateEmployees && <SidebarLink key={link.key} link={link} />
+              );
+
+            case "Create-Contract-Manager":
+              return (
+                createContractor && <SidebarLink key={link.key} link={link} />
+              );
+
+            case "contractorhistory":
+              return (
+                ContractHistory && <SidebarLink key={link.key} link={link} />
+              );
+
+            case "Collection-Plan":
+              return (
+                CreateCollection && <SidebarLink key={link.key} link={link} />
+              );
 
             default:
               return null;

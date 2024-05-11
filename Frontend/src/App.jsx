@@ -48,9 +48,9 @@ function App() {
   const [showTransaction, setShowTransaction] = useState(false);
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
-  const [createContract, setCreateContract] = useState(true);
+  const [createContract, setCreateContract] = useState(false);
   const [stsEntry, setStsEntry] = useState(false);
-  const [stsLoadEntry, setSTSLoadEntry] = useState(true);
+  const [stsLoadEntry, setSTSLoadEntry] = useState(false);
   const [landfillEntry, setLandfillEntry] = useState(false);
   const [seeDumpHistory, setSeeDumpHistory] = useState(false);
   const [accessRoles, setAccessRoles] = useState(false);
@@ -59,6 +59,7 @@ function App() {
   const [seeOptimizeRoute, setSeeOptimizeRoute] = useState(false);
   const [addVehicleEntry, setAddVehicleEntry] = useState(false);
   const [CreateEmployees, setCreateEmployee] = useState(false);
+  const [CreateCollection, setCreateCollection] = useState(false);
 
   useEffect(() => {
     if (userRole) {
@@ -86,9 +87,6 @@ function App() {
               case "Create-Landfill":
                 setCreateLandfill(permission.status);
                 break;
-              case "Create-Contract":
-                setCreateContract(permission.status);
-                break;
               case "STS-Entry":
                 setStsEntry(permission.status);
                 break;
@@ -113,13 +111,17 @@ function App() {
               case "Add-Vehicle-Entry":
                 setAddVehicleEntry(permission.status);
                 break;
-
               case "Registration-Employee":
                 setCreateEmployee(permission.status);
                 break;
-
               case "STS-Load-Entry":
                 setSTSLoadEntry(permission.status);
+                break;
+              case "Create-Contract-Manager":
+                setCreateContract(permission.status);
+                break;
+              case "Collection-Plan":
+                setCreateCollection(permission.status);
                 break;
               default:
             }
@@ -143,19 +145,19 @@ function App() {
         {/* Anyone  can access */}
 
         {/* Only any Logged in can access */}
-        
+
         <Route path="/dashboard" element={<Layout />}>
           <Route index element={dashboard ? <Dashboard /> : <NOACCESS />} />
         </Route>
         <Route path="/profile" element={<Layout />}>
           <Route index element={profile ? <Profile /> : <NOACCESS />} />
         </Route>
-        <Route path="/contract" element={<Layout />}>
+        {/* <Route path="/contract" element={<Layout />}>
           <Route
             index
             element={createContract ? <CreateContract /> : <NOACCESS />}
           />
-        </Route>
+        </Route> */}
         <Route path="/stsLoad" element={<Layout />}>
           <Route
             index
@@ -228,15 +230,13 @@ function App() {
         <Route path="/contractor" element={<Layout />}>
           <Route
             index
-            element={CreateContractor ? <CreateContractor /> : <NOACCESS />}
+            element={createContract ? <CreateContractor /> : <NOACCESS />}
           />
         </Route>
         <Route path="/homecollection" element={<Layout />}>
           <Route
             index
-            element={
-              HomeCollectionEntry ? <HomeCollectionEntry /> : <NOACCESS />
-            }
+            element={CreateCollection ? <HomeCollectionEntry /> : <NOACCESS />}
           />
         </Route>
         <Route path="/sts" element={<Layout />}>

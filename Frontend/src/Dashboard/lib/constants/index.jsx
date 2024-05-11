@@ -16,6 +16,9 @@ import { IoCreateSharp } from "react-icons/io5";
 import { FaPeopleRobbery } from "react-icons/fa6";
 import { FaDumpster } from "react-icons/fa";
 import { FaHandsHelping, FaDolly } from "react-icons/fa";
+import { TbUsersGroup } from "react-icons/tb";
+import { FaApplePay } from "react-icons/fa";
+import { MdCollections } from "react-icons/md";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -84,17 +87,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     path: "/landfill",
     icon: <FaLandmark />,
   },
-  {
-    key: "create-contractor",  // new case
-    label: "Create Contractor",
-    path: "/contractor",
-    icon: <FaHandsHelping />
-  },
+
   {
     key: "transport-entry", // new case
     label: "Transport Entry",
     path: "/stsLoad",
-    icon: <FaDolly/>
+    icon: <FaDolly />,
   },
   {
     key: "dump-history",
@@ -103,10 +101,35 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     icon: <FaDumpster />,
   },
   {
+    key: "Create-Contract-Manager", // new case
+    label: "Create Contractor",
+    path: "/contractor",
+    icon: <FaHandsHelping />,
+  },
+  {
     key: "Registration-Employee",
     label: "Create Employee",
     path: "/createEmployee",
-    icon: <FaDumpster />,
+    icon: <TbUsersGroup />,
+  },
+  {
+    key: "STS-Load-Entry",
+    label: "STS-Load-Entry",
+    path: "/stsLoad",
+    icon: <TbUsersGroup />,
+  },
+  {
+    key: "contractorhistory",
+    label: "Contract Billing",
+    path: "/contractorhistory",
+    icon: <FaApplePay />,
+  },
+
+  {
+    key: "Collection-Plan",
+    label: "Collection Plan",
+    path: "/homecollection",
+    icon: <MdCollections />,
   },
 ];
 

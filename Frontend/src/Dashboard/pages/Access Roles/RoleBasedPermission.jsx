@@ -168,6 +168,21 @@ export default function RoleBasedPermission() {
                 <Select.Option value="Registration-Employee">
                   Registration Employee
                 </Select.Option>
+                <Select.Option value="Create-Contract-Manager">
+                  Create Contract Manager
+                </Select.Option>
+                <Select.Option value="STS-Load-Entry">
+                  STS Load Entry
+                </Select.Option>
+                <Select.Option value="HomeCollectionEntry">
+                  Home Collection Entry
+                </Select.Option>
+                <Select.Option value="contractorhistory">
+                  Contractor history Bill
+                </Select.Option>
+                <Select.Option value="Collection-Plan">
+                  Collection Plan
+                </Select.Option>
               </Select>
             </Form.Item>
             <Form.Item

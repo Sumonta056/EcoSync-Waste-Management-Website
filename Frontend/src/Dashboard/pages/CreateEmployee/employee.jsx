@@ -45,7 +45,7 @@ export default function Employee() {
   };
 
   return (
-    <div className="w-[27rem] bg-white p-4 rounded-sm border border-gray-200">
+    <div className="w-[23rem] bg-white p-4 rounded-sm border border-gray-200">
       <strong className="flex w-full gap-2 text-2xl text-center text-neutral-700">
         <MdAddHome size={30}/> Create New Employee
       </strong>
