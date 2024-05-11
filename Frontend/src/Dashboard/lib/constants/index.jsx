@@ -19,6 +19,7 @@ import { FaHandsHelping, FaDolly } from "react-icons/fa";
 import { TbUsersGroup } from "react-icons/tb";
 import { FaApplePay } from "react-icons/fa";
 import { MdCollections } from "react-icons/md";
+import { MdMonitorHeart } from "react-icons/md";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
   {
@@ -130,6 +131,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
     label: "Collection Plan",
     path: "/homecollection",
     icon: <MdCollections />,
+  },
+  {
+    key: "Monitor-Workers",
+    label: "Monitor-Workers",
+    path: "/contractMonitor",
+    icon: <MdMonitorHeart/>,
   },
 ];
 

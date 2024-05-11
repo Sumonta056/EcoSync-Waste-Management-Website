@@ -183,6 +183,9 @@ export default function RoleBasedPermission() {
                 <Select.Option value="Collection-Plan">
                   Collection Plan
                 </Select.Option>
+                <Select.Option value="Monitor-Workers">
+                  Monitor Workers
+                </Select.Option>
               </Select>
             </Form.Item>
             <Form.Item

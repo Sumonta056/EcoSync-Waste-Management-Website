@@ -50,7 +50,7 @@ function App() {
   const [createSTS, setCreateSTS] = useState(false);
   const [createLandfill, setCreateLandfill] = useState(false);
   const [createContract, setCreateContract] = useState(true); // set to true
-  const [contractorMonitor, setContractorMonitor] = useState(true); // set to true
+  const [contractorMonitor, setContractorMonitor] = useState(false); // set to true
   const [stsEntry, setStsEntry] = useState(false);
   const [stsLoadEntry, setSTSLoadEntry] = useState(true); // set to true
   const [landfillEntry, setLandfillEntry] = useState(false);
@@ -125,10 +125,10 @@ function App() {
               case "Collection-Plan":
                 setCreateCollection(permission.status);
                 break;
-              default:
-              case "Contractor-Monitor":
+              case "Monitor-Workers":
                 setContractorMonitor(permission.status);
                 break;
+              default:
             }
           });
         })
