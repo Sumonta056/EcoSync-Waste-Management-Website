@@ -23,7 +23,7 @@ export default function DashboardStatsGrid() {
       });
     // Get the total number users from the database
     axios
-      .get("http://localhost:3000/user/")
+      .get("http://localhost:3000/contractor/")
       .then((response) => {
         setTotalUsers(response.data.length);
       })
@@ -32,7 +32,7 @@ export default function DashboardStatsGrid() {
       });
 
     axios
-      .get("http://localhost:3000/sts")
+      .get("http://localhost:3000/user/contractor-manager")
       .then((response) => {
         setTotalSTS(response.data.length);
       })
@@ -41,7 +41,7 @@ export default function DashboardStatsGrid() {
       });
 
     axios
-      .get("http://localhost:3000/landfill")
+      .get("http://localhost:3000/employee")
       .then((response) => {
         setTotalLandfills(response.data.length);
       })
@@ -71,7 +71,7 @@ export default function DashboardStatsGrid() {
         </div>
         <div className="pl-4">
           <span className="text-sm font-light text-gray-500">
-            Total Authenticated Users
+            Total Contractors Available
           </span>
           <div className="flex items-center">
             <strong className="text-xl font-semibold text-gray-700">
@@ -87,7 +87,7 @@ export default function DashboardStatsGrid() {
         </div>
         <div className="pl-4">
           <span className="text-sm font-light text-gray-500">
-            Total STS Available
+            Total Contractor Managers
           </span>
           <div className="flex items-center">
             <strong className="text-xl font-semibold text-gray-700">
@@ -103,7 +103,7 @@ export default function DashboardStatsGrid() {
         </div>
         <div className="pl-4">
           <span className="text-sm font-light text-gray-500">
-            Total Landfills Available
+            Total Employees Available
           </span>
           <div className="flex items-center">
             <strong className="text-xl font-semibold text-gray-700">

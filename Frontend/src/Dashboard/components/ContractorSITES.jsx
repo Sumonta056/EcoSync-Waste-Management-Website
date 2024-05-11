@@ -34,11 +34,11 @@ function PopularProducts() {
             <div className="flex-1 ml-4">
               <p className="text-sm font-medium text-gray-800">{`${product.fullName}`}</p>
               <span className="text-xs text-green-600">
-                {product.collectRoute}
+                {product.jobTitle}
               </span>
             </div>
             <div className="text-xs text-rose-700 pl-1.5">
-            Job Title: {product.jobTitle}
+            {product.collectRoute}
             </div>
           </div>
         ))}

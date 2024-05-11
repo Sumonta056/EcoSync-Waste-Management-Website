@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTruckFront } from "react-icons/fa6";
 
-const COLORS = ["#00C49F", "#FFBB28", "#FF8042", "#7b42ff"];
+const COLORS = ["#00C49F", "#FFBB28", "#FF8042"];
 const RADIAN = Math.PI / 180;
 
 const renderCustomizedLabel = ({
@@ -35,11 +35,11 @@ export default function VehicleTypePieChart() {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/vehicle/")
+      .get("http://localhost:3000/employee/")
       .then((response) => {
         const vehicles = response.data;
         const typeCount = vehicles.reduce((acc, vehicle) => {
-          acc[vehicle.type] = (acc[vehicle.type] || 0) + 1;
+          acc[vehicle.jobTitle] = (acc[vehicle.jobTitle] || 0) + 1;
           return acc;
         }, {});
 
@@ -57,7 +57,7 @@ export default function VehicleTypePieChart() {
   return (
     <div className="w-[30rem] h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col">
       <strong className="flex justify-center gap-2 font-medium text-gray-700">
-      <FaTruckFront /> Transportation Vehicle Distribution
+      <FaTruckFront /> Employee Distribution
       </strong>
       <div className="flex-1 w-full mt-3 text-xs">
         <ResponsiveContainer width="100%" height="100%">
