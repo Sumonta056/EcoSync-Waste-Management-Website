@@ -4,7 +4,9 @@
 
 ### 📚 Team Name : YOUR_WORST_NIGHTMARE (SUST) 📚
 
-**Team Member : [Sumonta Saha (Team Leader)](sumontasaha80@gmail.com) - [Promi Mojumder](promimojumder8@gmail.com) - [Ridwanur Rashid Siam](ridwan.siam@gmail.com)**
+<!-- **Team Member : [Sumonta Saha (Team Leader)](sumontasaha80@gmail.com) - [Promi Mojumder](promimojumder8@gmail.com) - [Ridwanur Rashid Siam](ridwan.siam@gmail.com)** -->
+
+##### 🏆 2nd in Preliminary Round 2 (Score : 89/100), Top Finalist in Code Samurai Hackathon 2024\*\*
 
 <hr>
 
